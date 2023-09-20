@@ -1,0 +1,44 @@
+/* ChatMessages.css */
+
+/* Styling for the chat container */
+.chat-container {
+    display: flex;
+    height: 100vh;
+  }
+  
+  /* Styling for the contact list */
+  .contact-list {
+    flex: 1;
+    background-color: #f4f4f4;
+    padding: 20px;
+    overflow-y: auto;
+  }
+  
+  /* Styling for the chat room */
+  .chat-room {
+    flex: 3;
+    background-color: #fff;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Styling for chat messages */
+  .tab-content {
+    flex: 1;
+    overflow-y: auto;
+  }
+  
+  /* Styling for the input field and send button */
+  .send-message {
+    padding: 10px;
+    background-color: #f4f4f4;
+    border-top: 1px solid #ddd;
+  }
+  
+  .input-group {
+    width: 100%;
+  }
+  
+  /* Additional styles can be added as needed to improve aesthetics */
+  
