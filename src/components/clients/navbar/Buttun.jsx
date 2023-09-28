@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { ClientLogout } from '../../../Redux/ClientAuth';
 import { proLogOut } from '../../../Redux/proAuth';
+import ProfilePic from '../ProfilePic/ProfilePic';
 const Buttun = ({Type,profile1}) => {
     const [isOpen, setIsOpen] = useState(false);
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
+    const id = useSelector((state) => (Type === 'users' ? state.ClientAuth.Id : state.proAuth.Id));
 
 
         const hadleLogout = () => {
@@ -42,7 +45,8 @@ const Buttun = ({Type,profile1}) => {
             {/* <a href="#" className="block px-4 py-2 account-link hover:text-white">
               Account
             </a> */}
-            <a href={profile1} className="block px-4 py-2 account-link hover:text-white">
+            <a  className="block px-4 py-2 account-link hover:text-white">
+              <ProfilePic UserId={id} value='pic'/>
               Profile
             </a>
             <a href="" className="block px-4 py-2 account-link hover:text-white" onClick={hadleLogout}>

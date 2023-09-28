@@ -58,9 +58,9 @@ const RequirementPage = () => {
         :
         <>
         <div>
-       
+       {console.log(interstPro,requirementId,hiredPros,'//////////////////=============++')}
         </div>
-        <ProCards interstPro={interstPro} setShow={setShow} requirementId={requirementId} hiredPros={hiredPros}/>
+        <ProCards interstPro={interstPro} setShow={setShow} requirementId={requirementId} />
         </>
        }
       </div>

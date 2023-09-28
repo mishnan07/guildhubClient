@@ -10,9 +10,13 @@ import { proLogOut } from "../../../Redux/proAuth";
 import PostUpload from "../../professionals/post/PostUpload";
 import Question from "../question/Question";
 import Requirements from "../requirement/Requirements";
+import Modal from "../../professionals/Modal/Modal";
+import { FaTimes } from "react-icons/fa";
 const LeftSidebar = ({ Type, user }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalIsOpens, setModalIsOpens] = useState(false);
+  const [isOpen1, setIsOpen1] = useState(false);
+
 
   const profile = "/images/user_149071.png";
 
@@ -42,12 +46,20 @@ const LeftSidebar = ({ Type, user }) => {
   };
   console.log(modalIsOpen, "pppp pppp ppp");
 
+  const Requirement = ()=>{
+    if(userT==='users'){
+      navigate('/requirement')
+    }else if(userT === 'professional'){
+      navigate('/professional/requirement')
+    }
+  }
+
   const hadleLogout = () => {
     dispatch(proLogOut());
     navigate("/professional/login");
   };
   return (
-    <div className="md:w-1/4">
+    <div className="md:w-1/5">
       <div className="profile-card  bg-gradient-to-r from-blue-500 to-purple-500 text-white p-4 rounded-lg shadow-lg">
        <div className="flex justify-center items-center">
         {user?.profilePic?(
@@ -55,7 +67,6 @@ const LeftSidebar = ({ Type, user }) => {
        className=" w-20 h-20 md:w-40 md:h-40 object-cover rounded-full border-2 border-pink-600 p-1"
        src={`${userAPI}/images/` + user.profilePic}
        alt="profile"
-      //  onClick={open}
      />
         ):(
           <img
@@ -82,65 +93,59 @@ const LeftSidebar = ({ Type, user }) => {
         <li className="flex items-center">
           <i className="icon ion-ios-paper text-blue-500"></i>
           <a
-            href="newsfeed.html"
+          onClick={Requirement}
+            href="#"
             className="text-blue-500 hover:underline ml-2"
           >
-            Trending
+            Requirement
           </a>
         </li>
-        <li className="flex items-center">
-          <i className="icon ion-ios-paper text-blue-500"></i>
-          <a
-            href="newsfeed.html"
-            className="text-blue-500 hover:underline ml-2"
-          >
-            Category
-          </a>
-        </li>
-        <li className="flex items-center">
-          <i className="icon ion-ios-paper text-blue-500"></i>
-          <a
-            href="newsfeed.html"
-            className="text-blue-500 hover:underline ml-2"
-          >
-            Videos
-          </a>
-        </li>
+      
         {userT === "users" ? (
           <li className="flex items-center">
             <i className="icon ion-ios-paper text-blue-500"></i>
             <a href="#" className="text-blue-500 hover:underline ml-2">
-              <span onClick={openModal}>Ask Experts</span>
+              <span onClick={()=>setIsOpen1(true)}>Ask Experts</span>
             </a>
           </li>
         ) : (
           <li className="flex items-center">
             <i className="icon ion-ios-paper text-blue-500"></i>
             <a href="#" className="text-blue-500 hover:underline ml-2">
-              <span onClick={openModal}>Crate Post</span>
+              <span onClick={()=>setIsOpen1(true)}>Crate Post</span>
             </a>
           </li>
         )}
         {userT === "users" ? (
-          <CustomModal isOpen={modalIsOpen} onClose={closeModal}>
-            <Question user={user} />
-          </CustomModal>
+          <Modal isOpen={isOpen1} onClose={()=>setIsOpen1(false)}>
+          <button className="p-2" onClick={() => setIsOpen1(false)}>
+                  <FaTimes /> 
+          </button>
+            <Question value='create'/>
+            </Modal>
         ) : (
-          <CustomModal isOpen={modalIsOpen} onClose={closeModal}>
-            <ImageUpload user={user} onClose={closeModal} />
-          </CustomModal>
+          <Modal isOpen={isOpen1} onClose={()=>setIsOpen1(false)}>
+          <button className="p-2" onClick={() => setIsOpen1(false)}>
+                  <FaTimes /> 
+          </button>           
+           <ImageUpload user={user} onClose={closeModal} />
+          </Modal>
         )}
         {userT === "users" ? (
           <>
             <li className="flex items-center">
               <i className="icon ion-ios-people text-blue-500"></i>
               <a href="#" className="text-blue-500 hover:underline ml-2">
-                <span onClick={openModals}> Create Requirement</span>
+                <span  onClick={()=>setIsOpen1(true)}> Create Requirement</span>
               </a>
             </li>
-            <CustomModals isOpen={modalIsOpens} onClose={closeModals}>
-              <Requirements user={user} onClose={closeModals} />
-            </CustomModals>
+            <Modal isOpen={isOpen1} onClose={()=>setIsOpen1(false)}>
+          <button className="p-2" onClick={() => setIsOpen1(false)}>
+                  <FaTimes /> 
+          </button>
+          
+                <Requirements user={user} onClose={closeModals} />
+            </Modal>
           </>
         ) : (
           ""

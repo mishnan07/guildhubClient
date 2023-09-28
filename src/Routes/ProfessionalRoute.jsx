@@ -4,16 +4,20 @@ import Register from "../components/professionals/register/Register";
 import Post from "../components/professionals/post/Post";
 import ImageUpload from "../components/professionals/post/ImageUpload";
 import Signin from "../components/professionals/login/Signin";
-import Home from "../pages/Professionals/Home.jsx";
 import HomePage from "../pages/Professionals/HomePage";
 import ProfilePages from "../pages/Professionals/ProfilePages";
 import CommunityPage from "../pages/Professionals/CommunityPage";
 import { useSelector } from "react-redux";
 import RequirementPage from "../pages/Professionals/RequirementPage";
 import HirePage from "../pages/Professionals/HirePage";
+import ChatMessages from "../components/clients/chatMessage/ChatMessage";
+import Notification from "../components/clients/notification/Notification";
+import NotificationPage from "../pages/Clients/NotificationPage";
+import MainPage from "../pages/Clients/MainPage";
 
 const ProfessionalRoute = () => {
   const isAuth = useSelector((state) => state.proAuth.Token);
+  const isAuth1 = useSelector((state) => state.ClientAuth.Token);
 
   return (
     <div>
@@ -27,26 +31,23 @@ const ProfessionalRoute = () => {
           path="/login"
           element={isAuth ? <Navigate to="/professional/home" /> : <Signin />}
         />
-        <Route
-          path="/"
-          element={isAuth ? <Home /> : <Navigate to="/professional/login" />}
-        />
+    
         <Route
           path="/home"
           element={
-            isAuth ? <HomePage /> : <Navigate to="/professional/login" />
+            isAuth ? <MainPage /> : <Navigate to="/professional/login" />
           }
         />
         <Route
           path="/profile"
           element={
-            isAuth ? <ProfilePages /> : <Navigate to="/professional/login" />
+            isAuth || isAuth1 ?( <ProfilePages /> ):( <Navigate to="/professional/login" />)
           }
         />
         <Route
           path="/community"
           element={
-            isAuth ? <CommunityPage /> : <Navigate to="/professional/login" />
+            isAuth ? <MainPage /> : <Navigate to="/professional/login" />
           }
         />
 
@@ -62,8 +63,19 @@ const ProfessionalRoute = () => {
         />
          <Route
           path="/hire"
-          element={isAuth ? <HirePage /> : <Navigate to="/professional/login" />}
+          element={isAuth ? <MainPage /> : <Navigate to="/professional/login" />}
         />
+
+        <Route
+          path="/message"
+          element={isAuth ? <ChatMessages /> : <Navigate to="/professional/login" />}
+        />
+
+        <Route
+          path="/notification"
+          element={isAuth ? <MainPage />: <Navigate to="/professional/login" />}
+        />
+
       </Routes>
 
       

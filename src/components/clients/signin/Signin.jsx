@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import userAxios from "../../../Axios/userAxios.js";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { ClientLogin, ClientEmail } from "../../../Redux/ClientAuth.js";
+import { ClientLogin, ClientId } from "../../../Redux/ClientAuth.js";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -41,15 +41,15 @@ const Signin = () => {
       .then((res) => {
         const result = res.data.userResponse;
         console.log(result,'kkkkkkkkkk');
-        console.log(result.token);
+        console.log(result.token,'ppppppppppppppppppppp99');
         if (result.status === true) {
           console.log('ttttttt');
           const token = result.token;
+          const id = result.id
           dispatch(ClientLogin({ token: token }));
-          dispatch(ClientEmail({ email: email }));
+          dispatch(ClientId({ id: id }));
           navigate("/home");
         } else {
-          console.log('eeeeeeeeee');
           showErrorMessage(result.message);
         }
       })

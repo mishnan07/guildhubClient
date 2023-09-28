@@ -3,17 +3,17 @@ import React from "react";
 const Hire = () => {
   return (
     <div>
-      <section className="bg-white py-16">
-        <div className="container mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black mb-6">
+      <section className="bg-white   ">
+        <div className="container mx-auto text-center  ">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black mb-6 p-10">
             Post Your Requirement
-            <br />& Hire Trusted Professionals
+            <br /> & Hire Trusted<br /> Professionals
           </h1>
 
-          <div className="flex justify-center space-x-4 mb-4">
+          <div className="flex justify-center space-x-4 mb-4 animate-bounce">
             <a
               href="#"
-              className="px-8 py-3 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-gray-400"
+              className="px-8 py-3 bg-purple-800 text-white rounded-lg hover:bg-gray-900 transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-gray-400"
             >
               Post now!
             </a>
@@ -35,7 +35,7 @@ const Hire = () => {
               you can choose who to interact with let anyone spam you!{" "}
             </p>
           </div>
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center p-4">
             <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAFB0lEQVR4nO2aW2gcVRjHP0q9PvTRt0IfVHCz0aa7SbqZ2cTurtnd7O5MGtkqlVYQ0dAgpCRNIRA3SfXBxiytCNYbPkQThUjSKFjsS4saklb6JOTSIrWiID6oxNaHzDmfnOlsdvaeue2MOH/4vyw7c+b/O998czkD4MqVK1euXLly5cqVZuHzmfulvuFe0j/ylTQweoucOPUPHTqFuj0whoQXq1rixL8lXlwlnDAtcd2H0JO+F+yQ9Mrwi9Lg6K+GAheZvDxUE0AJEF64scmleuoWHDOZnaR/5KOCg89MIJ2aRfrF10hn5pGe1AkgdVQzgLyFCYTMDssBEHX48Szi8jVEiaBadGZOe/jDxwyEV8wJb1he9jR30JPnEP/4syC4ZgDsnGdlb2jmC73Ji92WNTwyOPbL1swXh1+5jvSzBaRjk0iC3aYF0twTOPFHSxqj1Dfcm5s5uexzun0H6WDt7l1XCLyQNh0A6X/1Qq7hqc95p4VX/LH5AAbGf5YBTM0WlL3eg6THDyBe9iJe8iI9HjK5AsRV8wGcGL8jA/jyYn72Pz2v7yCTCcQrHsRrj931FY/8m2kAOGHDdAA017ln5vMAxrP6Zv9sIB9eMT0TMLUKrANwkkGYQzo9p6/bdyUQlxtKAJhdBdYBGFLdvOiZ/TOls79VBVljVfBXIIE3mztxzR9xKIB4svzsq6sgoa8KfmuN44ovvGVHAqDZtsrhc1Uw2aZr5tXhnQmgK4m4pOr8lbzkkStFy75Z2TsHQGcKydFOpEMdSE9zSD9sRjzfVL30i33Vg3jxCaQzPqRvB5COBpH2hpGIcSRBoWRMds7bC+BACun7rdpC6vVyA9L3WpE8mQdRHL7uAGim3frgxb1ipN1BALKB+gN4k3MOAJKOba/BmWXWKNNxBwHgRbnx4WIdesCSB+kLTxWM7QwAvIjkcBTxG6914Re9SI50lozrHAC8iOTZmDUQvmtA8ly07JjOAsBbAOHbBrm6Ko3nPAC8iOTpOOKlRuPhL3vlJlttLGcC4EWk51oNA6Dv7K85jj0ABmq/C8SFvcYrYL7JmQBIrWWsoGDOrTG75rcLDgSQqrGY0RM3rQmSg13OAkC2sYxF+8KmAaDHwg4AMKBtGYu+xpsHYDxoPwCyjdAFAD5oqR5ssQHp67zsWrfQbF//OQBY6QrAnufZk1xU9dYnmpR/K1grUHthr/0AJE7Y0FQBn/gKQ1z1yG93SLJKQ0t2yf/B74sqYMpfcZtNXigHwPyFEYkT1jRVAbsKzDfdfXp7t6VmJy/wwS55G/kRe66p6rYbbclSAP7IDdMBEE6Y1noa1MO3WqIlANb2hWZNByBx3YfsDlvs3/cXrgXkvOqPHDEdAPpeukfixet2h2bnPCv7cjMvh/eFflp/OHYfWKFNLtVjVhD1Mla5IHq96g8/A1aK8MKE0fDFy1hmed0XOQtWCyGzg3DiaSMzb0n4fZG36vKZXE7sayw9PaHcMpZB37S87Ks3RiHNvsmReHFlOzdLxs/50G12nV/3hT9n3f4Huz6VdeXKlSuVdgLALgB4CAB2A8CjANAIAM0AwANAEAA6ACAEABEAiAJADACSimPKb2HlPx3KNryyj0Zln7uVMXYpY9qmBwFgDwD4lQNO2uSQcgx7lGOqix4HgISNoSs5oVSK5Wr8vwNw6inwADisCXqVBsYVNUHW6LbbBNm2bB9sX49Y0QT/BRYZwqLdvg1TAAAAAElFTkSuQmCC" />
             <p className="text-lg lg:text-xl text-gray-700  px-4 ">
               you can put a public review about the work & profession{" "}

@@ -3,7 +3,7 @@ import Otp from '../otp/Otp'
 import userAxios from '../../../Axios/userAxios'
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { ClientLogin, ClientEmail } from "../../../Redux/ClientAuth.js";
+import { ClientLogin, ClientId } from "../../../Redux/ClientAuth.js";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ResetPass from './ResetPass';

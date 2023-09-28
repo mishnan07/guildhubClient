@@ -5,7 +5,6 @@ import { FaSearch } from 'react-icons/fa'; // You can choose a different icon fr
 const SearchBar = ({SetSearchInput,searchInput}) => {
   return (
     <div>
-       <div className=" create-post bg-white p-4 rounded-lg shadow-md">
         <div className="flex flex-row items-center">
           <div className="w-10 h-10">
           <div className="search-icon">
@@ -50,7 +49,6 @@ const SearchBar = ({SetSearchInput,searchInput}) => {
           </div>
         </div>
       </div>
-    </div>
   )
 }
 

@@ -3,7 +3,7 @@ import Otp from '../otp/Otp'
 import userAxios from '../../../Axios/userAxios'
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { ClientLogin, ClientEmail } from "../../../Redux/ClientAuth.js";
+import { ClientLogin, ClientId } from "../../../Redux/ClientAuth.js";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -24,8 +24,9 @@ const OtpLogin = () => {
               console.log(result.token);
               if (result.status === true) {
                 const token = result.token;
+                const id = result.id
                 dispatch(ClientLogin({ token: token }));
-                dispatch(ClientEmail({ email: email }));
+                dispatch(ClientId({ id: id }));
                 navigate("/home");
               } else {
                 toast.error(result.message);

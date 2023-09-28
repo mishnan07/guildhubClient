@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import ProfilePictureUpload from "./ProfilePictureUpload";
 import userInstance from "../../../Axios/userAxios";
 
-const EditProfile = ({ user, Type }) => {
+const EditProfile = ({ user, Type,changeState }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -74,7 +74,7 @@ const EditProfile = ({ user, Type }) => {
         .then((res) => {
             console.log(res.data);
             showToastMessage(res.data.message)
-            console.log("registered sucesssssss");
+            changeState()
           
         }).catch(()=>{
             setErrMsg("something went wrong");
@@ -83,13 +83,13 @@ const EditProfile = ({ user, Type }) => {
 
   const showErrorMessage = (message) => {
     toast.error(message, {
-      position: toast.POSITION.BOTTOM_CENTER,
+      position: toast.POSITION.TOP_RIGHT,
       autoClose: 1000,
     });
   };
   const showToastMessage = (message) => {
     toast.success(message, {
-      position: toast.POSITION.BOTTOM_CENTER,
+      position: toast.POSITION.TOP_RIGHT,
       autoClose: 1000
     });
   };

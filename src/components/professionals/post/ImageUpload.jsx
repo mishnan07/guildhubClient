@@ -51,18 +51,18 @@ const ImageUpload = ({user,onClose}) => {
   
   const showToastMessage = (message) => {
     toast.success(message, {
-      position: toast.POSITION.BOTTOM_CENTER,
+      position: toast.POSITION.TOP_RIGHT,
       autoClose: 1000
     });
   };
   const showErrorMessage = (message) => {
     toast.error(message, {
-      position: toast.POSITION.BOTTOM_CENTER,
+      position: toast.POSITION.TOP_RIGHT,
       autoClose: 2000
     });
   };
   return (
-    <div className="w-full max-w-md mx-auto p-4 border rounded-lg shadow-md mt-20">
+    <div className="w-full max-w-md mx-auto p-4 border rounded-lg shadow-md ">
       <form method='POST' onSubmit={handleUpload}>
         <Dropzone onDrop={handleDrop} accept="image/*" multiple>
           {({ getRootProps, getInputProps, isDragActive }) => (

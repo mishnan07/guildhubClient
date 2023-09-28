@@ -11,12 +11,14 @@ const ProfilePages = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();useNavigate
    const token = useSelector((state)=>state.proAuth.Token)
+   const isAuth1 = useSelector((state) => state.ClientAuth.Token);
+
 
    const [user, setUser] = useState(null);
    const Type = 'professional'
 
    useEffect(() => {
-    if(token){
+    if(token || isAuth1){
      const fetchUserDetails = async () => {
          try {
            const response = await userAxios.get('/userDetails', {

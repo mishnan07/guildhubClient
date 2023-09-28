@@ -4,16 +4,22 @@ import proAxios from '../../../Axios/proAxios';
 import { useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import userInstance from '../../../Axios/userAxios';
+import { userAPI } from '../../../Constants/Api';
 
 
-const Question = ({user}) => {
+const Question = ({value,id,questions}) => {
   const [files, setFiles] = useState([]);
   const [message, setMessage] = useState('');
   const [category, setCategory] = useState("");
   const [allCategory, setAllCAtegory] = useState([]);
+  const [questionId,setQuestionId]=useState('')
 
-  const token = useSelector((state)=>state.proAuth.Token)
-
+  const token = useSelector((state)=>state.ClientAuth.Token)
+  const userId = useSelector((state)=>state.ClientAuth.Id)
+  if(questions){
+    console.log(questions,'questionsquestions===');
+  }
 
   useEffect(() => {
     proAxios.get("/getCategory").then((res) => {
@@ -21,6 +27,13 @@ const Question = ({user}) => {
       console.log(getCategory, "lll++==");
       setAllCAtegory(getCategory);
     });
+    if(questions){
+      setMessage(questions?.message)
+      // setFiles(questions?.image[0])
+      setCategory(questions?.category)
+      setQuestionId(questions._id)
+      console.log(questions._id,'=========questionId');
+    }
   }, []);
 
   const handleDrop = (acceptedFiles) => {
@@ -29,14 +42,14 @@ const Question = ({user}) => {
 
   const showToastMessage = () => {
     toast.success("Success!", {
-      position: toast.POSITION.BOTTOM_CENTER,
+      position: toast.POSITION.TOP_RIGHT,
       autoClose: 3000,
     });
   };
 
   const showErrorMessage = (message) => {
     toast.error(message, {
-      position: toast.POSITION.BOTTOM_CENTER,
+      position: toast.POSITION.TOP_RIGHT,
       autoClose: 1000,
     });
   };
@@ -58,11 +71,26 @@ const Question = ({user}) => {
       formData.append('category', category);
 
   
-      formData.append('userId', user._id);
-  
-      const response = await proAxios.post('/quesionUpload', formData,{
+      formData.append('userId', userId);
+
+      if(questions){
+        formData.append('questionId', questionId); 
+
+      }
+
+      // if(questions){
+      //   formData.append('questionId',questionId)
+      // }
+      let response
+   if(value === 'create'){
+       response = await proAxios.post('/quesionUpload', formData,{
         headers: { Authorization: `Bearer ${token}` },
       });
+    }else if(value === 'edit'){
+      response = await proAxios.post('/editeQuestion', formData,{
+        headers: { Authorization: `Bearer ${token}` },
+      });
+    }
       showToastMessage(response.data.message)
       console.log('Images uploaded successfully:', response.data);
       setCategory('')
@@ -74,9 +102,10 @@ const Question = ({user}) => {
     }
   };
   
+  console.log(questionId,'====ll  vv');
 
   return (
-    <div className="w-full max-w-md mx-auto p-4 border rounded-lg shadow-md mt-20">
+    <div className="w-full max-w-md mx-auto p-4 border rounded-lg shadow-md ">
 
       <form method='POST' onSubmit={handleUpload}>
         
@@ -105,14 +134,25 @@ const Question = ({user}) => {
         </div>
       )}
       {!isDragActive && files.length === 0 && (
-        <div className="text-center">
-          <p>Drag 'n' drop images here, or click to select</p>
+        <div className="text-gray-400">
+          <p >upload image</p>
           <div className="w-full flex justify-center items-center mt-4">
+            {questions && questions.image.length > 0?
             <img
+              className="h-20 max-w-20"
+              src={`${userAPI}/images/` + questions.image[0]}
+              alt="image description"
+              
+            />
+              :
+              
+              <img
               className="h-20 max-w-20"
               src="/images/image.png"
               alt="image description"
+              
             />
+              }
           </div>
         </div>
       )}
@@ -123,7 +163,7 @@ const Question = ({user}) => {
 
         <label
           htmlFor="message"
-          className="block mt-4 mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          className="block  mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >
           Your message
         </label>

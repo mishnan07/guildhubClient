@@ -11,7 +11,8 @@ import Register from "../register/Register";
 import EditProfile from "./EditProfile";
 import CustomModal from "../../modal/CustomModal";
 import ProfilePictureUpload from "./ProfilePictureUpload";
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowCircleLeft, FaArrowLeft, FaEllipsisV, FaTimes } from "react-icons/fa";
+import UserProfile from "../../clients/Profile/UserProfile";
 
 const Profile = ({ Type, Uuser, token }) => {
   const [post, setPost] = useState([]);
@@ -89,13 +90,15 @@ const Profile = ({ Type, Uuser, token }) => {
     console.log(Uuser);
   } else {
     userID = Uuser ? Uuser._id : "";
+    
     user = Uuser;
   }
 
-  console.log(userID, "pppppppppppppppl");
+  console.log(userID, "pppppppppppppppl  vvvvv ======== ====///////");
 
   const proId = user ? user._id : "";
   const saveds = user ? user.savedPost : "";
+  console.log(saveds,'savessssssssssssssssss========');
   const posteds = post.filter(
     (item) => !item.isBanned && item.isActive && item.proId === user._id
   );
@@ -168,9 +171,10 @@ const Profile = ({ Type, Uuser, token }) => {
             </div>
             <Modal isOpen={isOpen} onClose={close}>
               <button className="p-2" onClick={() => setIsOpen(false)}>
-                <FaArrowLeft /> Back
+              <FaTimes /> 
+              
               </button>
-              {console.log(state,'a')}
+           
               <ProfilePictureUpload user={user} Type={Type} state={state} setState={setState} changeState={changeState} close={close}/>
             </Modal>
 
@@ -214,13 +218,6 @@ const Profile = ({ Type, Uuser, token }) => {
               </div>
               <div className="">
                 <CustomModal isOpen={isModalOpen} onClose={closeModal}>
-                  {/* Content of your modal */}
-                  {/* <button
-      onClick={closeModal}
-      className="bg-gray-300 hover:bg-gray-400 text-gray-700 font-bold py-2 px-4 rounded mt-4"
-    >
-      Close Modal
-    </button> */}
                   <div className="-mt-16 -mb-20">
                     <EditProfile user={user} Type={Type} />
                   </div>
@@ -351,8 +348,12 @@ const Profile = ({ Type, Uuser, token }) => {
           ) : (
             ""
           )}
+
+          
         </div>
       </main>
+
+      
     </>
   );
 };

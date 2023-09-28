@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { ClientLogout } from "../../Redux/ClientAuth";
 import { proLogOut } from "../../Redux/proAuth";
 import userAxios from "../../Axios/userAxios";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import Navbar from '../../components/clients/navbar/Navbar';
 import LeftSidebar from '../../components/clients/LeftSidebar/LeftSidebar'
@@ -15,6 +15,10 @@ const HomePage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
    const token = useSelector((state)=>state.proAuth.Token)
+
+   const location = useLocation()
+   const senderType = location.pathname.includes('professional') ? 'professional' : 'users'
+ console.log(location,senderType);
 
    const [user, setUser] = useState(null);
    const Type = 'professional'

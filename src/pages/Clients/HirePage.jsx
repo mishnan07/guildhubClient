@@ -14,6 +14,8 @@ import Confirm from "../../components/modal/Confirm";
 import Nodata from "../../components/clients/Nodata/Nodata";
 import ChatRoom from "../../components/clients/chatMessage/ChatMessage";
 import ChatMessages from "../../components/clients/chatMessage/ChatRoom";
+import RightSidebar from "../../components/clients/RightSidebar/RightSidebar";
+import LeftSidebar from "../../components/clients/LeftSidebar/LeftSidebar";
 
 const HirePage = () => {
     const Type = 'users';
@@ -46,26 +48,31 @@ const HirePage = () => {
     return (
       <>
       <Navbar Type={Type} user={user} />
-      <div className="mt-16 flex flex-col md:flex-col items-center justify-center">
-        <div className="w-full md:w-1/2">
+      <div className="container mt-20 ">
+      <div className="flex flex-col md:flex-row mt-20 justify-evenly sm:mr-16 sm:px-20">
+        <div></div>
+        <LeftSidebar Type={Type} user={user} />
+        
+        {/* Left Sidebar */}
+       
+    
+        <div className=" overflow-scroll h-screen md:w-2/3 ">
           {!show ? (
             <>
               <Hire />
-                <HireOptions setShow={setShow}  setCategoryName={setCategoryName} Type={Type}/>
-                <Follow  Type={Type} user={user}/>
-                {/* <Inputs /> */}
-                <Confirm />
-                <Nodata />
-                <ChatRoom />
-                <ChatMessages />
-                
+              <HireOptions setShow={setShow} setCategoryName={setCategoryName} Type={Type} />
             </>
           ) : (
-            <ProsCard setShows={setShow}  categoryName={categoryName}/>
+            <div className="w-full overflow-scroll h-screen ">
+            <ProsCard setShows={setShow} categoryName={categoryName} />
+            </div>
           )}
+  
         </div>
       </div>
+      </div>
     </>
+    
     
     );
 }

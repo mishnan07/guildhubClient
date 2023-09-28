@@ -75,7 +75,7 @@ console.log(user,'=====================');
   };
 
   return (
-    <div className="w-full max-w-md mx-auto p-4 border rounded-lg shadow-md mt-20">
+    <div className="w-full max-w-md mx-auto p-4 border rounded-lg shadow-md ">
       <form method="POST" onSubmit={handleUpload}>
         <Dropzone onDrop={handleDrop} accept="image/*">
           {({ getRootProps, getInputProps, isDragActive }) => (
@@ -100,7 +100,7 @@ console.log(user,'=====================');
                     <p className="text-blue-400">Drop the image here</p>
                   ) : (
                     <>
-                      <p>Drag 'n' drop an image here, or click to select</p>
+                      <p className='text-gray-400 text-left'>upload image</p>
                       <div className="w-full flex justify-center items-center mt-4">
                         <img
                           className="h-20 max-w-20"

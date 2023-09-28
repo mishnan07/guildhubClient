@@ -2,7 +2,6 @@ import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom"; // Added Navigate for conditional routing
 import Register from "../components/clients/register/Register.jsx";
 import Signin from "../components/clients/signin/Signin.jsx";
-import Home from "../pages/Clients/Home.jsx";
 import { useSelector } from "react-redux";
 import HomePage from "../pages/Clients/HomePage.jsx";
 import CommunityPage from "../pages/Clients/CommunityPage.jsx";
@@ -14,28 +13,32 @@ import FollowPage from "../pages/Clients/FollowPage.jsx";
 import PhoneSignin from "../components/clients/signin/PhoneSignin.jsx";
 import OtpLogin from "../components/clients/signin/OtpLogin.jsx";
 import ForgetPass from "../components/clients/signin/ForgetPass.jsx";
+// import Chat from "../pages/Clients/Chat/Chat.jsx";
+import ChatMessages from "../components/clients/chatMessage/ChatMessage.jsx";
+import Notification from "../components/clients/notification/Notification.jsx";
+import NotificationPage from "../pages/Clients/NotificationPage.jsx";
+import MainPage from "../pages/Clients/MainPage.jsx";
+import UserProfile from "../components/clients/Profile/UserProfile.jsx";
 // import Chat from "../components/clients/Chat/Chat.jsx";
 
 function ClientRoute() {
   const isAuth = useSelector((state) => state.ClientAuth.Token);
- 
+  const isAuth1 = useSelector((state) => state.ClientAuth.Token);
+
 
 
 
   return (
     <div>
       <Routes>
-        <Route
-          path="/"
-          element={isAuth ? <Home /> : <Navigate to="/login" />}
-        />
+       
         <Route
           path="/home"
-          element={isAuth ? <HomePage /> : <Navigate to="/login" />}
+          element={isAuth ? <MainPage /> : <Navigate to="/login" />}
         />
         <Route
           path="/community"
-          element={isAuth ? <CommunityPage /> : <Navigate to="/login" />}
+          element={isAuth ? <MainPage /> : <Navigate to="/login" />}
         />
         <Route
           path="/register"
@@ -73,8 +76,25 @@ function ClientRoute() {
 
         {/* <Route
           path="/chat"
-          element={isAuth ? <Chat /> : <Navigate to="/login" />}
+          element={isAuth ? <Chat />: <Navigate to="/login" />}
         /> */}
+
+         <Route
+          path="/message"
+          element={isAuth ? <ChatMessages />: <Navigate to="/login" />}
+        />
+        
+        <Route
+          path="/notification"
+          element={isAuth ? <NotificationPage />: <Navigate to="/login" />}
+        />
+
+         <Route
+          path="/profilePage"
+          element={isAuth || isAuth1 ? <UserProfile />: <Navigate to="/login" />}
+        />
+
+        
         
       </Routes>
       

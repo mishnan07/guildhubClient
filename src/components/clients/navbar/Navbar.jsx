@@ -18,18 +18,21 @@ let home
 let community
 let profile1
 let hire
+let message
  if( Type === 'users'){
     token = useSelector((state)=>state.proAuth.Token)
     home ='/home'
     community='/community'
     profile1='/profile'
     hire = '/hire'
+    message='/message'
  }else if('professional')  {
     token = useSelector((state)=>state.proAuth.Token)
     home = '/professional/home'
     community='/professional/community'
     profile1='/professional/profile'
     hire='/professional/hire'
+    message='/professional/message'
 
  }
   useEffect(() => {
@@ -69,7 +72,7 @@ console.log(user,'nmmmmmmm');
            
 <nav className="bg-blue-500  dark:bg-purple-500 fixed w-full z-20 top-0 left-0 border-b border-gray-200 from-blue-500 to-purple-500">
   <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4  from-blue-500 to-purple-500">
-  <a href="https://flowbite.com/" className="flex items-center">
+  <a href="" className="flex items-center">
       {/* <img src="https://flowbite.com/docs/images/logo.svg" className="h-8 mr-3" alt="Flowbite Logo"/> */}
       <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">GUILD HUB</span>
   </a>
@@ -101,7 +104,7 @@ console.log(user,'nmmmmmmm');
         <a href="#" className="block py-2 pl-3 pr-4 text-gray-900 rounded  dark:text-slate-950 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-white-700 md:p-0 md:dark:hover:text-white-500  dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"  onClick={openModal}>Follow</a>
       </li>
       <li>
-        <a href="#" className="block py-2 pl-3 pr-4 text-gray-900 rounded  dark:text-slate-950 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-white-700 md:p-0 md:dark:hover:text-white-500  dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Message</a>
+        <a href={message} className="block py-2 pl-3 pr-4 text-gray-900 rounded  dark:text-slate-950 hover:bg-gray-100 md:hover:bg-transparent md:hover:text-white-700 md:p-0 md:dark:hover:text-white-500  dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700" >Message</a>
       </li>
     </ul>
   </div>
@@ -109,7 +112,7 @@ console.log(user,'nmmmmmmm');
 </nav>
 <CustomModal isOpen={modalIsOpen} onClose={closeModal}>
   {console.log('test')}
-       <Follow users={users}pros={pros} Type={Type} user={user}/>
+       <Follow />
 </CustomModal>   
    
     </div>

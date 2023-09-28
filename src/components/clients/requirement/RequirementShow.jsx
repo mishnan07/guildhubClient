@@ -3,6 +3,9 @@ import userInstance from "../../../Axios/userAxios";
 import { userAPI } from "../../../Constants/Api";
 import { FaDollarSign, FaMapMarkerAlt, FaUser } from "react-icons/fa"; // Import icons
 import proAxios from "../../../Axios/proAxios";
+import {io} from 'socket.io-client'
+
+
 const RequirementShow = ({
   Type,
   user,
@@ -14,6 +17,9 @@ const RequirementShow = ({
 }) => {
   const [requirement, setRequirement] = useState([]);
   const [users, setUsers] = useState([]);
+
+  const socket = io.connect('http://localhost:3000')
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,6 +63,9 @@ const RequirementShow = ({
         userId,
         requirementId,
       });
+      if(response.data.message  === 'Successful'){
+        socket.emit('notification',response.data.recieverId,requirementId,userId,Type,'RequirementIntersted')
+      }
       console.log(response.data.message, "===========");
     } catch (error) {}
   };

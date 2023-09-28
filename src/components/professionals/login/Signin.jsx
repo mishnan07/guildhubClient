@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { proLogin, proEmail } from "../../../Redux/proAuth.js";
+import { proLogin, ProId } from "../../../Redux/proAuth.js";
 import proAxios from "../../../Axios/proAxios.js";
 
 import { ToastContainer, toast } from "react-toastify";
@@ -39,12 +39,14 @@ const Signin = () => {
         console.log(result.token);
         if (result.status === true) {
           const token = result.token;
+          const id = result.id
+          console.log(id,'==============++0');
           console.log(
             token,
             "================================================="
           );
           dispatch(proLogin({ token: token }));
-          dispatch(proEmail({ email: email }));
+          dispatch(ProId({ id: id }));
           navigate("/professional/home");
         } else {
           showErrorMessage(result.message);

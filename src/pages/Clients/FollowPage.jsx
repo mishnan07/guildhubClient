@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import LeftSidebar from '../../components/clients/LeftSidebar/LeftSidebar';
-import MiddleContent from '../../components/clients/MiddleContent/MiddleContent';
 import RightSidebar from '../../components/clients/RightSidebar/RightSidebar';
 import Navbar from '../../components/clients/navbar/Navbar';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 import { ClientLogout } from "../../Redux/ClientAuth";
 import userAxios from "../../Axios/userAxios";
 import Follow from "../../components/clients/Follow/Follow";
-import RightSideBar from "../../components/professionals/rightSideBar/RightSideBar";
 
 
 
