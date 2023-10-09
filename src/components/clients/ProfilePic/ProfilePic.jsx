@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import userInstance from "../../../Axios/userAxios";
+import CreateUserInstance from '../../../Axios/userAxios';
+import CreateProInstance from "../../../Axios/proAxios";
 import { userAPI } from "../../../Constants/Api";
 
 const ProfilePic = ({ UserId, value }) => {
   const location = useLocation();
   const navigate = useNavigate()
   const userType = location.pathname.includes('professional') ? 'professional' : 'users';
-
+  const userInstance = CreateUserInstance()
+  const proInstance = CreateProInstance()
+ 
+  const Axios = userType === 'users' ?userInstance :proInstance
   const token = useSelector((state) =>
     userType === 'users' ? state.ClientAuth.Token : state.proAuth.Token
   );
@@ -19,9 +23,7 @@ const ProfilePic = ({ UserId, value }) => {
 
   const fetchPosts = async () => {
     try {
-      const response = await userInstance.get('/getPost', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await Axios.get('/usersAndpros');
       setPros(response.data.pros);
       setUsers(response.data.users);
     } catch (error) {
@@ -76,13 +78,13 @@ const ProfilePic = ({ UserId, value }) => {
             <img
               src={`${userAPI}/images/` + details(UserId, value)}
               alt="user"
-              className="profile-photo-md float-left w-14 h-14 rounded-full border-2 border-purple-600-600 p-0.5"
+              className="profile-photo-md float-left w-14 h-14 rounded-full border-2 border-purple-600 p-0.5"
             />
           ) : (
             <img
               src={profile}
               alt="user"
-              className="profile-photo-md float-left w-14 h-14 rounded-full border-2 border-purple-600-600 p-0.5"
+              className="profile-photo-md float-left w-14 h-14 rounded-full border-2 border-purple-600 p-0.5"
             />
           )}
         </div>

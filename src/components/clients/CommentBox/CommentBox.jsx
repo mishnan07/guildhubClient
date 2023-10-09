@@ -15,7 +15,6 @@ const CommentBox = ({comments,item,details}) => {
                                   <div className="flex-shrink-0">
                                     {details(item1.userId, "pic") ? (
                                       <img
-                                        // onClick={()=>goProfile(item.proId)}
                                         src={
                                           `${userAPI}/images/` +
                                           details(item1.userId, "pic")
@@ -25,7 +24,6 @@ const CommentBox = ({comments,item,details}) => {
                                       />
                                     ) : (
                                       <img
-                                        // onClick={()=>goProfile(item.proId)}
                                         src={profile}
                                         alt="user"
                                         className="profile-photo-md float-left w-14 h-14 rounded-full border-2 border-purple-600-600 p-0.5"

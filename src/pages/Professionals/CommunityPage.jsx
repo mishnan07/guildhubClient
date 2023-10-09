@@ -5,7 +5,7 @@ import RightSidebar from '../../components/clients/RightSidebar/RightSidebar';
 import Navbar from '../../components/clients/navbar/Navbar';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import userAxios from "../../Axios/userAxios";
+import CreateUserInstance from "../../Axios/userAxios";
 import Community from "../../components/clients/MiddleContent/Community";
 
 
@@ -17,6 +17,7 @@ const CommunityPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const token = useSelector((state)=>state.proAuth.Token)
+  const userAxios = CreateUserInstance()
 
 
   useEffect(() => {
@@ -39,7 +40,6 @@ const CommunityPage = () => {
     }
      }, [token]);
    
-     console.log(user,'===============');
  
   return (
     <>

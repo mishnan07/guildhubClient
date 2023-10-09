@@ -5,7 +5,7 @@ import Navbar from '../../components/clients/navbar/Navbar';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { ClientLogout } from "../../Redux/ClientAuth";
-import userAxios from "../../Axios/userAxios";
+import CreateUserInstance from "../../Axios/userAxios";
 import Follow from "../../components/clients/Follow/Follow";
 
 
@@ -17,6 +17,7 @@ const FollowPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
  const token = useSelector((state)=>state.ClientAuth.Token)
+ const userAxios = CreateUserInstance()
 
    
  const hadleLogout = () => {

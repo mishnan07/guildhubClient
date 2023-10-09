@@ -6,10 +6,13 @@ import Navbar from '../../components/clients/navbar/Navbar';
 import { ClientLogout } from "../../Redux/ClientAuth";
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import userAxios from "../../Axios/userAxios";
+import CreateUserInstance from "../../Axios/userAxios";
+import CreateProInstance from "../../Axios/proAxios";
 import Notification from "../../components/clients/notification/Notification";
 import HirePage from "../Professionals/HirePage";
 import Community from "../../components/clients/MiddleContent/Community";
+import RequirementShow from "../../components/clients/requirement/RequirementShow";
+import RequirementPage from "./RequirementPage";
 
 const MainPage = () => {
     
@@ -22,8 +25,11 @@ const MainPage = () => {
   let hire = location.pathname.includes('hire')?true:false
   let message = location.pathname.includes('message')?true:false
   let community = location.pathname.includes('community')?true:false
+  let requirement = location.pathname.includes('requirement')?true:false
 
-
+  const userAxios = CreateUserInstance()
+  const proAxios = CreateProInstance()
+  const Axios = Type === 'users'?userAxios:proAxios
   const [user, setUser] = useState(null);
 
   const dispatch = useDispatch();
@@ -47,14 +53,9 @@ const MainPage = () => {
            try {
             let response
             if(Type === 'users'){
-                response = await userAxios.get('/clientDetails', {
-                    headers: { Authorization: `Bearer ${token}` },
-                  });
+                response = await Axios.get('/clientDetails');
             }else if(Type === 'professional'){
-                response = await userAxios.get('/userDetails', {
-                    headers: { Authorization: `Bearer ${token}` },
-                });
-
+                response = await Axios.get('/userDetails');
             }
             
              const userDetail= response.data.user;
@@ -80,7 +81,7 @@ const MainPage = () => {
     <>
     <Navbar Type={Type} user={user}/>
 
-    <div className="container mt-20 ">
+    <div className=" mt-20 ">
 
       <div className="flex flex-col md:flex-row justify-around px-6">
       <div></div> 
@@ -91,10 +92,12 @@ const MainPage = () => {
         {home &&  <MiddleContent Type={Type} user={user} token={token}/>}
         {hire && <HirePage /> }
         {community && <Community  Type={Type} user={user}/>}
+        {requirement && <RequirementPage Type={Type} user={user} />}
+
        
 
         </div>
-        <RightSidebar />
+        <RightSidebar user={user}/>
         <div></div> 
        
       </div>

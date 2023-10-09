@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Profile from '../../components/professionals/Profile.jsx/Profile'
 import Navbar from '../../components/clients/navbar/Navbar';
-import userAxios from "../../Axios/userAxios";
+import CreateUserInstance from '../../Axios/userAxios';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Follow from '../../components/clients/Follow/Follow';
@@ -12,7 +12,7 @@ const ProfilePages = () => {
     const navigate = useNavigate();useNavigate
    const token = useSelector((state)=>state.proAuth.Token)
    const isAuth1 = useSelector((state) => state.ClientAuth.Token);
-
+   const userAxios = CreateUserInstance()
 
    const [user, setUser] = useState(null);
    const Type = 'professional'

@@ -1,16 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Dropzone from 'react-dropzone';
-import proAxios from '../../../Axios/proAxios';
+import CreateProInstance from '../../../Axios/proAxios';
 import { useSelector } from 'react-redux';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 
-const ImageUpload = ({user,onClose}) => {
+const ImageUpload = ({user,onClose,value,editData,setState,setIsOpen1}) => {
   const [files, setFiles] = useState([]);
   const [message, setMessage] = useState('');
+  const [postId,setPostId] = useState('')
  
-  const token = useSelector((state)=> state.proAuth.Token)
+  useEffect(()=>{
+    if(editData){
+      setMessage(editData?.message)
+      setPostId(editData?._id)
+    }
+  },[])
+
+  const proAxios = CreateProInstance()
+
 
   const handleDrop = (acceptedFiles) => {
     setFiles([...files, ...acceptedFiles]);
@@ -20,26 +29,30 @@ const ImageUpload = ({user,onClose}) => {
     event.preventDefault(); 
 
     try {
+      const formData = new FormData();
 
-      if (files.length === 0) {
-        // Validate that at least one image is selected
-        console.log('llllllllllpppooopppp');
+
+    if( value !== 'edit'){
+      if (files.length === 0 ) {
         return showErrorMessage("Please select at least one image.");
       }
       
-      const formData = new FormData();
       files.forEach((file) => {
         formData.append('image', file);
       });
+    }
+
       formData.append('message', message);
-  
+
       formData.append('userId', user._id);
-  
-      const response = await proAxios.post('/upload', formData, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      console.log('Images uploaded successfully:', response.data);
-      showToastMessage('Images uploaded successfully:')
+      if(value === 'edit'){
+        const response = await proAxios.patch('/editPost', {message,postId});
+        setState(true)
+        setIsOpen1(false)
+      }else{
+        const response = await proAxios.post('/upload', formData);
+      }
+      showToastMessage(' uploaded successfully:')
       setTimeout(() => {
         onClose()
       }, 2000);
@@ -64,6 +77,7 @@ const ImageUpload = ({user,onClose}) => {
   return (
     <div className="w-full max-w-md mx-auto p-4 border rounded-lg shadow-md ">
       <form method='POST' onSubmit={handleUpload}>
+        {value !== 'edit'&&
         <Dropzone onDrop={handleDrop} accept="image/*" multiple>
           {({ getRootProps, getInputProps, isDragActive }) => (
             <div
@@ -106,7 +120,7 @@ const ImageUpload = ({user,onClose}) => {
             </div>
           )}
         </Dropzone>
-
+}
         <label
           htmlFor="message"
           className="block mt-4 mb-2 text-sm font-medium text-gray-900 dark:text-white"

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import CreateCategory from '../../../components/admin/category/CreateCategory';
 import { adminLogout } from '../../../Redux/AdminAuth';
 import './admin.css'
 
@@ -34,7 +33,7 @@ const Sidebar = () => {
             </button>
         </div>
         <nav className="text-white text-base font-semibold pt-3">
-            <a href="/admin/home" className="flex items-center active-nav-link text-white py-4 pl-6 nav-item">
+            <a href="/admin/home" className="flex items-center  text-white py-4 pl-6 nav-item">
                 <i className="fas fa-tachometer-alt mr-3"></i>
                 Dashboard
             </a>
@@ -47,7 +46,7 @@ const Sidebar = () => {
                 <i className="fas fa-align-left mr-3"></i>
                 Category
             </a>
-            <CreateCategory />
+         
 
             
             <a href="/admin/reportedPost" className="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">

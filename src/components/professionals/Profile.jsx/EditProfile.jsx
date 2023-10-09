@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import proAxios from "../../../Axios/proAxios";
+import CreateProInstance from "../../../Axios/proAxios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProfilePictureUpload from "./ProfilePictureUpload";
-import userInstance from "../../../Axios/userAxios";
+import CreateUserInstance from '../../../Axios/userAxios';
 
 const EditProfile = ({ user, Type,changeState }) => {
   const [name, setName] = useState("");
@@ -20,11 +20,14 @@ const EditProfile = ({ user, Type,changeState }) => {
   const [errMsg, setErrMsg] = useState("");
 
   const navigate = useNavigate();
+  const userInstance = CreateUserInstance()
+  const proAxios = CreateProInstance()
+  const Axios = Type === 'users'?userInstance:proAxios
+
 
   useEffect(() => {
-    proAxios.get("/getCategory").then((res) => {
+    Axios.get("/getCategory").then((res) => {
       const getCategory = res.data.category;
-      console.log(getCategory, "lll++==");
       setAllCAtegory(getCategory);
       setName(user.name);
       setEmail(user.email);
@@ -61,7 +64,7 @@ const EditProfile = ({ user, Type,changeState }) => {
     } else if (location.trim().length === 0) {
       return showErrorMessage("Please enter location");
     } else
-      userInstance
+    Axios
         .post("/editProfile", {
           name,
           email,

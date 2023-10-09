@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Hire from '../../components/clients/hire/Hire'
 import Navbar from '../../components/clients/navbar/Navbar';
-import userAxios from "../../Axios/userAxios";
+import CreateProInstance from "../../Axios/proAxios";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import HireOptions from "../../components/clients/hire/HireOptions";
@@ -17,15 +17,15 @@ const RequirementPage = () => {
   
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const proAxios = CreateProInstance()
+
   
   
     useEffect(() => {
       if(token){
        const fetchUserDetails = async () => {
            try {
-             const response = await userAxios.get('/userDetails', {
-               headers: { Authorization: `Bearer ${token}` },
-             });
+             const response = await proAxios.get('/userDetails');
              const userDetail= response.data.user;
              setUser(userDetail);
            } catch (error) {

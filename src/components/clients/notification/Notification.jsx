@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import {io} from 'socket.io-client'
-import userInstance from '../../../Axios/userAxios';
+import CreateUserInstance from '../../../Axios/userAxios';
+import CreateProInstance from '../../../Axios/proAxios';
 import ProfilePic from '../ProfilePic/ProfilePic';
 import NoDataFound from '../../NoDataFound/NoDataFound';
 import Modal from '../../professionals/Modal/Modal';
 import { FaTimes } from 'react-icons/fa';
 import ProCards from '../../professionals/proCards/ProCards';
+import RequirementShow from '../requirement/RequirementShow';
 
 
 const Notification = () => {
@@ -17,25 +19,26 @@ const Notification = () => {
   
   const [notification,setNotification] = useState([]) 
   const [isOpen1, setIsOpen1] = useState(false);
+  const [isOpen2,setIsOpen2] = useState(false)
+  const userInstance = CreateUserInstance()
+  const proInstance = CreateProInstance()
   
   const location = useLocation();
   const senderType = location.pathname.includes('professional') ? 'professional' : 'users';
-  console.log(location, senderType);
 
   const token = useSelector((state) =>
     senderType === 'users' ? state.ClientAuth.Token : state.proAuth.Token
   );
   const id = useSelector((state) => (senderType === 'users' ? state.ClientAuth.Id : state.proAuth.Id));
-  console.log(token, 'lldddda', id);
 
-   
+  const Axios = senderType === 'users'?userInstance:proInstance   
  
 
 
   useEffect(()=>{
     const FetchNotifications = async()=>{
         try {
-            const response = await userInstance.get(`/FetchNotification/${id}`,)
+            const response = await Axios.get(`/FetchNotification/${id}`,)
             const match = response.data.match
             const newNotifications = [].concat(...match.map((conversation) => conversation.notifications));
 
@@ -101,7 +104,7 @@ console.log(notification,'notiiiiiiiiii');
     <div>
 {notification.length === 0 && <NoDataFound />
 ||notification.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)).map((item, index) => (
-  <div className="w-full h-auto relative py-2" key={index}>
+  <div className="w-full h-auto relative py-2 z-0" key={index}>
     <div className="bg-white px-5 py-3.5 rounded-lg shadow hover:shadow-xl max-w-sm mx-auto transform hover:-translate-y-[0.125rem] transition duration-100 ease-linear">
       <div className="w-full flex items-center justify-between">
         <span className="font-medium text-sm text-slate-400">New Notification</span>
@@ -131,13 +134,16 @@ console.log(notification,'notiiiiiiiiii');
              }
 
          {item.text==='Hiring'&& 
+         <>
             <p 
-            // onClick={()=> setIsOpen1(true) }
+            onClick={()=> setIsOpen2(true) }
             className="text-xs leading-4 pt-2 italic opacity-70 ">
                 you are hired for requirement
             </p>
             
+             </>
              }
+
 
           <p className="text-xs leading-4 pt-2 italic opacity-70">
             {item.text==='PostLike'&&'❤ liked your post'}
@@ -158,6 +164,8 @@ console.log(notification,'notiiiiiiiiii');
 
   </div>
     </Modal>
+
+   
   </div>
 
 

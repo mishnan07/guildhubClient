@@ -1,55 +1,46 @@
 import React, { useEffect, useState } from "react";
-import userAxios from "../../../Axios/userAxios";
-import { userAPI } from "../../../Constants/Api";
 import Follow from "../Follow/Follow";
 import CustomModal from "../../modal/CustomModal";
 import { useSelector } from "react-redux";
-import Community from "../MiddleContent/Community";
 import Buttun from "./Buttun";
+import { FaBell } from "react-icons/fa";
+import { io } from 'socket.io-client';
+
 
 const Navbar = ({Type,user}) => {
 
-  const [pros, setPros] = useState([]);
-  const [users,setUsers] = useState([]);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  
+const [modalIsOpen, setModalIsOpen] = useState(false);
+
+const userId = useSelector((state)=>  Type ==='users' ?state.ClientAuth.Id : state.proAuth.Id)
+
+
+
 let token
 let home
 let community
 let profile1
 let hire
 let message
+let goNotificaion
  if( Type === 'users'){
-    token = useSelector((state)=>state.proAuth.Token)
+    // token = useSelector((state)=>state.proAuth.Token)
     home ='/home'
     community='/community'
     profile1='/profile'
     hire = '/hire'
     message='/message'
+    goNotificaion='/notification'
  }else if('professional')  {
-    token = useSelector((state)=>state.proAuth.Token)
+    // token = useSelector((state)=>state.proAuth.Token)
     home = '/professional/home'
     community='/professional/community'
     profile1='/professional/profile'
     hire='/professional/hire'
     message='/professional/message'
+    goNotificaion='/professional/notification'
 
  }
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response =await userAxios.get("/getPost",
-        {headers: { Authorization: `Bearer ${token}` }});
-       
-        setPros(response.data.pros);
-        setUsers(response.data.users)
-      } catch (error) {
-        console.log("Error fetching posts:", error);
-      }
-    };
-
-    fetchPosts();
-  }, []);
+ 
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -59,10 +50,7 @@ let message
     setModalIsOpen(false);
   };
 
-  
-  // const notification = "/images/notification.png"
-  const profile = '/images/user_149071.png'
-console.log(user,'nmmmmmmm');
+    const profile = '/images/user_149071.png'
 
 
   return (
@@ -70,8 +58,9 @@ console.log(user,'nmmmmmmm');
     <div>
 
            
-<nav className="bg-blue-500  dark:bg-purple-500 fixed w-full z-20 top-0 left-0 border-b border-gray-200 from-blue-500 to-purple-500">
-  <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4  from-blue-500 to-purple-500">
+<nav 
+className="  dark:bg-purple-500 fixed w-full z-20 top-0 left-0 border-b border-gray-200  bg-gradient-to-r from-blue-500 to-purple-500">
+  <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4  from-purple-500 to-purple-500">
   <a href="" className="flex items-center">
       {/* <img src="https://flowbite.com/docs/images/logo.svg" className="h-8 mr-3" alt="Flowbite Logo"/> */}
       <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">GUILD HUB</span>
@@ -85,6 +74,8 @@ console.log(user,'nmmmmmmm');
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
         </svg>
     </button>
+   <a href={goNotificaion}> <FaBell size={24} color="blue" className="mr-3" /> </a>
+
     <Buttun Type={Type} profile1={profile1}/>
     {/* <img src={notification} className="h-8 mr-3" alt="Flowbite Logo"/> */}
     {/* <a href={profile1}><img onClick={profile1} src={profile} className="h-8 mr-3" alt="Flowbite Logo"/></a> */}

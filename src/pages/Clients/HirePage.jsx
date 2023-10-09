@@ -1,20 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Hire from '../../components/clients/hire/Hire';
 import Navbar from '../../components/clients/navbar/Navbar';
-import userAxios from "../../Axios/userAxios";
+import CreateUserInstance from "../../Axios/userAxios";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import HireOptions from "../../components/clients/hire/HireOptions";
-import RequirementShow from "../../components/clients/requirement/RequirementShow";
-import ProCards from "../../components/professionals/proCards/ProCards";
 import ProsCard from "../../components/professionals/proCards/ProsCard";
-import Follow from "../../components/clients/Follow/Follow";
-import Inputs from "../../components/clients/otp/Inputs";
-import Confirm from "../../components/modal/Confirm";
-import Nodata from "../../components/clients/Nodata/Nodata";
-import ChatRoom from "../../components/clients/chatMessage/ChatMessage";
-import ChatMessages from "../../components/clients/chatMessage/ChatRoom";
-import RightSidebar from "../../components/clients/RightSidebar/RightSidebar";
 import LeftSidebar from "../../components/clients/LeftSidebar/LeftSidebar";
 
 const HirePage = () => {
@@ -26,6 +17,8 @@ const HirePage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const token = useSelector((state) => state.ClientAuth.Token);
+    const userAxios = CreateUserInstance()
+
 
     useEffect(() => {
         if (token) {
@@ -49,7 +42,7 @@ const HirePage = () => {
       <>
       <Navbar Type={Type} user={user} />
       <div className="container mt-20 ">
-      <div className="flex flex-col md:flex-row mt-20 justify-evenly sm:mr-16 sm:px-20">
+      <div className="flex flex-col md:flex-row  justify-evenly sm:mr-16 sm:px-20">
         <div></div>
         <LeftSidebar Type={Type} user={user} />
         

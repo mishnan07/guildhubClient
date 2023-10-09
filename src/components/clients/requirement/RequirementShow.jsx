@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import userInstance from "../../../Axios/userAxios";
+import CreateUserInstance from '../../../Axios/userAxios';
+import CreateProInstance from "../../../Axios/proAxios";
 import { userAPI } from "../../../Constants/Api";
-import { FaDollarSign, FaMapMarkerAlt, FaUser } from "react-icons/fa"; // Import icons
-import proAxios from "../../../Axios/proAxios";
+import { FaDollarSign, FaMapMarkerAlt, FaThumbsUp, FaUser } from "react-icons/fa"; // Import icons
 import {io} from 'socket.io-client'
 
 
@@ -14,9 +14,14 @@ const RequirementShow = ({
   setRequirementId,
   setHiredPros,
   profileId,
+  specific,
+  setRequirementLength
 }) => {
   const [requirement, setRequirement] = useState([]);
   const [users, setUsers] = useState([]);
+  const userInstance = CreateUserInstance()
+  const proInstance = CreateProInstance()
+  const Axios = Type==='users'?userInstance:proInstance
 
   const socket = io.connect('http://localhost:3000')
 
@@ -24,17 +29,19 @@ const RequirementShow = ({
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await userInstance.get("/requirement");
+        const response = await Axios.get("/requirement");
         console.log(response.data.users);
         setRequirement(response.data.response);
         setUsers(response.data.users);
 
-        if (profileId) {
-          setRequirement(
-            response.data.response.filter((item) =>
-              item.hired.includes(profileId)
-            )
+        if (specific) {
+         
+          const req=  response.data.response.filter((item) =>
+            item.userId === specific
           );
+
+          setRequirement(req)
+          setRequirementLength(req.length)
         }
       } catch (error) {
         console.error(error);
@@ -43,7 +50,8 @@ const RequirementShow = ({
 
     fetchData();
   }, []);
-  console.log(Type, "=========================0");
+
+
 
   const userName = (userID) => {
     console.log(userID);
@@ -59,14 +67,13 @@ const RequirementShow = ({
   const Interested = async (userId, requirementId) => {
     try {
       console.log(userId);
-      const response = await proAxios.post("/intersted", {
+      const response = await Axios.post("/intersted", {
         userId,
         requirementId,
       });
       if(response.data.message  === 'Successful'){
         socket.emit('notification',response.data.recieverId,requirementId,userId,Type,'RequirementIntersted')
       }
-      console.log(response.data.message, "===========");
     } catch (error) {}
   };
 
@@ -82,8 +89,8 @@ const RequirementShow = ({
   return (
     <div>
       {/* <section className="bg-white overflow-scroll h-screen"> */}
-      <div className="container mx-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-4 p-4">
+      <div className="container mx-auto z-50">
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-2 gap-4 p-4">
           {requirement.map((item) => (
             <div
               className="bg-gray-100 border border-gray-300 p-4 rounded-md shadow-md hover:shadow-lg"
@@ -103,21 +110,19 @@ const RequirementShow = ({
                     </p>
                   </div>
 
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center space-x-2 ">
                     <FaMapMarkerAlt className="text-gray-700 text-md" />
                     <p className="text-gray-700">Location: {item.location}</p>
                   </div>
                 </div>
 
-                {item.image ? (
+                {item.image &&
                   <img
                     src={`${userAPI}/images/` + item.image}
                     alt={item._id}
-                    className="max-h-20 rounded-lg"
+                    className="max-h-20  rounded-lg mr-5"
                   />
-                ) : (
-                  ""
-                )}
+               }
               </div>
 
               <div className="flex items-center space-x-2 mt-4">
@@ -138,7 +143,7 @@ const RequirementShow = ({
                         item.hired
                       )
                     }
-                    className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg w-full"
+                    className="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded-lg w-full"
                   >
                     ❤️{item.interesteds.length} Professionals interested
                   </button>
@@ -150,7 +155,8 @@ const RequirementShow = ({
                     onClick={() => Interested(user._id, item._id)}
                     className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg w-full"
                   >
-                    ❤️ I am interested
+                    ❤️ 
+                I am interested
                   </button>
                 ) : (
                   ""

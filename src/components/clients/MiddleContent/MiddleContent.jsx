@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import userAxios from "../../../Axios/userAxios";
+import CreateUserInstance from '../../../Axios/userAxios';
+import CreateProInstance from "../../../Axios/proAxios";
 import { userAPI } from "../../../Constants/Api";
 import ThreeDotButton from "./ThreeDotButton";
 import Options from "./Options";
@@ -19,7 +20,7 @@ import "react-toastify/dist/ReactToastify.css";
 import ProfilePic from "../ProfilePic/ProfilePic";
 import PostNav from "./PostNav";
 
-const MiddleContent = ({ Type, user, token, userID, saveduserID, saveds }) => {
+const MiddleContent = ({ Type, user, token, userID, saveduserID, saveds,specificPost }) => {
   const [post, setPost] = useState([]);
   const [pros, setPros] = useState([]);
   const [users, setUsers] = useState([]);
@@ -31,7 +32,10 @@ const MiddleContent = ({ Type, user, token, userID, saveduserID, saveds }) => {
   const [opennewMessageReport, setOpenReport] = useState(false);
   const [searchInput, SetSearchInput] = useState("");
   const [newMessages, setNewMessage] = useState("");
+  const userAxios = CreateUserInstance()
+  const proAxios = CreateProInstance()
 
+ const Axios = Type==='users'?userAxios:proAxios
   const navigate = useNavigate();
 
   const deleatTheComponent = (value) => {
@@ -40,21 +44,26 @@ const MiddleContent = ({ Type, user, token, userID, saveduserID, saveds }) => {
 
   const userId = user ? user._id : "";
   const userType = Type ? Type : "";
-//----=====
+//----=====///////////
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await userAxios.get("/getPost", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await Axios.get("/getPost");
         const updatedPosts = response.data.post.map((post) => ({
           ...post,
           liked: false,
         }));
         setPost(updatedPosts);
 
+        if(specificPost){
+          const specificPosts = updatedPosts.filter(
+            (item)=>
+            item._id === specificPost
+            )
+          setPost(specificPosts)
+        }
+
         if (userID) {
-          console.log(userID, "00000000000000");
           const posteds = updatedPosts.filter(
             (item) => !item.isBanned && item.isActive && item.proId === user._id
           );
@@ -87,7 +96,6 @@ const MiddleContent = ({ Type, user, token, userID, saveduserID, saveds }) => {
   }, [state, userID, user]);
 
   const socket = io.connect("http://localhost:3000");
-  socket.emit("connected", "middleContent");
 
   const handleLike = async (postId, userId = userId) => {
     if (state) {
@@ -101,7 +109,7 @@ const MiddleContent = ({ Type, user, token, userID, saveduserID, saveds }) => {
       );
       setPost(updatedPosts);
       if (updatedPosts.find((item) => item._id === postId).liked) {
-        const response = await userAxios.post(
+        const response = await Axios.post(
           "/like",
           { postId, userId },
           {
@@ -109,7 +117,6 @@ const MiddleContent = ({ Type, user, token, userID, saveduserID, saveds }) => {
           }
         );
         if (response.status === 200 && response.data.action === "like") {
-          console.log(response.data, "Like successful");
           socket.emit(
             "notification",
             response.data.proId,
@@ -130,19 +137,11 @@ const MiddleContent = ({ Type, user, token, userID, saveduserID, saveds }) => {
 
   const profile = "/images/user_149071.png";
 
-  const check = () => {
-    console.log(item._id, "111771111");
-  };
-
+ 
   const hasLiked = (likes, userId) =>
     likes.some((like) => like.userId === userId && like.liked);
-  //ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
 
-  const LikeCount = (likes) => {
-    likes.some((like) => {
-      return like.liked;
-    });
-  };
+ 
 
   const proName = (proId) => {
     const foundPro = pros.find((pro) => pro._id === proId);
@@ -207,7 +206,7 @@ const MiddleContent = ({ Type, user, token, userID, saveduserID, saveds }) => {
     }
 
     try {
-      const response = await userAxios.post(
+      const response = await Axios.post(
         "/comment",
         {
           text,
@@ -215,9 +214,6 @@ const MiddleContent = ({ Type, user, token, userID, saveduserID, saveds }) => {
           userId,
           userType,
         },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
       );
 
       if (response.status === 200) {
@@ -230,10 +226,7 @@ const MiddleContent = ({ Type, user, token, userID, saveduserID, saveds }) => {
     }
   };
 
-  const goProfile = (userID) => {
-    navigate(`/professional/profile?id=${userID}&usertype='professional'`);
-  };
-
+ 
   const datas = post.filter((item) => {
     const locationMatch = location(item.proId)
       .toLowerCase()
@@ -255,14 +248,10 @@ const MiddleContent = ({ Type, user, token, userID, saveduserID, saveds }) => {
   });
 
   const save = async (postId) => {
-    console.log("llllllllllllllllllllll");
     try {
-      const response = await userAxios.post(
+      const response = await Axios.post(
         "/savePost",
-        { postId, userId: user._id, Type },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      console.log(response.data.message, "ppppppppppp");
+        { postId, userId: user._id, Type }, );
       if (response.data.isTrue === true) {
         toast.success(response.data.message);
       } else {
@@ -275,14 +264,13 @@ const MiddleContent = ({ Type, user, token, userID, saveduserID, saveds }) => {
     <div className="">
       {/* Create Post Section */}
       <ToastContainer />
-      <div className=" create-post bg-white p-4 rounded-lg shadow-md">
 
-      {!userID && !saveduserID ? (
+      {!specificPost &&
+            <div className=" create-post bg-white p-4 rounded-lg shadow-md">
         <SearchBar SetSearchInput={SetSearchInput} searchInput={searchInput} />
-      ) : (
-        ""
-      )}
-      </div>
+        </div>
+
+    }
       {/* Post Content datas */}
       {(datas.length === 0 && <NoDataFound />) ||
         datas
@@ -298,7 +286,7 @@ const MiddleContent = ({ Type, user, token, userID, saveduserID, saveds }) => {
                 >
                   {/* User Info */}
                  
-                  <PostNav item={item} user ={user} deleatTheComponent={deleatTheComponent} Type={Type} />
+                  <PostNav item={item} user ={user} deleatTheComponent={deleatTheComponent} Type={Type} setState={setState}/>
 
                   {/* Image or Video */}
                   <div className="flex justify-center items-center">

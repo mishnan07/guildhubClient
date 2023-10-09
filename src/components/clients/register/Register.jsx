@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import userAxios from "../../../Axios/userAxios.js";
+import CreateUserInstance from '../../../Axios/userAxios';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -11,6 +11,7 @@ const Register = () => {
     const [location,setLocation] = useState('')
 
     const [errMsg,setErrMsg] = useState('')
+    const userAxios = CreateUserInstance()
 
     const navigate = useNavigate()
 

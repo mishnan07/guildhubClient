@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import userAxios from "../../../Axios/userAxios";
-import adminAxios from "../../../Axios/adminAxios";
+import CreateAdminInstance from '../../../Axios/adminAxios';
 import { userAPI } from "../../../Constants/Api";
 import CustomModal from "../../modal/CustomModal";
 import { useSelector } from "react-redux";
@@ -13,9 +12,11 @@ const ReportedPost = () => {
     const [users, setUsers] = useState([]);
     const [state, setState] = useState(false);
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    const [selectedPost, setSelectedPost] = useState(null); // To keep track of the selected post
+    const [selectedPost, setSelectedPost] = useState(null); 
 
     const token = useSelector((state) => state.AdminAuth.Token);
+    const adminAxios = CreateAdminInstance()
+
 
 
     const openModal = () => {
@@ -30,8 +31,7 @@ const ReportedPost = () => {
     useEffect(() => {
         const fetchPosts = async () => {
           try {
-            const response = await userAxios.get("/getPost",
-            {headers: { Authorization: `Bearer ${token}` }});
+            const response = await adminAxios.get("/getPost");
             const updatedPosts = response.data.post.map((post) => ({
               ...post,
               liked: false,
@@ -51,6 +51,7 @@ const ReportedPost = () => {
       const blockPost =async (postId)=>{
          try {
           const response = adminAxios.post('/blockPost',{postId})
+              setState(true)
          } catch (error) {
           
          }
@@ -58,10 +59,8 @@ const ReportedPost = () => {
 
       const report = post.map((item)=>item.report)
       const reports = report.filter((item)=> item.length > 0)
-      console.log(reports,'llllll');
       
       const postReported = post.filter((item)=> item.report.length >0)
-      console.log(postReported,'pppppppppp');
 
       const handleDetailsClick = (post) => {
         setSelectedPost(post);
@@ -80,7 +79,7 @@ const ReportedPost = () => {
             return user.name;
           }
         }
-        return 'User not found'; // Handle cases where the user is not found
+        return 'User not found';
       };
 
       const proPic = (reportEntry) => {
@@ -95,7 +94,7 @@ const ReportedPost = () => {
             return user.profilePic;
           }
         }
-        return 'User not found'; // Handle cases where the user is not found
+        return 'User not found';
       };
       
   return (
@@ -114,7 +113,7 @@ const ReportedPost = () => {
     <tbody>
     {postReported.map((item)=>(
 
-        <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700" >
+        <tr className="bg-white border-b dark:bg-white text-gray-800 dark:border-gray-700" >
             
           <td className="px-6 py-4">
           {item.image[0] ? (
@@ -164,14 +163,12 @@ const ReportedPost = () => {
                     <td className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
                     {proPic(item.proId) ?
                   <img
-                  // onClick={()=>goProfile(item.proId)}
-                  src={`${userAPI}/images/` + proPic(reportEntry)}
+                  src={`${userAPI}/images/` + proPic(reportEntry)}  
                       alt="user"
                     className="profile-photo-md float-left w-14 h-14 rounded-full border-2 border-purple-600-600 p-0.5"
                   />
                   :
                   <img
-                  // onClick={()=>goProfile(item.proId)}
                     src={profile}
                     alt="user"
                     className="profile-photo-md float-left w-14 h-14 rounded-full border-2 border-purple-600-600 p-0.5"

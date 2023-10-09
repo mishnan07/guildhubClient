@@ -6,7 +6,7 @@ import Navbar from '../../components/clients/navbar/Navbar';
 import { ClientLogout } from "../../Redux/ClientAuth";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import userAxios from "../../Axios/userAxios";
+import CreateUserInstance from "../../Axios/userAxios";
 
 
 const HomePage = () => {
@@ -16,7 +16,7 @@ const HomePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
  const token = useSelector((state)=>state.ClientAuth.Token)
-
+ const userAxios = CreateUserInstance()
    
  const hadleLogout = () => {
   dispatch(ClientLogout());

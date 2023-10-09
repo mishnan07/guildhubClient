@@ -4,15 +4,22 @@ import { useNavigate } from 'react-router-dom';
 import { ClientLogout } from '../../../Redux/ClientAuth';
 import { proLogOut } from '../../../Redux/proAuth';
 import ProfilePic from '../ProfilePic/ProfilePic';
+import { FaCog } from 'react-icons/fa';
+import { io } from 'socket.io-client';
+
+
+
+
 const Buttun = ({Type,profile1}) => {
     const [isOpen, setIsOpen] = useState(false);
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
     const id = useSelector((state) => (Type === 'users' ? state.ClientAuth.Id : state.proAuth.Id));
-
+    const socket = io.connect('http://localhost:3000')
 
         const hadleLogout = () => {
+          socket.emit('online',id,false)
             if(Type === 'users'){
                 dispatch(ClientLogout());
                 navigate("/login");
@@ -25,12 +32,12 @@ const Buttun = ({Type,profile1}) => {
    
   return (
     <div>
-      <button
+      <div
           onClick={() => setIsOpen(!isOpen)}
-          className="relative z-10 w-8 h-8 rounded-full overflow-hidden border-4 border-gray-400 hover:border-gray-300 focus:border-gray-300 focus:outline-none"
+          className="text-lg cursor-pointer"
         >
-          <img src="https://source.unsplash.com/uJ8LNVCBjFQ/400x400" alt="User Profile" />
-        </button>
+      <FaCog size={22}/>
+        </div>
 
          {/* Button to close the dropdown when clicking outside */}
          {isOpen && (

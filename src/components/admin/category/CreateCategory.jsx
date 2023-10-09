@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import adminAxios from "../../../Axios/adminAxios";
+import CreateAdminInstance from "../../../Axios/adminAxios";
 import { useSelector } from "react-redux";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -10,6 +10,7 @@ const CreateCategory = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const token = useSelector((state) => state.AdminAuth.Token);
+  const adminAxios= CreateAdminInstance()
 
   const handleForm = async (e) => {
     e.preventDefault();
@@ -28,12 +29,7 @@ console.log(file===null,'pp');
     formData.append("image", file);
 
     try {
-      const response = await adminAxios.post("/addCategory", formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await adminAxios.post("/addCategory", formData);
 
       console.log(response.data);
       setCategoryName("");
@@ -56,7 +52,7 @@ console.log(file===null,'pp');
 
       <button
         onClick={toggleModal}
-        className="flex items-center text-white opacity-75 hover:opacity-100 py-4 ml-3 pl-6 nav-item"
+        className="flex items-center text-white bg-blue-500 p-6 rounded-lg opacity-75 hover:opacity-100 py-4 ml-3 pl-6 nav-item"
       >
         Add Category
       </button>

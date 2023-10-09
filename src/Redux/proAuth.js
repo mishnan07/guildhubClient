@@ -4,7 +4,7 @@ export const  proAuth = createSlice({
     name:'pro',
     initialState:{
         Token:null,
-        Id:null
+        Id:null,
     },
     reducers:{
         proLogin(state,action){
@@ -15,7 +15,8 @@ export const  proAuth = createSlice({
         },
         ProId(state,action){
             state.Id = action.payload.id
-        }
+        },
+       
     }
 })
 

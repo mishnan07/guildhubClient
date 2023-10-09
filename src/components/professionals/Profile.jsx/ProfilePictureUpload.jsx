@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
 import { FaCloudUploadAlt } from 'react-icons/fa';
-import professionalInstance from '../../../Axios/proAxios';
+import CreateProInstance from '../../../Axios/proAxios';
+import CreateUserInstance from '../../../Axios/userAxios';
 import { userAPI } from "../../../Constants/Api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const ProfilePictureUpload = ({ user, Type, state, setState,changeState,close }) => {
   const [selectedImage, setSelectedImage] = useState(null);
+  const proAxios = CreateProInstance()
+  const userAxios = CreateUserInstance()
 
+  let axios = Type === 'users'?userAxios:proAxios
+  
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -18,7 +23,6 @@ const ProfilePictureUpload = ({ user, Type, state, setState,changeState,close })
   const userId = user ? user._id : '';
   const userType = Type ? Type : '';
   const states = state?state:''
-  console.log(userId,state,userType,'ssssssssssssssssssss');
 
   const handleImageSubmit = async () => {
     try {
@@ -29,7 +33,7 @@ const ProfilePictureUpload = ({ user, Type, state, setState,changeState,close })
         formData.append('userId', userId);
         formData.append('userType', userType);
 
-        const response = await professionalInstance.post('/profilePic', formData);
+        const response = await axios.post('/profilePic', formData);
 
         // Handle the response from the server (e.g., display a success message)
         console.log(response);
@@ -110,7 +114,6 @@ const ProfilePictureUpload = ({ user, Type, state, setState,changeState,close })
       </button>
       <div className="ml-14">
         <ToastContainer />{" "}
-        {/* ToastContainer for showing success message */}
       </div>
     </div>
   );

@@ -1,23 +1,28 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+
+
 export const  ClientAuth = createSlice({
     name:'Client',
     initialState:{
         Token:null,
-        Id:null
+        Id:null,
+        Online:false
     },
     reducers:{
         ClientLogin(state,action){
             state.Token = action.payload.token;
+            state.Online = true
         },
        ClientLogout(state,action){
+        state.Online = false
         state.Token = ''
        },
        ClientId(state,action){
-        console.log(action.payload.id);
         state.Id = action.payload.id
+       },
+      
 
-       }
     },
 })
 

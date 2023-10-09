@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import userInstance from "../../../Axios/userAxios";
+import CreateUserInstance from '../../../Axios/userAxios';
+import CreateProInstance from "../../../Axios/proAxios";
 import ProfilePics from "../../clients/Profile/ProfilePics";
 import { FaArrowLeft } from "react-icons/fa";
 import { userAPI } from "../../../Constants/Api";
@@ -17,18 +18,20 @@ const ProCards = ({ interstPro, setShow, requirementId, no }) => {
   const [hiredPros, setHiredPros] = useState([]);
   const [change,setChange] = useState(false)
 
+  const userInstance = CreateUserInstance()
+  const proInstance = CreateProInstance()
   const navigate = useNavigate()
   const location = useLocation();
   const Type = location.pathname.includes('professional') ? 'professional' : 'users';
 
+  const Axios = Type==='users'?userInstance:proInstance
 
   const socket = io.connect('http://localhost:3000')
-  socket.emit('connected','hiringggggg')
 
   const aa = pros.filter((pro) => interstPro.includes(pro._id));
   const Hire = async () => {
     try {
-      const response = await userInstance.get(`/hiredPros/${requirementId}`);
+      const response = await Axios.get(`/hiredPros/${requirementId}`);
       if (response.status === 200) {
         setHiredPros(response.data.hiredPro);
         setIsOpen1(true);
@@ -36,12 +39,11 @@ const ProCards = ({ interstPro, setShow, requirementId, no }) => {
     } catch (error) {}
   };
   useEffect(() => {
-    console.log(aa, "llllllllllllllp=====");
 
     Hire();
     const fetchData = async () => {
       try {
-        const response = await userInstance.get("/requirement");
+        const response = await Axios.get("/requirement");
         setRequirement(response.data.response);
         setUsers(response.data.users);
         setPros(response.data.pros);
@@ -54,10 +56,9 @@ const ProCards = ({ interstPro, setShow, requirementId, no }) => {
   }, [state]);
 
   const Hiring = async (userId) => {
-    socket.emit('some','cccccccccccccc')
      const ttype='users'
     try {
-      const response = await userInstance.post("/hiring", {
+      const response = await Axios.post("/hiring", {
         userId,
         requirementId,
       });

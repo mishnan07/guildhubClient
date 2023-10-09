@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import proAxios from "../../../Axios/proAxios";
+import CreateProInstance from "../../../Axios/proAxios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const Register = () => {
@@ -17,11 +17,12 @@ const Register = () => {
   const [errMsg, setErrMsg] = useState("");
 
   const navigate = useNavigate();
+  const proAxios = CreateProInstance()
+
 
   useEffect(() => {
     proAxios.get("/getCategory").then((res) => {
       const getCategory = res.data.category;
-      console.log(getCategory, "lll++==");
       setAllCAtegory(getCategory);
     });
   }, []);

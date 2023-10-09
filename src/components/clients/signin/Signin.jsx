@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import userAxios from "../../../Axios/userAxios.js";
+import CreateUserInstance from "../../../Axios/userAxios.js";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { ClientLogin, ClientId } from "../../../Redux/ClientAuth.js";
@@ -8,6 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Google from "../Google/Google.jsx";
 import PhoneSignin from "./PhoneSignin.jsx";
+import Nav from "../navbar/Nav.jsx";
 
 const Signin = () => {
   const backgroundImageUrl = "/images/model-house-project-blueprints.jpg"; // Path to your image
@@ -15,6 +16,8 @@ const Signin = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const userAxios = CreateUserInstance()
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -24,7 +27,6 @@ const Signin = () => {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       return emailRegex.test(email);
     };
-    console.log(isValidEmail);
 
     if (email.trim().length === 0) {
       return showErrorMessage("Please enter email");
@@ -40,10 +42,7 @@ const Signin = () => {
       .post("/login", { email, password })
       .then((res) => {
         const result = res.data.userResponse;
-        console.log(result,'kkkkkkkkkk');
-        console.log(result.token,'ppppppppppppppppppppp99');
         if (result.status === true) {
-          console.log('ttttttt');
           const token = result.token;
           const id = result.id
           dispatch(ClientLogin({ token: token }));
@@ -73,6 +72,8 @@ const Signin = () => {
   };
 
   return (
+    <>
+    {/* <Nav /> */}
     <div
       className="bg-cover bg-center bg-fixed h-screen flex justify-evenly  items-center backdrop-blur-3xl bg-opacity-80 overflow-hidden"
       style={{ backgroundImage: `url('${backgroundImageUrl}')` }}
@@ -169,6 +170,7 @@ const Signin = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

@@ -14,6 +14,7 @@ import ChatMessages from "../components/clients/chatMessage/ChatMessage";
 import Notification from "../components/clients/notification/Notification";
 import NotificationPage from "../pages/Clients/NotificationPage";
 import MainPage from "../pages/Clients/MainPage";
+import Nodata from "../components/clients/Nodata/Nodata";
 
 const ProfessionalRoute = () => {
   const isAuth = useSelector((state) => state.proAuth.Token);
@@ -54,12 +55,12 @@ const ProfessionalRoute = () => {
         <Route
           path="/community"
           element={
-            isAuth ? <CommunityPage /> : <Navigate to="/professional/login" />
+            isAuth ? <MainPage /> : <Navigate to="/professional/login" />
           }
         />
          <Route
           path="/requirement"
-          element={isAuth ? <RequirementPage /> : <Navigate to="/professional/login" />}
+          element={isAuth ? <RequirementPage/> : <Navigate to="/professional/login" />}
         />
          <Route
           path="/hire"
@@ -75,6 +76,10 @@ const ProfessionalRoute = () => {
           path="/notification"
           element={isAuth ? <MainPage />: <Navigate to="/professional/login" />}
         />
+
+        <Route path="/404" element={<Nodata />} />
+
+        <Route path="*" element={<Navigate to="/professional/404" />} />
 
       </Routes>
 

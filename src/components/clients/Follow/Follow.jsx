@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import userAxios from '../../../Axios/userAxios';
+import CreateUserInstance from '../../../Axios/userAxios';
+import CreateProInstance from '../../../Axios/proAxios';
 import { ClientLogout } from "../../../Redux/ClientAuth";
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -15,9 +16,9 @@ const Follow = () => {
   const [users, setUsers] = useState([]);
   const [user, setUser] = useState(null);
   const [searchInput, SetSearchInput] = useState("");
-
+  const userAxios = CreateUserInstance()
+  const proAxios = CreateProInstance()
   const [all,setAll] = useState([])
-
 
 
   const location = useLocation();
@@ -27,21 +28,17 @@ const Follow = () => {
     Type === 'users' ? state.ClientAuth.Token : state.proAuth.Token
   );
   const id = useSelector((state) => (Type === 'users' ? state.ClientAuth.Id : state.proAuth.Id));
-  console.log(token, 'lldddda', id);
 
+  const Axios = Type === 'users' ? userAxios :proAxios
   useEffect(() => {
     if(token){
      const fetchUserDetails = async () => {
          try {
           let response
           if(Type === 'users'){
-              response = await userAxios.get('/clientDetails', {
-                  headers: { Authorization: `Bearer ${token}` },
-                });
+              response = await Axios.get('/clientDetails');
           }else if(Type === 'professional'){
-              response = await userAxios.get('/userDetails', {
-                  headers: { Authorization: `Bearer ${token}` },
-              });
+              response = await Axios.get('/userDetails');
 
           }
           
@@ -66,15 +63,12 @@ const Follow = () => {
 
   const fetchPosts = async () => {
     try {
-      const response = await userAxios.get('/getPost', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await Axios.get('/usersAndpros');
       setPros(response.data.pros);
       setUsers(response.data.users);
       const combinedArray = [...response.data.pros, ...response.data.users];
       setAll(combinedArray);
       
-      console.log(all,'allllllllllaaaaaaaaaaaaaaa');
     } catch (error) {
       console.log('Error fetching posts:', error);
     }
@@ -93,7 +87,6 @@ const Follow = () => {
   const userId = user ? user._id : '';
 
   useEffect(() => {
-    console.log(userr,'aaaaaaaaaaauserdetails');
     setUserDetail([userr]);
   }, [userr, seto]);
 

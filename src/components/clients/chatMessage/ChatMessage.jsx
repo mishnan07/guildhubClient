@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import userAxios from '../../../Axios/userAxios';
+import CreateUserInstance from '../../../Axios/userAxios';
+import CreateProInstance from '../../../Axios/proAxios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import Navbar from '../navbar/Navbar';
@@ -52,7 +53,7 @@ const ContactList = ({ setReceiver, users, pros, seReciverId, userId, FetchChats
   
 
   return (
-    <div className="w-1/4 p-4 bg-purple-400 rounded-l-lg overflow-y-auto">
+    <div className="w-1/4 p-4 bg-gradient-to-r from-purple-500 to-blue-400 rounded-l-lg overflow-y-auto">
       <h2 className="text-xl font-semibold p-3">Contacts</h2>
       <div className=''>
       <SearchBar SetSearchInput={SetSearchInput} searchInput={searchInput} />
@@ -89,6 +90,8 @@ const ContactList = ({ setReceiver, users, pros, seReciverId, userId, FetchChats
   );
 };
 
+
+
 const ChatMessages = () => {
   const [chatMessages, setChatMessages] = useState([]);
   const [receiver, setReceiver] = useState('');
@@ -96,19 +99,24 @@ const ChatMessages = () => {
   const [pros, setPros] = useState([]);
   const [users, setUsers] = useState([]);
   const [user, setUser] = useState(null);
-  const [socket, setSocket] = useState(null);
+  // const [socket, setSocket] = useState(null);
   const [state, setState] = useState(false);
-  
+  const userAxios = CreateUserInstance()
+  const proAxios = CreateProInstance()
+
+
 
   const location = useLocation();
   const senderType = location.pathname.includes('professional') ? 'professional' : 'users';
 
   const token = useSelector((state) => (senderType === 'users' ? state.ClientAuth.Token : state.proAuth.Token));
   const id = useSelector((state) => (senderType === 'users' ? state.ClientAuth.Id : state.proAuth.Id));
+   
+  const Axios = senderType === 'users' ? userAxios:proAxios
 
   const fetchPosts = async () => {
     try {
-      const response = await userAxios.get('/getPost', { headers: { Authorization: `Bearer ${token}` } });
+      const response = await Axios.get('/getPost');
       setPros(response.data.pros);
       setUsers(response.data.users);
     } catch (error) {
@@ -118,7 +126,7 @@ const ChatMessages = () => {
 
   useEffect(() => {
     fetchPosts();
-  }, [token, id]);
+  }, [token, id,]);
 
   useEffect(() => {
     if (id) {
@@ -128,37 +136,36 @@ const ChatMessages = () => {
     }
   }, [id, pros, users]);
 
-  useEffect(() => {
-    if (!socket) {
-      const newSocket = io.connect('http://localhost:3000');
-      newSocket.emit('connected', 'connectedsss');
-
-      newSocket.on('connected', (arg) => {
-        console.log('connected in front', arg);
-        newSocket.emit('connected', 'connectedsss===');
-      });
-
-      newSocket.on(id, (msg) => {
-        console.log('message received successfully', msg);
-        receiveMessage(msg);
-      });
-
-      setSocket(newSocket);
-    }
-  }, [socket, id]);
-
   
+
+
+    
+const socket = io.connect('http://localhost:3000');
+// socket.emit('connected',"connectedsss")
+
+
+
+socket.on(id,(msg)=> {
+  console.log('message recievd succussfully',msg)
+  receiveMessage(msg)
+})
+
 
   const FetchChats = async (receverId) => {
     try {
-      const response = await userAxios.get(`/FetchChats/${id}/${receverId}`);
+      const response = await Axios.get(`/FetchChats/${id}/${receverId}`);
       const match = response.data.match;
       const newMessage = [].concat(...match.map((conversation) => conversation.messages));
+      console.log(newMessage,'fetchhhhhhh');
       setChatMessages(newMessage);
     } catch (error) {
       console.error('Error fetching chats:', error);
     }
   };
+
+  useEffect(()=>{
+    FetchChats(receverId)
+  },[receverId])
 
  
 
@@ -171,8 +178,9 @@ const ChatMessages = () => {
       receiverId: msg.receiverId,
       receiverType: msg.receiverType,
     };
-
-    setChatMessages([...chatMessages, newMessage]);
+    console.log(chatMessages,'ooooooooooo');
+    console.log(newMessage,'new =========');
+    setChatMessages([...chatMessages,newMessage]);
   };
 
   const handleSendMessage = (id,messageText) => {
@@ -251,15 +259,12 @@ const ChatMessages = () => {
 
               {chatMessages.map((message, index) => (
                 <div key={index} className="mb-2">
+                  {console.log(message.senderId === id,'pppppp ====== id' )}
                   <div className={`text-${message.senderId === id ? 'right' : 'left'}`}>
                     <div className='flex-col text-blue-600'>
                     
                       <div className={`flex  justify-${message.senderId === id ? 'end' : 'start'}`}>
-
-                      </div>
-                     
-                    </div>
-                    <div className={`text-lg bg-${message.senderId === id ? 'green-100 text-green-800' : 'gray-200 text-gray-700'} rounded-lg p-2 inline-block`}>
+                      <div className={`text-lg bg-${message.senderId === id ? 'green-300 text-green-800' : 'gray-200 text-gray-700'} rounded-lg p-2 inline-block`}>
                     <div className='text-sm'>
                       <ProfilePic UserId={message.senderId} value='name'/>
 
@@ -269,6 +274,12 @@ const ChatMessages = () => {
                       </div>
                       {message.text}
                     </div>
+
+                      </div>
+                     
+                    </div>
+                    {}
+                  
                   </div>
                 </div>
               ))}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import userAxios from '../../../Axios/userAxios'
+import CreateUserInstance from '../../../Axios/userAxios';
 import { userAPI } from '../../../Constants/Api';
 const ComplexDiv = () => {
   const [imageUrl,setImageUrl] = useState('')
@@ -7,7 +7,8 @@ const ComplexDiv = () => {
 
   const [post,setPost] = useState([])
   const [like,setLike] = useState (false)
-  
+  const userAxios = CreateUserInstance()
+
 
   useEffect(() => {
     userAxios

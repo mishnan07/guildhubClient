@@ -5,7 +5,7 @@ import { userAPI } from "../../../Constants/Api";
 
 import ImageUpload from "../../professionals/post/ImageUpload";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { proLogOut } from "../../../Redux/proAuth";
 import PostUpload from "../../professionals/post/PostUpload";
 import Question from "../question/Question";
@@ -16,16 +16,20 @@ const LeftSidebar = ({ Type, user }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalIsOpens, setModalIsOpens] = useState(false);
   const [isOpen1, setIsOpen1] = useState(false);
+  const [isOpen2,setIsOpen2] = useState(false)
+
 
 
   const profile = "/images/user_149071.png";
 
 
   const userType = user ? user : "";
+  
+  const location = useLocation();
+  const senderType = location.pathname.includes('professional') ? 'professional' : 'users';
 
-  const userT = userType.experiance ? "professional" : "users";
+  const userT = senderType
 
-  console.log(userT, "ppppppppppppsssssssssssssssssssq");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -44,7 +48,6 @@ const LeftSidebar = ({ Type, user }) => {
   const closeModal = () => {
     setModalIsOpen(false);
   };
-  console.log(modalIsOpen, "pppp pppp ppp");
 
   const Requirement = ()=>{
     if(userT==='users'){
@@ -60,7 +63,9 @@ const LeftSidebar = ({ Type, user }) => {
   };
   return (
     <div className="md:w-1/5">
-      <div className="profile-card  bg-gradient-to-r from-blue-500 to-purple-500 text-white p-4 rounded-lg shadow-lg">
+      {user&&
+      <div
+       className="profile-card  bg-gradient-to-r from-blue-500 to-purple-500 text-white p-4 rounded-lg shadow-lg">
        <div className="flex justify-center items-center">
         {user?.profilePic?(
        <img
@@ -89,36 +94,39 @@ const LeftSidebar = ({ Type, user }) => {
           </a>
         </p>
       </div>
-      <ul className="nav-news-feed mt-6 space-y-2">
-        <li className="flex items-center">
+}
+
+
+{user&&
+      <ul className="nav-news-feed  space-y-2 p-5 bg-white mt-6 text-purple-800 rounded-md shadow-lg ">
+        <li className="flex items-center border-b">
           <i className="icon ion-ios-paper text-blue-500"></i>
-          <a
+          <p  className=" cursor-pointer ml-2"
           onClick={Requirement}
             href="#"
-            className="text-blue-500 hover:underline ml-2"
           >
             Requirement
-          </a>
+          </p>
         </li>
       
         {userT === "users" ? (
-          <li className="flex items-center">
+          <li className="flex items-center border-b">
             <i className="icon ion-ios-paper text-blue-500"></i>
-            <a href="#" className="text-blue-500 hover:underline ml-2">
-              <span onClick={()=>setIsOpen1(true)}>Ask Experts</span>
-            </a>
+            <p  className=" cursor-pointer ml-2">
+              <span onClick={()=>setIsOpen2(true)}>Ask Experts</span>
+            </p>
           </li>
         ) : (
-          <li className="flex items-center">
-            <i className="icon ion-ios-paper text-blue-500"></i>
-            <a href="#" className="text-blue-500 hover:underline ml-2">
+          <li className="flex items-center border-b">
+            <i className="icon ion-ios-paper text-blue-500 "></i>
+            <a href="#" className=" hover:underline ml-2">
               <span onClick={()=>setIsOpen1(true)}>Crate Post</span>
             </a>
           </li>
         )}
         {userT === "users" ? (
-          <Modal isOpen={isOpen1} onClose={()=>setIsOpen1(false)}>
-          <button className="p-2" onClick={() => setIsOpen1(false)}>
+          <Modal isOpen={isOpen2} onClose={()=>setIsOpen2(false)}>
+          <button className="p-2" onClick={() => setIsOpen2(false)}>
                   <FaTimes /> 
           </button>
             <Question value='create'/>
@@ -133,18 +141,18 @@ const LeftSidebar = ({ Type, user }) => {
         )}
         {userT === "users" ? (
           <>
-            <li className="flex items-center">
+            <li className="flex items-center border-b">
               <i className="icon ion-ios-people text-blue-500"></i>
-              <a href="#" className="text-blue-500 hover:underline ml-2">
+              <p  className=" cursor-pointer ml-2">
                 <span  onClick={()=>setIsOpen1(true)}> Create Requirement</span>
-              </a>
+              </p>
             </li>
             <Modal isOpen={isOpen1} onClose={()=>setIsOpen1(false)}>
           <button className="p-2" onClick={() => setIsOpen1(false)}>
                   <FaTimes /> 
           </button>
           
-                <Requirements user={user} onClose={closeModals} />
+                <Requirements user={user} onClose={closeModals} setIsOpen1={setIsOpen1}/>
             </Modal>
           </>
         ) : (
@@ -153,6 +161,9 @@ const LeftSidebar = ({ Type, user }) => {
         {/* Add more nav links */}
         {/* ... */}
       </ul>
+}
+
+      {user &&
       <div id="chat-block" className="mt-6">
         <div className="title text-blue-500 font-semibold mb-2">
           Chat online
@@ -168,10 +179,10 @@ const LeftSidebar = ({ Type, user }) => {
               <span className="online-dot bg-green-500"></span>
             </a>
           </li>
-          {/* Add more online users */}
-          {/* ... */}
+        
         </ul>
       </div>
+}
     </div>
   );
 };

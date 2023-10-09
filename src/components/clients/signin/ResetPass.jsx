@@ -1,23 +1,19 @@
 import React, { useState } from 'react'
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import userAxios from '../../../Axios/userAxios';
+import CreateUserInstance from '../../../Axios/userAxios';
 import { useNavigate } from 'react-router-dom';
 
 
 const ResetPass = ({phone,value}) => {
     const [newPassword,setNewPassword] = useState('')
     const [repeatePassword,setRepeatePassword] = useState('')
-
+    const userAxios = CreateUserInstance()
     const navigate = useNavigate()
 
     const resetPassword = async () => {
         try {
-            console.log('papapapapapa');
-        //   if (newPassword !== repeatePassword) {
-        //     toast.error('Passwords do not match');
-        //     return;
-        //   }
+       
     
           const response = await userAxios.post('/resetPassword', { phone, newPassword });
           if (response.data.success) {

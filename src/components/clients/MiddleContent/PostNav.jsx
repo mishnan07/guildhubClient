@@ -3,7 +3,7 @@ import ProfilePic from '../ProfilePic/ProfilePic'
 import Options from './Options'
 import OptionsIcon from '../Icon/OptionIcon'
 
-const PostNav = ({item,user,deleatTheComponent,Type,deleteQuestion,userId}) => {
+const PostNav = ({item,user,deleatTheComponent,Type,deleteQuestion,userId,setState}) => {
            let postUserId 
            if(item.proId){
             postUserId = item.proId
@@ -13,7 +13,10 @@ const PostNav = ({item,user,deleatTheComponent,Type,deleteQuestion,userId}) => {
   return (
     <div>
          <div className="post-container flex justify-start items-start mt-4 p-2">
-                    <ProfilePic UserId={postUserId } value="pic" />
+                <div className='h-fit w-20'>
+                <ProfilePic UserId={postUserId } value="pic" />
+
+                </div>
 
                     <div className="flex justify justify-between w-full  post-detail ml-2 mb-2">
                       <div className="user-info">
@@ -42,6 +45,7 @@ const PostNav = ({item,user,deleatTheComponent,Type,deleteQuestion,userId}) => {
                           deleate={deleatTheComponent}
                           value={item?._id}
                           Type={Type}
+                          setState={setState}
                         />
                       }
 

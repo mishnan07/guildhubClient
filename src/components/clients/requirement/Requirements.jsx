@@ -1,18 +1,25 @@
 import React, { useState } from 'react';
 import Dropzone from 'react-dropzone';
-import proAxios from '../../../Axios/proAxios';
+import CreateUserInstance from '../../../Axios/userAxios';
 import { useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import userAxios from '../../../Axios/userAxios';
+import { useLocation } from 'react-router-dom';
 
-const Requirements = ({ user, onClose }) => {
+const Requirements = ({ onClose,setIsOpen1 }) => {
   const [files, setFiles] = useState([]);
   const [message, setMessage] = useState('');
   const [budget, setbudget] = useState('');
   const [location, setlocation] = useState('');
+  const locations = useLocation();
+  const userAxios = CreateUserInstance()
 
-  const token = useSelector((state) => state.proAuth.Token);
+
+  const Type = locations.pathname.includes('professional') ? 'professional' : 'users';
+  const token = useSelector((state) =>
+  Type === 'users' ? state.ClientAuth.Token : state.proAuth.Token
+);
+const id = useSelector((state) => (Type === 'users' ? state.ClientAuth.Id : state.proAuth.Id));
 
   const handleDrop = (acceptedFiles) => {
     // Ensure that only one file is selected
@@ -20,7 +27,8 @@ const Requirements = ({ user, onClose }) => {
       setFiles([acceptedFiles[0]]);
     }
   };
-console.log(user,'=====================');
+
+
   const handleUpload = async (event) => {
     event.preventDefault();
 
@@ -44,13 +52,11 @@ console.log(user,'=====================');
       formData.append('budget', budget); 
       formData.append('location', location); 
 
-      formData.append('userId', user._id);
+      formData.append('userId', id);
 
-      const response = await proAxios.post('/uploadRequirement', formData, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      console.log('Images uploaded successfully:', response.data);
-      showToastMessage('Images uploaded successfully:');
+      const response = await userAxios.post('/uploadRequirement', formData);
+      showToastMessage('requirement uploaded successfully:');
+      setIsOpen1(false)
       setTimeout(() => {
         onClose();
       }, 2000);
@@ -75,7 +81,7 @@ console.log(user,'=====================');
   };
 
   return (
-    <div className="w-full max-w-md mx-auto p-4 border rounded-lg shadow-md ">
+    <div className="w-full max-w-md mx-auto  ">
       <form method="POST" onSubmit={handleUpload}>
         <Dropzone onDrop={handleDrop} accept="image/*">
           {({ getRootProps, getInputProps, isDragActive }) => (
@@ -118,7 +124,7 @@ console.log(user,'=====================');
 
         <label
           htmlFor="message"
-          className="block mt-4 mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          className="block  text-sm font-medium text-gray-900 dark:text-white"
         >
           Your message
         </label>
@@ -138,7 +144,7 @@ console.log(user,'=====================');
         {/* Input 1 */}
         <label
           htmlFor="budget"
-          className="block mt-4 mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          className="block  text-sm font-medium text-gray-900 dark:text-white"
         >
           Input 1
         </label>
@@ -157,7 +163,7 @@ console.log(user,'=====================');
         {/* Input 2 */}
         <label
           htmlFor="location"
-          className="block mt-4 mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          className="block   text-sm font-medium text-gray-900 dark:text-white"
         >
           Input 2
         </label>
@@ -175,7 +181,7 @@ console.log(user,'=====================');
 
         <button
           type="submit"
-          className="w-full mt-4 p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+          className="w-full mt-4  p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
           // disabled={files.length === 0}
         >
           Upload

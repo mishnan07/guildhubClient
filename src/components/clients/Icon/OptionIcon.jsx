@@ -8,9 +8,7 @@ function OptionsIcon({id,item,deleteQuestion}) {
   const [isOpen1, setIsOpen1] = useState(false);
 
 
-  const close = () => {
-    setIsOpen1(false);
-  };
+
 
   return (
     <div className="relative inline-block text-left">

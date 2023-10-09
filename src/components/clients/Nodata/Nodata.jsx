@@ -4,10 +4,10 @@ import Data from '../Icon/Data';
 const Nodata = () => {
   return (
     <div>
-      <section className="bg-white py-20 font-serif">
+      <section className=" py-20 font-serif">
         <div className="container mx-auto">
           <div className="text-center">
-            <div className="bg-cover bg-center bg-no-repeat h-96" style={{ backgroundImage: 'url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif)' }}></div>
+            <div className="bg-cover bg-center bg-no-repeat "></div>
            <div className='text-6xl font-bold my-8"'>
             </div>
             <h1 className="text-6xl font-bold my-8">404</h1>

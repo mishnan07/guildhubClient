@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import userInstance from '../../../Axios/userAxios';
+import CreateUserInstance from '../../../Axios/userAxios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -7,7 +7,7 @@ const PhoneSignin = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [otp, setOtp] = useState('');
   const [verificationSid, setVerificationSid] = useState(null);
-
+  const userInstance = CreateUserInstance()
   const sendOtp = async () => {
     try {
       const response = await userInstance.post('/sendOtp', {

@@ -1,6 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
+import Modal from "../../professionals/Modal/Modal";
+import { FaTimes } from "react-icons/fa";
+import Requirements from "../requirement/Requirements";
 
 const Hire = () => {
+  const [isOpen1, setIsOpen1] = useState(false);
+  const closeModals = () => {
+    setIsOpen1(false);
+  };
+
   return (
     <div>
       <section className="bg-white   ">
@@ -12,12 +20,19 @@ const Hire = () => {
 
           <div className="flex justify-center space-x-4 mb-4 animate-bounce">
             <a
+            onClick={()=>setIsOpen1(true)}
               href="#"
               className="px-8 py-3 bg-purple-800 text-white rounded-lg hover:bg-gray-900 transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-gray-400"
             >
               Post now!
             </a>
           </div>
+          <Modal isOpen={isOpen1} onClose={()=>setIsOpen1(false)}>
+          <button className="p-2 flex " onClick={() => setIsOpen1(false)}>
+                  <FaTimes /> 
+          </button>
+                <Requirements  onClose={closeModals} />
+            </Modal>
 
           <h1 className="text-4px md:text-lg lg:text-xl font-bold text-gray-700 mb-6">
           Why  this website the best choice for<br />requirement & hiring ?

@@ -14,6 +14,8 @@ import Report from '../../components/clients/MiddleContent/Report'
 import LocationSearchInput from '../../components/clients/LocationSearchInput'
 import RequirementShow from '../../components/clients/requirement/RequirementShow'
 import ChatMessages from '../../components/clients/chatMessage/ChatMessage'
+import { FaChartArea } from 'react-icons/fa'
+import Dashboard from '../../components/admin/Dashboard/Dashboard'
 
 
 const Home = () => {
@@ -45,32 +47,19 @@ const Home = () => {
     };
     const [isOpen, setIsOpen] = useState(false);
   return (
-    <div>
-      {/* <h1>admin home</h1> */}
-      <div>
-      {/* <h1>React Modal Example</h1>
-      <button onClick={openModal}>Open Modal</button> */}
-{/* 
-      <CustomModal isOpen={modalIsOpen} onClose={closeModal}>
-        <h2>Modal Content</h2>
-        <p>This is the content of the modal.</p>
-        <ImageUpload />
-      </CustomModal> */}
-    </div>
    
- 
 
 
-    <Header />
+<div>
+<Header />
+<div className='flex  '>
+<Sidebar />
+  <div className='w-full p-3'>
+  <Dashboard />
+  </div>
+</div>
 
-    <Sidebar />
-  
-
-
-<ChatMessages/>
-
-
-    </div>
+</div>
   )
 }
 

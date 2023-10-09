@@ -1,20 +1,21 @@
 import React from 'react'
-import userInstance from '../../../Axios/userAxios';
+import CreateUserInstance from '../../../Axios/userAxios';
+import CreateProInstance from '../../../Axios/proAxios';
 import { useSelector } from 'react-redux';
 
 const FollowButton = ({item,userId,userType,userDetail,token,setSuc,suce}) => {
+  const userInstance = CreateUserInstance()
+  const proInstance = CreateProInstance()
 
+  const Axios = userType === 'users'?userInstance:proInstance
     const following = async (followerId, followerType) => {
-
+   
         
-
         try {
-          const response = await userInstance.post(
+          const response = await Axios.post(
             '/following',
             { userId, userType, followerId, followerType },
-            {
-              headers: { Authorization: `Bearer ${token}` },
-            }
+           
           );
     
           if (response.data.message === 'Follower added/removed successfully') {

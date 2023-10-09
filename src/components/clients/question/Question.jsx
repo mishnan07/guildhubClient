@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Dropzone from 'react-dropzone';
-import proAxios from '../../../Axios/proAxios';
 import { useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import userInstance from '../../../Axios/userAxios';
 import { userAPI } from '../../../Constants/Api';
+import CreateUserInstance from '../../../Axios/userAxios';
 
 
 const Question = ({value,id,questions}) => {
@@ -14,17 +13,15 @@ const Question = ({value,id,questions}) => {
   const [category, setCategory] = useState("");
   const [allCategory, setAllCAtegory] = useState([]);
   const [questionId,setQuestionId]=useState('')
+  const userAxios = CreateUserInstance()
 
   const token = useSelector((state)=>state.ClientAuth.Token)
   const userId = useSelector((state)=>state.ClientAuth.Id)
-  if(questions){
-    console.log(questions,'questionsquestions===');
-  }
+ 
 
   useEffect(() => {
-    proAxios.get("/getCategory").then((res) => {
+    userAxios.get("/getCategory").then((res) => {
       const getCategory = res.data.category;
-      console.log(getCategory, "lll++==");
       setAllCAtegory(getCategory);
     });
     if(questions){
@@ -32,7 +29,6 @@ const Question = ({value,id,questions}) => {
       // setFiles(questions?.image[0])
       setCategory(questions?.category)
       setQuestionId(questions._id)
-      console.log(questions._id,'=========questionId');
     }
   }, []);
 
@@ -78,21 +74,13 @@ const Question = ({value,id,questions}) => {
 
       }
 
-      // if(questions){
-      //   formData.append('questionId',questionId)
-      // }
       let response
    if(value === 'create'){
-       response = await proAxios.post('/quesionUpload', formData,{
-        headers: { Authorization: `Bearer ${token}` },
-      });
+       response = await userAxios.post('/quesionUpload', formData);
     }else if(value === 'edit'){
-      response = await proAxios.post('/editeQuestion', formData,{
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      response = await userAxios.post('/editeQuestion', formData);
     }
       showToastMessage(response.data.message)
-      console.log('Images uploaded successfully:', response.data);
       setCategory('')
       setMessage('')
       setFiles([])
@@ -102,7 +90,7 @@ const Question = ({value,id,questions}) => {
     }
   };
   
-  console.log(questionId,'====ll  vv');
+  
 
   return (
     <div className="w-full max-w-md mx-auto p-4 border rounded-lg shadow-md ">
@@ -178,48 +166,9 @@ const Question = ({value,id,questions}) => {
           placeholder="Write your thoughts here..."
         ></textarea>
 
-
-
-
-        
-<div className="flex items-center border-2 py-2 px-3 mt-2 rounded-2xl">
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    className="h-5 w-5 text-gray-400"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="2"
-      d="M4 6h16M4 10h16M4 14h16M4 18h16"
-    />
-  </svg>
-  <select
-    className="pl-2 outline-none border-none text-sm md:text-base text-gray-400 "
-    id="category"
-    name="category"
-    onChange={(e) => setCategory(e.target.value)}
-    value={category}
-  >
-    <option >
-      add category
-    </option>
-    {allCategory.map((item) => (
-      <option key={item.categoryName} value={item.categoryName}>
-        {item.categoryName}
-      </option>
-    ))}
-  </select>
-</div>
-
-
         <button
           type='submit'
           className="w-full mt-4 p-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-        //   disabled={files.length === 0}
         >
           Upload
         </button>

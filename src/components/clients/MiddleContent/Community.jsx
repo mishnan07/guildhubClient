@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import userAxios from "../../../Axios/userAxios";
+import CreateUserInstance from '../../../Axios/userAxios';
+import CreateProInstance from "../../../Axios/proAxios";
 import { userAPI } from "../../../Constants/Api";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +13,7 @@ import SearchBar from "./SearchBar";
 import PostNav from "./PostNav";
 import LikeComment from "./LikeComment";
 import PostText from "./PostText";
+import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
 
 const Community = ({ Type, user }) => {
   const [post, setPost] = useState([]);
@@ -22,6 +24,8 @@ const Community = ({ Type, user }) => {
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
   const [searchInput, SetSearchInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
 
   const navigate = useNavigate();
 
@@ -31,12 +35,16 @@ const Community = ({ Type, user }) => {
   } else if ("professional") {
     token = useSelector((state) => state.proAuth.Token);
   }
+  const userAxios = CreateUserInstance()
+  const proAxios = CreateProInstance()
+  const Axios = Type === 'users'?userAxios:proAxios
+
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await userAxios.get("/getQuestion", {
-          headers: { Authorization: `Bearer ${token}` },
+        setIsLoading(true)
+        const response = await Axios.get("/getQuestion", {
         });
         const updatedPosts = response.data.post.map((post) => ({
           ...post,
@@ -47,6 +55,7 @@ const Community = ({ Type, user }) => {
         setComments(response.data.comments);
 
         setUsers(response.data.users);
+        setIsLoading(false)
       } catch (error) {
         console.log("Error fetching posts:", error);
       }
@@ -55,11 +64,12 @@ const Community = ({ Type, user }) => {
     fetchPosts();
   }, [state]);
 
+
+ 
   const userId = user ? user._id : "";
   const userType = Type ? Type : "";
 
   const handleLike = async (postId, userId = userId) => {
-    console.log(postId, userId, "pppppppppppppppk");
     if (state) {
       setState(false);
     } else {
@@ -70,17 +80,13 @@ const Community = ({ Type, user }) => {
         item._id === postId ? { ...item, liked: !item.liked } : item
       );
       setPost(updatedPosts);
-      console.log(updatedPosts, "oooooooooooo");
 
       if (updatedPosts.find((item) => item._id === postId).liked) {
-        console.log("yesssssssss");
-        const response = await userAxios.post(
+        const response = await Axios.post(
           "/likeQuestion",
           { postId, userId },
-          { headers: { Authorization: `Bearer ${token}` } }
         );
         // response();
-        console.log(response.data, "Like successful");
       } else {
         console.log("unlike");
         // Handle unliking if needed
@@ -92,24 +98,12 @@ const Community = ({ Type, user }) => {
 
   const profile = "/images/user_149071.png";
 
-  const check = () => {
-    console.log(item._id, "111771111");
-  };
+
 
   const hasLiked = (likes, userId) =>
     likes.some((like) => like.userId === userId && like.liked);
-  //ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
 
-  const LikeCount = (likes) => {
-    likes.some((like) => {
-      return like.liked;
-    });
-  };
 
-  const proName = (proId) => {
-    const foundPro = pros.find((pro) => pro._id === proId);
-    return foundPro ? foundPro.name : false;
-  };
 
   const userName = (userID) => {
     const foundUser = users.find((user) => user._id === userID);
@@ -122,13 +116,10 @@ const Community = ({ Type, user }) => {
   };
 
   const details = (specificId, value) => {
-    console.log(specificId, value, "ppppppppppp==");
     let idExists = pros.find((pro) => pro._id === specificId);
-    console.log(idExists);
     const a = "";
     if (idExists) {
       if (value === "name") {
-        console.log(idExists.name, "kkkkkkkkkkkkkkkkkkkk");
         return idExists.name;
       }
       if (value === "pic") {
@@ -161,7 +152,7 @@ const Community = ({ Type, user }) => {
       setState(true);
     }
     try {
-      const response = await userAxios.post(
+      const response = await Axios.post(
         "/questionComment",
         { comment, postId, userId, userType },
         { headers: { Authorization: `Bearer ${token}` } }
@@ -186,15 +177,11 @@ const Community = ({ Type, user }) => {
     });
   };
 
-  const goProfile = (userID) => {
-    console.log(userID, "ddddddddd");
-    navigate(`/profile?id=${userID}&usertype='users'`);
-  };
+
 
   const deleteQuestion = async (id) => {
-    console.log(id, "ppppppppppppppppppp");
     try {
-      const response = await userAxios.post("/deleteQuestion", { id });
+      const response = await Axios.post("/deleteQuestion", { id });
       if (response.status === 200) {
         showToastMessage(response.data.message);
         setState(!state);
@@ -220,7 +207,12 @@ const Community = ({ Type, user }) => {
   });
 
   return (
+    <>
+     {isLoading ? (
+        <LoadingSpinner />
+      ) : (
     <div className="">
+      
       <ToastContainer /> {/* Create Post Section */}
       <div className=" create-post bg-white p-4 rounded-lg shadow-md">
       <SearchBar SetSearchInput={SetSearchInput} searchInput={searchInput} />
@@ -345,7 +337,11 @@ const Community = ({ Type, user }) => {
           </div>
         </div>
       ))}
+
+     
     </div>
+     )}
+  </>
   );
 };
 

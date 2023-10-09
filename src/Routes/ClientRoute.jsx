@@ -13,13 +13,13 @@ import FollowPage from "../pages/Clients/FollowPage.jsx";
 import PhoneSignin from "../components/clients/signin/PhoneSignin.jsx";
 import OtpLogin from "../components/clients/signin/OtpLogin.jsx";
 import ForgetPass from "../components/clients/signin/ForgetPass.jsx";
-// import Chat from "../pages/Clients/Chat/Chat.jsx";
 import ChatMessages from "../components/clients/chatMessage/ChatMessage.jsx";
 import Notification from "../components/clients/notification/Notification.jsx";
 import NotificationPage from "../pages/Clients/NotificationPage.jsx";
 import MainPage from "../pages/Clients/MainPage.jsx";
 import UserProfile from "../components/clients/Profile/UserProfile.jsx";
-// import Chat from "../components/clients/Chat/Chat.jsx";
+import VideoRoom from "../components/clients/VideoCall/VideoRoom.jsx";
+import Nodata from "../components/clients/Nodata/Nodata.jsx";
 
 function ClientRoute() {
   const isAuth = useSelector((state) => state.ClientAuth.Token);
@@ -74,10 +74,13 @@ function ClientRoute() {
           element={isAuth ? <Navigate to="/forgetPass" /> : <ForgetPass />}
         />
 
-        {/* <Route
-          path="/chat"
-          element={isAuth ? <Chat />: <Navigate to="/login" />}
-        /> */}
+   
+
+          <Route path="/404" element={<Nodata />} />
+
+          <Route path="*" element={<Navigate to="/404" />} />
+
+
 
          <Route
           path="/message"
@@ -91,7 +94,12 @@ function ClientRoute() {
 
          <Route
           path="/profilePage"
-          element={isAuth || isAuth1 ? <UserProfile />: <Navigate to="/login" />}
+          element={ <UserProfile />}
+        />
+
+         <Route
+          path="/videocall"
+          element={ <VideoRoom />}
         />
 
         

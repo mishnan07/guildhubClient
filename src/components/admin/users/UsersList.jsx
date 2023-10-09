@@ -1,42 +1,37 @@
 import React, { useEffect, useState } from "react";
-import userAxios from "../../../Axios/userAxios";
-import adminAxios from "../../../Axios/adminAxios";
+import CreateAdminInstance from '../../../Axios/adminAxios';
+import CreateUserInstance from "../../../Axios/userAxios";
 import { useSelector } from "react-redux";
 import SearchBar from '../../clients/MiddleContent/SearchBar';
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 
 const HomeOwners = ({ userType }) => {
-  const [post, setPost] = useState([]);
   const [pros, setPros] = useState([]);
   const [users, setUsers] = useState([]);
   const [state, setState] = useState(false);
   const [searchInput, SetSearchInput] = useState("");
+  const adminAxios = CreateAdminInstance()
+  const userAxios = CreateUserInstance()
+
 
 
   const token = useSelector((state) => state.AdminAuth.Token);
   useEffect(() => {
-    const fetchPosts = async () => {
+    const usersAndpros = async () => {
       try {
-        const response = await userAxios.get("/getPost",
-        {headers: { Authorization: `Bearer ${token}` }});
-        const updatedPosts = response.data.post.map((post) => ({
-          ...post,
-          liked: false,
-        }));
-        setPost(updatedPosts);
+        const response = await adminAxios.get("/usersAndpros");
         setPros(response.data.pros);
-
         setUsers(response.data.users);
       } catch (error) {
         console.log("Error fetching posts:", error);
       }
     };
-
-    fetchPosts();
+    usersAndpros();
   }, [state]);
 
-  userType ? console.log(userType, "+++====") : "";
   const head =
     userType === "owner"
       ? ["name", "location", "phone", "action"]
@@ -48,6 +43,7 @@ const HomeOwners = ({ userType }) => {
     setState(!state)
     try {
       const response = await adminAxios.post('/blockUser',{userID,userType})
+      toast.success(response.data.message)
 
     } catch (error) {
       
@@ -55,14 +51,15 @@ const HomeOwners = ({ userType }) => {
   }
   return (
     <div className="relative w-full p-2 overflow-x-auto shadow-md sm:rounded-lg">
+            <ToastContainer />
               <div className=""> 
                <SearchBar SetSearchInput={SetSearchInput} searchInput={searchInput} />
                </div>
       <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 mt-3">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <thead className="text-xs text-gray-700 uppercase bg-gray-500 dark:bg-gray-200 dark:text-gray-400">
           <tr>
             {head.map((item) => (
-              <th scope="col" key={item} className="px-6 py-3">
+              <th scope="col" key={item} className="px-6 py-3 text-black">
                 {item}
               </th>
             ))}
@@ -72,7 +69,7 @@ const HomeOwners = ({ userType }) => {
           {userType === "owner"
             ? users.filter((item1)=>item1.name. toLowerCase()
             .includes(searchInput.toLowerCase())).map((item) => (
-                <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                <tr className="bg-white border-b dark:bg-white dark:border-gray-300 text-gray-700">
                   {console.log(item.isBanned, "kklkl")}
 
                   <td className="px-6 py-4">{item.name}</td>
@@ -94,7 +91,7 @@ const HomeOwners = ({ userType }) => {
               ))
             : pros.filter((item1)=>item1.name. toLowerCase()
             .includes(searchInput.toLowerCase())).map((item) => (
-                <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                <tr className="bg-white border-b dark:bg-white dark:border-gray-300 text-gray-600">
                   {console.log(item.isBanned, "kklkl")}
 
                   <td className="px-6 py-4">{item.name}</td>

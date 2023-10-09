@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { adminLogin } from '../../../Redux/AdminAuth.js';
-import adminAxios from '../../../Axios/adminAxios.js';
+import CreateAdminInstance from '../../../Axios/adminAxios.js';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Signin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const adminAxios = CreateAdminInstance()
 
   const navigate = useNavigate();
   const dispatch = useDispatch();

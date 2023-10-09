@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
-import proAxios from "../../../Axios/proAxios";
+import CreateProInstance from "../../../Axios/proAxios";
+import CreateUserInstance from "../../../Axios/userAxios";
 import { userAPI } from "../../../Constants/Api";
 
 const HireOptions = ({ setShow, setCategoryName, Type }) => {
   const [allCategory, setAllCategory] = useState([]);
+  const proAxios = CreateProInstance()
+  const userAxios = CreateUserInstance()
+  const Axios = Type === 'users' ?userAxios:proAxios
 
   useEffect(() => {
-    proAxios.get("/getCategory").then((res) => {
+    Axios.get("/getCategory").then((res) => {
       const getCategory = res.data.category;
       setAllCategory(getCategory);
     });
@@ -29,7 +33,6 @@ const HireOptions = ({ setShow, setCategoryName, Type }) => {
     if (filteredCategory.length === 1) {
       const categoryName = filteredCategory[0].categoryName;
       setCategoryName(categoryName);
-      console.log(categoryName, "==================oo");
     } else {
       console.log("Category not found or multiple categories match the ID.");
     }
@@ -37,9 +40,9 @@ const HireOptions = ({ setShow, setCategoryName, Type }) => {
 
   return (
     <div>
-      <section className={Type === "users" ? "bg-white " : ''}>
+      <section className={Type === "users" ? "bg-white p-20" : ''}>
         {" "}
-        <div className="container mx-auto ">
+        <div className={"container mx-auto  "}>
           <div className={Type === 'users' ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 p-4' :'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8 p-4'}>
             {allCategory.map((item, index) => (
               <div
@@ -47,7 +50,7 @@ const HireOptions = ({ setShow, setCategoryName, Type }) => {
                 key={index}
                 className={`${
                   backgroundColors[index % backgroundColors.length]
-                } p-4 rounded-lg text-center shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-105`}
+                } p-4  rounded-lg text-center shadow-lg hover:shadow-xl transition duration-300 transform hover:scale-105`}
               >
                 <p className=" font-semibold mb-4">{item.categoryName}</p>
                 <div className="w-1/2 mx-auto">

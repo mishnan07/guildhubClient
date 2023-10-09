@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import userAxios from "../../../Axios/userAxios";
+import CreateUserInstance from '../../../Axios/userAxios';
+import CreateProInstance from "../../../Axios/proAxios";
 import { userAPI } from "../../../Constants/Api";
 import "./Profile.css";
 import Options from "../../clients/MiddleContent/Options";
@@ -27,6 +28,11 @@ const Profile = ({ Type, Uuser, token }) => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+
+  const userAxios = CreateUserInstance()
+  const proAxios = CreateProInstance()
+
+  const Axios = Type === 'users'?userAxios:proAxios
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -57,10 +63,7 @@ const Profile = ({ Type, Uuser, token }) => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await userAxios.get("/getPost", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        
+        const response = await Axios.get("/getPost");
         const updatedPosts = response.data.post.map((post) => ({
           ...post,
           liked: false,

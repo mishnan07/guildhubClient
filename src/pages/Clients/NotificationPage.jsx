@@ -6,17 +6,21 @@ import Navbar from '../../components/clients/navbar/Navbar';
 import { ClientLogout } from "../../Redux/ClientAuth";
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import userAxios from "../../Axios/userAxios";
+import CreateUserInstance from "../../Axios/userAxios";
+import CreateProInstance from "../../Axios/proAxios";
 import Notification from "../../components/clients/notification/Notification";
 
 const NotificationPage = () => {
     
-  
+  const userAxios = CreateUserInstance()
+  const proAxios = CreateProInstance()
+
   const location = useLocation();
   const Type = location.pathname.includes('professional') ? 'professional' : 'users';
-
+   
   let home = location.pathname.includes('home')?true:false
   let notification = location.pathname.includes('notification')?true:false
+  const Axios = Type === 'users'?userAxios:proAxios
 
   const [user, setUser] = useState(null);
 
@@ -41,14 +45,9 @@ const NotificationPage = () => {
            try {
             let response
             if(Type === 'users'){
-                response = await userAxios.get('/clientDetails', {
-                    headers: { Authorization: `Bearer ${token}` },
-                  });
+                response = await Axios.get('/clientDetails');
             }else if(Type === 'professional'){
-                response = await userAxios.get('/userDetails', {
-                    headers: { Authorization: `Bearer ${token}` },
-                });
-
+                response = await Axios.get('/userDetails',);
             }
             
              const userDetail= response.data.user;

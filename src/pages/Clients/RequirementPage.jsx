@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Hire from '../../components/clients/hire/Hire'
 import Navbar from '../../components/clients/navbar/Navbar';
-import userAxios from "../../Axios/userAxios";
+import CreateUserInstance from "../../Axios/userAxios";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import HireOptions from "../../components/clients/hire/HireOptions";
@@ -22,15 +22,15 @@ const RequirementPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
    const token = useSelector((state)=>state.ClientAuth.Token)
+   const userAxios = CreateUserInstance()
+
   
   
     useEffect(() => {
       if(token){
        const fetchUserDetails = async () => {
            try {
-             const response = await userAxios.get('/clientDetails', {
-               headers: { Authorization: `Bearer ${token}` },
-             });
+             const response = await userAxios.get('/clientDetails');
              const userDetail= response.data.user;
              setUser(userDetail);
            } catch (error) {
@@ -54,11 +54,11 @@ const RequirementPage = () => {
       
       <div className="w-full md:w-1/2 mt-8 md:mt-0">
         {!show?
+        
         <RequirementShow  Type={Type} user={user} show={setShow} setInterstedPro={setInterstedPro} setRequirementId={setRequirementId} setHiredPros={setHiredPros}/>
         :
         <>
         <div>
-       {console.log(interstPro,requirementId,hiredPros,'//////////////////=============++')}
         </div>
         <ProCards interstPro={interstPro} setShow={setShow} requirementId={requirementId} />
         </>

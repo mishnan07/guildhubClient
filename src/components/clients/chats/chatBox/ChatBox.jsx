@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import userInstance from '../../../../Axios/userAxios';
+import CreateUserInstance from '../../../Axios/userAxios';
 import InputEmoji from 'react-input-emoji';
 import './ChatBox.css';
 
@@ -7,6 +7,8 @@ const ChatBox = ({ chat, currentUserId, setSendMessage, receiveMessage }) => {
   const [userData, setUserData] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
+  const userInstance = CreateUserInstance()
+
 
   useEffect(() => {
     // Fetch user data of the chat partner
