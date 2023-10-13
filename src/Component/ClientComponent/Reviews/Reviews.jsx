@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { IoStar, IoStarHalf } from "react-icons/io5";
 import RateAndReview from "./Review";
-import CreateUserInstance from '../../../Axios/UserAxios';
-import CreateProInstance from "../../../Axios/ProAxios";
+import CreateUserInstance from '../../../Axios/userAxios';
+import CreateProInstance from "../../../Axios/proAxios";
 import ProfilePic from "../ProfilePic/ProfilePic";
 
 const Reviews = ({ LogedUserId, proId ,userType}) => {

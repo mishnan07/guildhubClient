@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import CreateUserInstance from '../../../Axios/UserAxios';
-import CreateProInstance from '../../../Axios/ProAxios';
+import CreateUserInstance from '../../../Axios/userAxios';
+import CreateProInstance from '../../../Axios/proAxios';
 import { ClientLogout } from "../../../Redux/ClientAuth";
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';

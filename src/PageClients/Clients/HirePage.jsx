@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Hire from '../../Component/ClientComponent/HIrePros/Hire';
 
 import Navbar from '../../Component/ClientComponent/NavBar/Navbar'
-import CreateUserInstance from "../../Axios/UserAxios";
+import CreateUserInstance from "../../Axios/userAxios";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import HireOptions from '../../Component/ClientComponent/HIrePros/HireOptions'

@@ -1,7 +1,7 @@
 import React from 'react'
 import {GoogleLogin, useGoogleLogin} from '@react-oauth/google'
 import {decodeJwt} from 'jose'
-import CreateUserInstance from '../../../Axios/UserAxios'
+import CreateUserInstance from '../../../Axios/userAxios'
 import { useDispatch } from 'react-redux'
 import { ClientLogin } from '../../../Redux/ClientAuth'
 import { useNavigate } from 'react-router-dom'

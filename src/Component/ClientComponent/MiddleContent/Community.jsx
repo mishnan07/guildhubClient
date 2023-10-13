@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import CreateUserInstance from '../../../Axios/UserAxios';
-import CreateProInstance from "../../../Axios/ProAxios";
+import CreateUserInstance from '../../../Axios/userAxios';
+import CreateProInstance from "../../../Axios/proAxios";
 import { userAPI } from "../../../Constants/Api";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";

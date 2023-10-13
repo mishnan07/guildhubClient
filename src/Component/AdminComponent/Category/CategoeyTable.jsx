@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import CreateProInstance from '../../../Axios/proAxios';
 import SearchBar from '../../ClientComponent/MiddleContent/SearchBar';
 import CreateAdminInstance from '../../../Axios/adminAxios';
 import { toast, ToastContainer } from 'react-toastify';
@@ -16,7 +15,6 @@ const CategoeyTable = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
-  const proAxios = CreateProInstance()
 
 
   // Calculate the index range for items on the current page

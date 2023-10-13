@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import CreateUserInstance from '../../../Axios/UserAxios';
-import CreateProInstance from "../../../Axios/ProAxios";
+import CreateUserInstance from '../../../Axios/userAxios';
+import CreateProInstance from "../../../Axios/proAxios";
 import { FaArrowLeft } from "react-icons/fa";
 import {io} from 'socket.io-client'
 import ProfilePic from "../Profile/ProfilePics";

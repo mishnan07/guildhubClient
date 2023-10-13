@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart } from 'recharts';
 import { useSelector } from 'react-redux';
-import CreateAdminInstance from '../../../Axios/adminAxios';
+import CreateAdminInstance from '../../../Axios/adminAxios'
 
 
 
@@ -15,10 +15,8 @@ function LineChartComponent() {
 
   const [suce, setSuc] = useState(1);
 
-  const [seto, setSeto] = useState(false);
   const [pros, setPros] = useState([]);
   const [users, setUsers] = useState([]);
-  const token = useSelector((state) => state.AdminAuth.Token);
   const [dataForChart, setDataForChart] = useState([]);
   const adminAxios = CreateAdminInstance()
   

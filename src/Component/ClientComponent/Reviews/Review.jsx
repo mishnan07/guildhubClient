@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { IoStar } from 'react-icons/io5';
-import CreateUserInstance from '../../../Axios/UserAxios';
+import CreateUserInstance from '../../../Axios/userAxios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 

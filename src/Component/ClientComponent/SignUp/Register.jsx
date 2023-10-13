@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import CreateUserInstance from '../../../Axios/UserAxios';
+import CreateUserInstance from '../../../Axios/userAxios';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

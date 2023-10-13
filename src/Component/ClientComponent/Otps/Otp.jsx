@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import CreateUserInstance from '../../../Axios/UserAxios';
+import CreateUserInstance from '../../../Axios/userAxios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import CreateProInstance from "../../../Axios/ProAxios";
+import CreateProInstance from "../../../Axios/proAxios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProfilePictureUpload from "./ProfilePictureUpload";
-import CreateUserInstance from '../../../Axios/UserAxios';
+import CreateUserInstance from '../../../Axios/userAxios';
 
 const EditProfile = ({ user, Type,changeState }) => {
   const [name, setName] = useState("");

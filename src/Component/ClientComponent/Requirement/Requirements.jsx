@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Dropzone from 'react-dropzone';
-import CreateUserInstance from '../../../Axios/UserAxios';
+import CreateUserInstance from '../../../Axios/userAxios';
 import { useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

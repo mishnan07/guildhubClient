@@ -1,6 +1,6 @@
 import React from 'react'
-import CreateUserInstance from '../../../Axios/UserAxios';
-import CreateProInstance from '../../../Axios/ProAxios';
+import CreateUserInstance from '../../../Axios/userAxios';
+import CreateProInstance from '../../../Axios/proAxios';
 import { useSelector } from 'react-redux';
 
 const FollowButton = ({item,userId,userType,userDetail,token,setSuc,suce}) => {

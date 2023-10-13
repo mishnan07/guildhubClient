@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Otp from '../Otps/Otp'
-import userAxios from '../../../Axios/UserAxios'
+import userAxios from '../../../Axios/userAxios'
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { ClientLogin, ClientId } from "../../../Redux/ClientAuth.js";

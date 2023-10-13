@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FaCloudUploadAlt } from 'react-icons/fa';
-import CreateProInstance from '../../../Axios/ProAxios';
-import CreateUserInstance from '../../../Axios/UserAxios';
+import CreateProInstance from '../../../Axios/proAxios';
+import CreateUserInstance from '../../../Axios/userAxios';
 import { userAPI } from "../../../Constants/Api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

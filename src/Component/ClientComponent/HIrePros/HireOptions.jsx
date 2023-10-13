@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import CreateProInstance from "../../../Axios/ProAxios";
-import CreateUserInstance from "../../../Axios/UserAxios";
+import CreateProInstance from "../../../Axios/proAxios";
+import CreateUserInstance from "../../../Axios/userAxios";
 import { userAPI } from "../../../Constants/Api";
 
 const HireOptions = ({ setShow, setCategoryName, Type }) => {

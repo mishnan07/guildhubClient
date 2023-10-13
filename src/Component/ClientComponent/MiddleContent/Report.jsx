@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import CreateUserInstance from '../../../Axios/UserAxios';
-import CreateProInstance from '../../../Axios/ProAxios';
+import CreateUserInstance from '../../../Axios/userAxios';
+import CreateProInstance from '../../../Axios/proAxios';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSelector } from "react-redux";

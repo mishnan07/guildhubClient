@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import CreateUserInstance from "../../../Axios/UserAxios.js";
+import CreateUserInstance from "../../../Axios/userAxios.js";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { ClientLogin, ClientId } from "../../../Redux/ClientAuth.js";
@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Google from "../Google/Google.jsx";
 import { FaStar } from "react-icons/fa";
 import Nav from "../NavBar/Nav.jsx";
-import CreateProInstance from "../../../Axios/ProAxios.js";
+import CreateProInstance from "../../../Axios/proAxios.js";
 import { ProId, proLogin } from "../../../Redux/proAuth.js";
 
 const Login = () => {
