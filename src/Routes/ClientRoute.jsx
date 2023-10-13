@@ -7,7 +7,7 @@ import HirePage from "../PageClients/Clients/HirePage.jsx";
 import RequirementPage from "../PageClients/Clients/RequirementPage.jsx";
 import OtpLogin from '../Component/ClientComponent/SignIn/OtpLogin.jsx'
 import ForgetPass from '../Component/ClientComponent/SignIn/ForgetPass.jsx'
-import ChatMessages from "../Component/ClientComponent/chatMessage/ChatMessage.jsx";
+import ChatMessages from "../Component/ClientComponent/ChatMessage/ChatMessage.jsx";
 import MainPages from "../PageClients/Clients/MainPages.jsx";
 import UserProfile from "../Component/ClientComponent/Profile/UserProfile.jsx";
 import Nodata from "../Component/ClientComponent/Nodata/Nodata.jsx";
