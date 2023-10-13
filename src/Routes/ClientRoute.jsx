@@ -39,6 +39,10 @@ function ClientRoute() {
           path="/login"
           element={isAuth ? <Navigate to="/home" /> : <Signin />}
         />
+         <Route
+          path="/"
+          element={isAuth ? <Navigate to="/home" /> : <Signin />}
+        />
     
          <Route
           path="/hire"
