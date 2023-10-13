@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ThreeDotButton from "./ThreeDotButton";
-import CreateUserInstance from "../../../Axios/userAxios";
-import CreateProInstance from "../../../Axios/proAxios";
+import CreateUserInstance from "../../../Axios/UserAxios";
+import CreateProInstance from "../../../Axios/ProAxios";
 import Report from "./Report";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

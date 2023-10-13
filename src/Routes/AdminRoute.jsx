@@ -3,11 +3,11 @@ import { Navigate, Route,Routes } from 'react-router-dom'
 import { useSelector } from "react-redux";
 
 
-import Signin from '../components/admin/login/Signin'
-import Home from '../pages/Admin/Home'
-import Category from '../pages/Admin/Category'
-import HomeOwners from '../pages/Admin/UserList'
-import ReportedPost from '../pages/Admin/ReportedPost'
+import Signin from '../Component/AdminComponent/Login/Signin'
+import Home from '../PageClients/Admin/Home'
+import Category from '../PageClients/Admin/Category';
+import HomeOwners from '../PageClients/Admin/UserList'
+import ReportedPost from '../PageClients/Admin/ReportedPost'
 
 const AdminRoute = () => {
   const isAuth = useSelector((state) => state.AdminAuth.Token);

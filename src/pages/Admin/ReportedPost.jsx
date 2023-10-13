@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Header from '../../components/admin/Header/Header';
-import Sidebar from '../../components/admin/sidebars/Sidebar';
-import ReportedPosts from '../../components/admin/posts/ReportedPost';
+import Header from '../../Component/AdminComponent/Header/Header';
+import Sidebar from '../../Component/AdminComponent/SideBars/Sidebar';
+import ReportedPosts from '../../Component/AdminComponent/Posts/ReportedPost';
 const ReportedPost = () => {
   return (
     <div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import CreateUserInstance from '../../../Axios/userAxios';
-import CreateProInstance from '../../../Axios/proAxios';
+import CreateUserInstance from '../../../Axios/UserAxios';
+import CreateProInstance from '../../../Axios/ProAxios';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import Navbar from '../navbar/Navbar';

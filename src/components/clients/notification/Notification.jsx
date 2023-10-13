@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import {io} from 'socket.io-client'
-import CreateUserInstance from '../../../Axios/userAxios';
-import CreateProInstance from '../../../Axios/proAxios';
+import CreateUserInstance from '../../../Axios/UserAxios';
+import CreateProInstance from '../../../Axios/ProAxios';
 import ProfilePic from '../ProfilePic/ProfilePic';
 import NoDataFound from '../../NoDataFound/NoDataFound';
 import Modal from '../../professionals/Modal/Modal';

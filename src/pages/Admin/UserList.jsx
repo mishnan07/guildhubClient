@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Header from '../../components/admin/Header/Header';
-import Sidebar from '../../components/admin/sidebars/Sidebar';
-import HomeOwner from '../../components/admin/users/UsersList';
+import Header from '../../Component/AdminComponent/Header/Header';
+import Sidebar from '../../Component/AdminComponent/SideBars/Sidebar';
+import UsersList from '../../Component/AdminComponent/users/UsersList';
 
 const HomeOwners = () => {
     const [userType,setUserType] = useState('owner')
@@ -20,7 +20,7 @@ return(
             <button className='bg-zinc-50 rounded p-1 mr-3' onClick={()=>handleUser('owner')}>Home Owners</button>
             <button className='bg-zinc-50 rounded p-1' onClick={()=>handleUser('pro')}>Professionals</button>
         </div>
-      <HomeOwner userType={userType}  className='w-full md:w-3/4 lg:w-4/5' />
+      <UsersList userType={userType}  className='w-full md:w-3/4 lg:w-4/5' />
 
       </div>
     </div>

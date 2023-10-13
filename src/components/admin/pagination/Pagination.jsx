@@ -1,5 +1,8 @@
 import React from "react";
 
+
+//==========================
+
 const Pagination = ({ currentPage, totalPages, onPageChange, page }) => {
   const handlePrevPage = () => {
     if (currentPage > 1) {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import CreateUserInstance from '../../../Axios/userAxios';
-import CreateProInstance from "../../../Axios/proAxios";
+import CreateUserInstance from '../../../Axios/UserAxios';
+import CreateProInstance from "../../../Axios/ProAxios";
 import ProfilePics from "../../clients/Profile/ProfilePics";
 import { FaArrowLeft } from "react-icons/fa";
 import { userAPI } from "../../../Constants/Api";

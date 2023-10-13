@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import CreateUserInstance from '../../../Axios/userAxios';
-import CreateProInstance from "../../../Axios/proAxios";
+import CreateUserInstance from '../../../Axios/UserAxios';
+import CreateProInstance from "../../../Axios/ProAxios";
 import { userAPI } from "../../../Constants/Api";
 import "./Profile.css";
 import Options from "../../clients/MiddleContent/Options";

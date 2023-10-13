@@ -1,25 +1,16 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom"; // Added Navigate for conditional routing
-import Register from "../components/clients/register/Register.jsx";
-import Signin from "../components/clients/signin/Signin.jsx";
+import Register from "../Component/ClientComponent/SignUp/Register.jsx";
+import Signin from "../Component/ClientComponent/SignIn/Login.jsx"
 import { useSelector } from "react-redux";
-import HomePage from "../pages/Clients/HomePage.jsx";
-import CommunityPage from "../pages/Clients/CommunityPage.jsx";
-import ProfilePages from "../pages/Clients/ProfilePage.jsx";
-import HirePage from "../pages/Clients/HirePage.jsx";
-import RequirementShow from "../components/clients/requirement/RequirementShow.jsx";
-import RequirementPage from "../pages/Clients/RequirementPage.jsx";
-import FollowPage from "../pages/Clients/FollowPage.jsx";
-import PhoneSignin from "../components/clients/signin/PhoneSignin.jsx";
-import OtpLogin from "../components/clients/signin/OtpLogin.jsx";
-import ForgetPass from "../components/clients/signin/ForgetPass.jsx";
-import ChatMessages from "../components/clients/chatMessage/ChatMessage.jsx";
-import Notification from "../components/clients/notification/Notification.jsx";
-import NotificationPage from "../pages/Clients/NotificationPage.jsx";
-import MainPage from "../pages/Clients/MainPage.jsx";
-import UserProfile from "../components/clients/Profile/UserProfile.jsx";
-import VideoRoom from "../components/clients/VideoCall/VideoRoom.jsx";
-import Nodata from "../components/clients/Nodata/Nodata.jsx";
+import HirePage from "../PageClients/Clients/HirePage.jsx";
+import RequirementPage from "../PageClients/Clients/RequirementPage.jsx";
+import OtpLogin from '../Component/ClientComponent/SignIn/OtpLogin.jsx'
+import ForgetPass from '../Component/ClientComponent/SignIn/ForgetPass.jsx'
+import ChatMessages from "../Component/ClientComponent/chatMessage/ChatMessage.jsx";
+import MainPages from "../PageClients/Clients/MainPages.jsx";
+import UserProfile from "../Component/ClientComponent/Profile/UserProfile.jsx";
+import Nodata from "../Component/ClientComponent/Nodata/Nodata.jsx";
 
 function ClientRoute() {
   const isAuth = useSelector((state) => state.ClientAuth.Token);
@@ -34,11 +25,11 @@ function ClientRoute() {
        
         <Route
           path="/home"
-          element={isAuth ? <MainPage /> : <Navigate to="/login" />}
+          element={isAuth ? <MainPages /> : <Navigate to="/login" />}
         />
         <Route
           path="/community"
-          element={isAuth ? <MainPage /> : <Navigate to="/login" />}
+          element={isAuth ? <MainPages /> : <Navigate to="/login" />}
         />
         <Route
           path="/register"
@@ -48,10 +39,7 @@ function ClientRoute() {
           path="/login"
           element={isAuth ? <Navigate to="/home" /> : <Signin />}
         />
-        <Route
-          path="/profile"
-          element={isAuth ? <ProfilePages /> : <Navigate to="/login" />}
-        />
+    
          <Route
           path="/hire"
           element={isAuth ? <HirePage /> : <Navigate to="/login" />}
@@ -60,10 +48,7 @@ function ClientRoute() {
           path="/requirement"
           element={isAuth ? <RequirementPage /> : <Navigate to="/login" />}
         />
-        <Route
-          path="/follow"
-          element={isAuth ? <FollowPage /> : <Navigate to="/login" />}
-        />
+    
         <Route
           path="/otpLogin"
           element={isAuth ? <Navigate to="/login" /> : <OtpLogin />}
@@ -89,7 +74,7 @@ function ClientRoute() {
         
         <Route
           path="/notification"
-          element={isAuth ? <NotificationPage />: <Navigate to="/login" />}
+          element={isAuth ? <MainPages />: <Navigate to="/login" />}
         />
 
          <Route
@@ -97,11 +82,7 @@ function ClientRoute() {
           element={ <UserProfile />}
         />
 
-         <Route
-          path="/videocall"
-          element={ <VideoRoom />}
-        />
-
+        
         
         
       </Routes>

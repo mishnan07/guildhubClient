@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Profile from '../../components/professionals/Profile.jsx/Profile'
 import Navbar from '../../components/clients/navbar/Navbar';
-import CreateUserInstance from '../../Axios/userAxios';
+import CreateUserInstance from '../../Axios/UserAxios';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Follow from '../../components/clients/Follow/Follow';

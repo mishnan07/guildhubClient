@@ -1,20 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import adminAxios from '../../Axios/adminAxios'
 import { useNavigate } from 'react-router-dom'
-import Post from '../../components/professionals/post/Post'
-import CustomModal from '../../components/modal/CustomModal'
 
-import ImageUpload from '../../components/professionals/post/ImageUpload'
-import CreateCategory from '../../components/admin/category/CreateCategory'
+
 import { adminLogout } from '../../Redux/AdminAuth'
 import Sidebar from '../../components/admin/sidebars/Sidebar'
 import Header from '../../components/admin/Header/Header'
-import Report from '../../components/clients/MiddleContent/Report'
-import LocationSearchInput from '../../components/clients/LocationSearchInput'
-import RequirementShow from '../../components/clients/requirement/RequirementShow'
-import ChatMessages from '../../components/clients/chatMessage/ChatMessage'
-import { FaChartArea } from 'react-icons/fa'
+
 import Dashboard from '../../components/admin/Dashboard/Dashboard'
 
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import Header from '../../components/admin/Header/Header'
 import Sidebar from '../../components/admin/sidebars/Sidebar'
-import CategoeyTable from '../../components/admin/category/CategoeyTable'
+import CategoeyTable from '../../Component/AdminComponent/category/CategoeyTable'
 
 
 const Category = () => {

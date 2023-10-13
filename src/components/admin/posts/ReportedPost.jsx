@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import CreateAdminInstance from '../../../Axios/adminAxios';
+import CreateAdminInstance from '../../../Axios/AdminAxios';
 import { userAPI } from "../../../Constants/Api";
 import CustomModal from "../../modal/CustomModal";
 import { useSelector } from "react-redux";
