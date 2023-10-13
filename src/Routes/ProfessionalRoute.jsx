@@ -4,7 +4,7 @@ import Register from "../Component/ClientComponent/Register/Register";
 import Signin from "../Component/ClientComponent/SignIn/Login";
 import { useSelector } from "react-redux";
 import RequirementPage from "../PageClients/Professionals/RequirementPage";
-import ChatMessages from "../Component/ClientComponent/chatMessage/ChatMessage";
+import ChatMessages from "../Component/ClientComponent/ChatMessage/ChatMessage";
 
 import MainPages from "../PageClients/Clients/MainPages";
 import Nodata from "../Component/ClientComponent/Nodata/Nodata";
