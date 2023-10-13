@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from "react";
-import CreateUserInstance from '../../../Axios/UserAxios';
-import CreateProInstance from "../../../Axios/ProAxios";
+import CreateUserInstance from '../../../Axios/userAxios';
+import CreateProInstance from "../../../Axios/proAxios";
 import { userAPI } from "../../../Constants/Api";
 import "./Profile.css";
-import Options from "../../clients/MiddleContent/Options";
-import RequirementShow from "../../clients/requirement/RequirementShow";
-import MiddleContent from "../../clients/MiddleContent/MiddleContent";
+import RequirementShow from "../../ClientComponent/Requirement/RequirementShow";
+import MiddleContent from "../../ClientComponent/MiddleContent/MiddleContent";
 import { useLocation } from "react-router-dom";
 import Modal from "../../ClientComponent/Modal/Modal";
-import Register from "../../ClientComponent/Register/Register";
 import EditProfile from "../../ClientComponent/Profile/EditProfile";
 import CustomModal from "../../ClientComponent/Modal/CustomModal";
 import ProfilePictureUpload from "../../ClientComponent/Profile/ProfilePictureUpload";
-import { FaArrowCircleLeft, FaArrowLeft, FaEllipsisV, FaTimes } from "react-icons/fa";
-import UserProfile from "../../clients/Profile/UserProfile";
+import { FaTimes } from "react-icons/fa";
 
 const Profile = ({ Type, Uuser, token }) => {
   const [post, setPost] = useState([]);

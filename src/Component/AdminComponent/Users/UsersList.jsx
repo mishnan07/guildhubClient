@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import CreateAdminInstance from '../../../Axios/AdminAxios';
-import CreateUserInstance from "../../../Axios/UserAxios";
+import CreateAdminInstance from '../../../Axios/adminAxios';
+import CreateUserInstance from "../../../Axios/userAxios";
 import { useSelector } from "react-redux";
 import SearchBar from "../../ClientComponent/MiddleContent/SearchBar";
 import { toast, ToastContainer } from "react-toastify";
