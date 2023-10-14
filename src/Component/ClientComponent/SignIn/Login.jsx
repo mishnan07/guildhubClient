@@ -25,8 +25,9 @@ const Login = () => {
   const proAxios = CreateProInstance()
 
   const handleSubmit = async(e) => {
-    console.log(userType,'pppppppppppppp',email,password);
     e.preventDefault();
+
+    console.log(userType,'pppppppppppppp',email,password);
     try {
       
     const isValidEmail = (email) => {
@@ -51,7 +52,9 @@ const Login = () => {
 
 
    if(userType==='users'){
+    console.log('usrrrrrrrrrr');
    const  res=await userAxios.post("/login", { email, password })
+   console.log(res,'llllllll');
    const result = res.data.userResponse;
    if (result.status === true) {
      const token = result.token;

@@ -12,6 +12,7 @@ import PostText from "./PostText";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PostNav from "./PostNav";
+import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
 
 const MiddleContent = ({ Type, user, token, userID, saveduserID, saveds,specificPost }) => {
   const [post, setPost] = useState([]);
@@ -19,14 +20,13 @@ const MiddleContent = ({ Type, user, token, userID, saveduserID, saveds,specific
   const [users, setUsers] = useState([]);
   const [state, setState] = useState(false);
   const [commentBoxes, setCommentBoxes] = useState({});
-  const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
   const [deleatedId, setDeleatedId] = useState("");
-  const [opennewMessageReport, setOpenReport] = useState(false);
   const [searchInput, SetSearchInput] = useState("");
-  const [newMessages, setNewMessage] = useState("");
   const userAxios = CreateUserInstance()
   const proAxios = CreateProInstance()
+  const [isLoading, setIsLoading] = useState(false);
+
 
  const Axios = Type==='users'?userAxios:proAxios
   const navigate = useNavigate();
@@ -41,6 +41,7 @@ const MiddleContent = ({ Type, user, token, userID, saveduserID, saveds,specific
   useEffect(() => {
     const fetchPosts = async () => {
       try {
+        setIsLoading(true)
         const response = await Axios.get("/getPost");
         const updatedPosts = response.data.post.map((post) => ({
           ...post,
@@ -60,12 +61,10 @@ const MiddleContent = ({ Type, user, token, userID, saveduserID, saveds,specific
           const posteds = updatedPosts.filter(
             (item) => !item.isBanned && item.isActive && item.proId === user._id
           );
-          console.log(posteds);
           setPost(posteds);
         }
 
         if (saveduserID) {
-          console.log(saveduserID, "ppppppppp");
           const savedPost = updatedPosts.filter((obj1) =>
             saveds.some(
               (obj2) =>
@@ -80,6 +79,7 @@ const MiddleContent = ({ Type, user, token, userID, saveduserID, saveds,specific
         setPros(response.data.pros);
         setComments(response.data.comments);
         setUsers(response.data.users);
+        setIsLoading(false)
       } catch (error) {
         console.log("Error fetching posts:", error);
       }
@@ -141,15 +141,7 @@ const MiddleContent = ({ Type, user, token, userID, saveduserID, saveds,specific
     return foundPro ? foundPro.name : false;
   };
 
-  const proPic = (proId) => {
-    const foundPro = pros.find((pro) => pro._id === proId);
-    return foundPro ? foundPro.profilePic : false;
-  };
-
-  const userName = (userID) => {
-    const foundUser = users.find((user) => user._id === userID);
-    return foundUser ? foundUser.name : false;
-  };
+ 
 
   const location = (proId) => {
     const foundPro = pros.find((pro) => pro._id === proId);
@@ -265,6 +257,10 @@ const MiddleContent = ({ Type, user, token, userID, saveduserID, saveds,specific
 
     }
       {/* Post Content datas */}
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+      <>
       {(datas.length === 0 && <NoDataFound />) ||
         datas
           .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
@@ -342,6 +338,8 @@ const MiddleContent = ({ Type, user, token, userID, saveduserID, saveds,specific
               )}
             </div>
           ))}
+          </>
+      )}
     </div>
   );
 };

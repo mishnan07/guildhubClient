@@ -95,7 +95,6 @@ const LeftSidebar = ({ Type, user }) => {
 }
 
 
-{user&&
       <ul className="nav-news-feed  space-y-2 p-5 bg-white mt-6 text-purple-800 rounded-md shadow-lg ">
         <li className="flex items-center border-b">
           <i className="icon ion-ios-paper text-blue-500"></i>
@@ -159,9 +158,8 @@ const LeftSidebar = ({ Type, user }) => {
         {/* Add more nav links */}
         {/* ... */}
       </ul>
-}
 
-      {user &&
+
       <div id="chat-block" className="mt-6">
         <div className="title text-blue-500 font-semibold mb-2">
           Chat online
@@ -180,7 +178,6 @@ const LeftSidebar = ({ Type, user }) => {
         
         </ul>
       </div>
-}
     </div>
   );
 };

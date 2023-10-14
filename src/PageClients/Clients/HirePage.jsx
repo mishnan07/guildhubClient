@@ -21,6 +21,7 @@ const HirePage = () => {
     const userAxios = CreateUserInstance()
 
 
+
     useEffect(() => {
         if (token) {
             const fetchUserDetails = async () => {

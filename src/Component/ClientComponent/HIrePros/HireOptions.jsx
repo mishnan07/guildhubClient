@@ -2,18 +2,24 @@ import React, { useEffect, useState } from "react";
 import CreateProInstance from "../../../Axios/proAxios";
 import CreateUserInstance from "../../../Axios/userAxios";
 import { userAPI } from "../../../Constants/Api";
+import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
+
 
 const HireOptions = ({ setShow, setCategoryName, Type }) => {
   const [allCategory, setAllCategory] = useState([]);
   const proAxios = CreateProInstance()
   const userAxios = CreateUserInstance()
   const Axios = Type === 'users' ?userAxios:proAxios
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true)
     Axios.get("/getCategory").then((res) => {
       const getCategory = res.data.category;
       setAllCategory(getCategory);
     });
+    setIsLoading(false)
+
   }, []);
 
   // Define an array of background colors
@@ -42,6 +48,9 @@ const HireOptions = ({ setShow, setCategoryName, Type }) => {
     <div>
       <section className={Type === "users" ? "bg-white p-20" : ''}>
         {" "}
+        {isLoading ? (
+        <LoadingSpinner />
+      ) : (
         <div className={"container mx-auto  "}>
           <div className={Type === 'users' ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 p-4' :'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8 p-4'}>
             {allCategory.map((item, index) => (
@@ -64,6 +73,7 @@ const HireOptions = ({ setShow, setCategoryName, Type }) => {
             ))}
           </div>
         </div>
+      )}
       </section>
     </div>
   );
