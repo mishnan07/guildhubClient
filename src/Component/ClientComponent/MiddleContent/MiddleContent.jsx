@@ -37,7 +37,7 @@ const MiddleContent = ({ Type, user, token, userID, saveduserID, saveds,specific
 
   const userId = user ? user._id : "";
   const userType = Type ? Type : "";
-//----=====///////////
+
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -257,10 +257,7 @@ const MiddleContent = ({ Type, user, token, userID, saveduserID, saveds,specific
 
     }
       {/* Post Content datas */}
-      {isLoading ? (
-        <LoadingSpinner />
-      ) : (
-      <>
+   
       {(datas.length === 0 && <NoDataFound />) ||
         datas
           .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
@@ -338,8 +335,7 @@ const MiddleContent = ({ Type, user, token, userID, saveduserID, saveds,specific
               )}
             </div>
           ))}
-          </>
-      )}
+    
     </div>
   );
 };

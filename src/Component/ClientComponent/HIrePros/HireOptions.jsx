@@ -3,6 +3,8 @@ import CreateProInstance from "../../../Axios/proAxios";
 import CreateUserInstance from "../../../Axios/userAxios";
 import { userAPI } from "../../../Constants/Api";
 import LoadingSpinner from "../../LoadingSpinner/LoadingSpinner";
+import SearchBar from "../MiddleContent/SearchBar";
+import NoDataFound from "../../NoDataFound/NoDataFound";
 
 
 const HireOptions = ({ setShow, setCategoryName, Type }) => {
@@ -11,6 +13,8 @@ const HireOptions = ({ setShow, setCategoryName, Type }) => {
   const userAxios = CreateUserInstance()
   const Axios = Type === 'users' ?userAxios:proAxios
   const [isLoading, setIsLoading] = useState(false);
+  const [searchInput, SetSearchInput] = useState("");
+
 
   useEffect(() => {
     setIsLoading(true)
@@ -44,8 +48,16 @@ const HireOptions = ({ setShow, setCategoryName, Type }) => {
     }
   };
 
+  const filteredItems = allCategory.filter((item) => {
+    return item.categoryName.toLowerCase().includes(searchInput.toLowerCase());
+  });
+  
+
   return (
     <div>
+       <div className=" create-post bg-white p-4 rounded-lg shadow-md mb-5">
+        <SearchBar SetSearchInput={SetSearchInput} searchInput={searchInput} />
+        </div>
       <section className={Type === "users" ? "bg-white p-20" : ''}>
         {" "}
         {isLoading ? (
@@ -53,7 +65,7 @@ const HireOptions = ({ setShow, setCategoryName, Type }) => {
       ) : (
         <div className={"container mx-auto  "}>
           <div className={Type === 'users' ? 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 p-4' :'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8 p-4'}>
-            {allCategory.map((item, index) => (
+          {(filteredItems.length === 0 && <NoDataFound />) || filteredItems.map((item, index) => (
               <div
                 onClick={() => detail(item._id)}
                 key={index}

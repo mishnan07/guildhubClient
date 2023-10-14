@@ -9,18 +9,34 @@ import ProfilePic from '../ProfilePic/ProfilePic';
 import { userAPI } from '../../../Constants/Api';
 import EmojiInput from '../InputEmoji/EmojiInput';
 import SearchBar from '../MiddleContent/SearchBar';
+import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner';
 
-const ContactList = ({ setReceiver, users, pros, seReciverId, userId, FetchChats,state }) => {
+const ContactList = ({ setReceiver, users, pros, seReciverId, userId, FetchChats,isLoading }) => {
   const [all, setAll] = useState([]);
   const profile = "/images/user_149071.png";
   const [searchInput, SetSearchInput] = useState("");
   const location = useLocation();
 
 
-  useEffect(() => {   
+  useEffect(() => { 
     const combinedArray = [...pros, ...users];
     setAll(combinedArray);
   }, [users, pros, userId]);
+
+  const details = (specificId, value) => {
+    let idExists = pros.find((pro) => pro._id === specificId);
+
+    if (!idExists) {
+      idExists = users.find((user) => user._id === specificId);
+    }
+
+    if (idExists) {
+        return idExists.name;
+      
+     
+    }
+    return "";
+  };
 
   useEffect(()=>{
     const queryParams = new URLSearchParams(location.search);
@@ -33,6 +49,7 @@ const ContactList = ({ setReceiver, users, pros, seReciverId, userId, FetchChats
        FetchChats(receiverId);
     }
   },[])
+
 
   const handleUserClick = async (contact) => {
     try {
@@ -59,6 +76,9 @@ const ContactList = ({ setReceiver, users, pros, seReciverId, userId, FetchChats
       <SearchBar SetSearchInput={SetSearchInput} searchInput={searchInput} />
       </div>
 
+      {isLoading && isLoading? (
+        <LoadingSpinner />
+      ) : (
       <ul>
         {datas.map((item, index) => (
           <li
@@ -86,6 +106,7 @@ const ContactList = ({ setReceiver, users, pros, seReciverId, userId, FetchChats
           </li>
         ))}
       </ul>
+      )}
     </div>
   );
 };
@@ -103,6 +124,8 @@ const ChatMessages = () => {
   const [state, setState] = useState(false);
   const userAxios = CreateUserInstance()
   const proAxios = CreateProInstance()
+  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading1, setIsLoading1] = useState(false);
 
 
 
@@ -116,9 +139,11 @@ const ChatMessages = () => {
 
   const fetchPosts = async () => {
     try {
-      const response = await Axios.get('/getPost');
+      setIsLoading(true)
+      const response = await Axios.get('/usersAndpros');
       setPros(response.data.pros);
       setUsers(response.data.users);
+      setIsLoading(false)
     } catch (error) {
       console.error('Error fetching posts:', error);
     }
@@ -153,18 +178,20 @@ socket.on(id,(msg)=> {
 
   const FetchChats = async (receverId) => {
     try {
+      setIsLoading1(true)
       const response = await Axios.get(`/FetchChats/${id}/${receverId}`);
       const match = response.data.match;
       const newMessage = [].concat(...match.map((conversation) => conversation.messages));
       setChatMessages(newMessage);
+      setIsLoading1(false)
     } catch (error) {
       console.error('Error fetching chats:', error);
     }
   };
 
-  useEffect(()=>{
-    FetchChats(receverId)
-  },[receverId])
+  // useEffect(()=>{
+  //   FetchChats(receverId)
+  // },[receverId])
 
  
 
@@ -177,8 +204,7 @@ socket.on(id,(msg)=> {
       receiverId: msg.receiverId,
       receiverType: msg.receiverType,
     };
-    console.log(chatMessages,'ooooooooooo');
-    console.log(newMessage,'new =========');
+  
     setChatMessages([...chatMessages,newMessage]);
   };
 
@@ -209,15 +235,7 @@ socket.on(id,(msg)=> {
     }
   };
 
-  const userName = (userID) => {
-    const foundUser = users.find((user) => user._id === userID);
-    return foundUser ? foundUser.name : false;
-  };
 
-  const proName = (proId) => {
-    const foundPro = pros.find((pro) => pro._id === proId);
-    return foundPro ? foundPro.name : false;
-  };
 
   const formatTimestamp = (timestamp) => {
     const currentTime = new Date();
@@ -245,7 +263,7 @@ socket.on(id,(msg)=> {
       <div className='w-full h-20'></div>
 
       <div className='flex h-[800px] sm-h-[600px] md:h-[650px] md:px-36 '>
-        <ContactList setReceiver={setReceiver} users={users} pros={pros} seReciverId={setReceiverId} userId={id} FetchChats={FetchChats} state={setState} />
+        <ContactList setReceiver={setReceiver} users={users} pros={pros} seReciverId={setReceiverId} userId={id} FetchChats={FetchChats}  isLoading={isLoading} />
         <div className="w-3/4 p-4 bg-white rounded-r-lg ">
           <div className="border rounded-lg p-4 h-full">
             <div className="flex items-center  mb-4">
@@ -255,10 +273,12 @@ socket.on(id,(msg)=> {
 
             </div>
             <div className="border-t border-gray-300 h-3/4 overflow-y-auto">
-
+            {isLoading1 ? (
+        <LoadingSpinner />
+      ) : (
+     <>
               {chatMessages.map((message, index) => (
                 <div key={index} className="mb-2">
-                  {console.log(message.senderId === id,'pppppp ====== id' )}
                   <div className={`text-${message.senderId === id ? 'right' : 'left'}`}>
                     <div className='flex-col text-blue-600'>
                     
@@ -282,6 +302,7 @@ socket.on(id,(msg)=> {
                   </div>
                 </div>
               ))}
+     </> )}
             </div>
             <div className="mt-4">
               <div className="w-full p-2 rounded-lg bg-gray-200 focus:outline-none">

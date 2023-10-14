@@ -160,7 +160,7 @@ const LeftSidebar = ({ Type, user }) => {
       </ul>
 
 
-      <div id="chat-block" className="mt-6">
+      {/* <div id="chat-block" className="mt-6">
         <div className="title text-blue-500 font-semibold mb-2">
           Chat online
         </div>
@@ -177,7 +177,7 @@ const LeftSidebar = ({ Type, user }) => {
           </li>
         
         </ul>
-      </div>
+      </div> */}
     </div>
   );
 };

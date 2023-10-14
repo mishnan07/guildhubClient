@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { io } from "socket.io-client";
+import ProfilePic from "../ProfilePic/ProfilePic";
 
 
 const RightSidebar = ({ user }) => {
@@ -40,18 +40,19 @@ const RightSidebar = ({ user }) => {
       navigate("/professional/requirement");
     }
   };
+  const follower = user ? user.following:[]
 
   const profile = "/images/user_149071.png";
 
   const location = useLocation();
-  const senderType = location.pathname.includes("professional")
+  const userType = location.pathname.includes("professional")
     ? "professional"
     : "users";
   const id = useSelector((state) =>
-    senderType === "users" ? state.ClientAuth.Id : state.proAuth.Id
+  userType === "users" ? state.ClientAuth.Id : state.proAuth.Id
   );
 
-  const socket = io.connect("http://localhost:3000");
+ 
 
 
 
@@ -69,22 +70,25 @@ const RightSidebar = ({ user }) => {
             <div className="title text-blue-500 font-semibold mb-2">
               Chat online
             </div>
-            <ul className="online-users list-inline space-x-2">
-              <li className="grid grid-cols-4">
+            <ul className="online-users w-full flex  list-inline ">
+  {follower.map((item) => {
 
-                <a href="newsfeed-messages.html" title="Linda Lohan">
-                  <div className="relative flex flex-shrink-0 items-end">
-                    <img
-                      className="h-10 w-10 rounded-full"
-                      src="https://i.pravatar.cc/300"
-                    />
-                    <span className="absolute h-4 w-4 bg-green-400 rounded-full border-2 border-white"></span>
+    return (
+      
+      <>
+      <div className="relative  "   onClick={() => goMessage(item.followersId)}>
+      <li   
+       className="ml-3" key={item._id}>
+        <ProfilePic UserId={item.followersId} value="pic" chat='chat'/>
+        {/* Other content you want to render for each follower */}
+      </li>
+      <span className="absolute h-4 w-4  rounded-full border-2 border-white"></span>
                   </div>
-                  <span className="online-dot bg-green-500"></span>
-                </a>
-              </li>
-              
-            </ul>
+                </>
+    );
+  })}
+</ul>
+
           </div>
         </div>
       </div>

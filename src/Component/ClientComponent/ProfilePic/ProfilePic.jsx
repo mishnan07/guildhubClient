@@ -5,7 +5,7 @@ import CreateUserInstance from '../../../Axios/userAxios';
 import CreateProInstance from "../../../Axios/proAxios";
 import { userAPI } from "../../../Constants/Api";
 
-const ProfilePic = ({ UserId, value }) => {
+const ProfilePic = ({ UserId, value,chat }) => {
   const location = useLocation();
   const navigate = useNavigate()
   const userType = location.pathname.includes('professional') ? 'professional' : 'users';
@@ -63,9 +63,25 @@ const ProfilePic = ({ UserId, value }) => {
     return "";
   };
 
+ 
+
   const goProfile = (userId)=>{
-    console.log(userId,'kkkkk');
-    navigate(`/profilePage?userId=${userId}&LogedUserType=${userType}`)
+    if(chat&&chat==='chat'){
+      const name =  details(UserId,'name')
+      if (userType === "professional") {
+        navigate(
+          `/professional/message?id=${userId}&goMessage='goMessage'&name=${name}`
+        );
+      } else if (userType === "users") {
+        navigate(`/message?id=${userId}&name=${name}`);
+      }
+    }else{
+      console.log(userId,'kkkkk');
+      navigate(`/profilePage?userId=${userId}&LogedUserType=${userType}`)
+    }
+
+    
+   
   }
 
   return (

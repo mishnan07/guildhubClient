@@ -37,7 +37,6 @@ const MainPages = () => {
     Type === 'users' ? state.ClientAuth.Token : state.proAuth.Token
   );
   const id = useSelector((state) => (Type === 'users' ? state.ClientAuth.Id : state.proAuth.Id));
-  console.log(token, 'lldddda', id);
 
      
  const hadleLogout = () => {
@@ -68,7 +67,6 @@ const MainPages = () => {
              console.log(error);
            }
          };
-         console.log('successful');
          fetchUserDetails();
            }else{
         Type === 'users'? navigate('/login'): navigate('/professional/login')

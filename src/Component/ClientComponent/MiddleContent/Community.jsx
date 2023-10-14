@@ -162,12 +162,7 @@ const Community = ({ Type, user }) => {
     }
   };
 
-  const showErrorMessage = (message) => {
-    toast.error(message, {
-      position: toast.POSITION.TOP_RIGHT,
-      autoClose: 1000,
-    });
-  };
+ 
 
   const showToastMessage = (message) => {
     toast.success(message, {
@@ -188,10 +183,7 @@ const Community = ({ Type, user }) => {
     } catch (error) {}
   };
 
-  const proPic = (proId) => {
-    const foundPro = users.find((pro) => pro._id === proId);
-    return foundPro ? foundPro.profilePic : false;
-  };
+
 
   const datas = post.filter((item) => {
     const locationMatch = location(item.userId)
@@ -207,16 +199,17 @@ const Community = ({ Type, user }) => {
 
   return (
     <>
-     {isLoading ? (
-        <LoadingSpinner />
-      ) : (
-    <div className="">
+    
       
       <ToastContainer /> {/* Create Post Section */}
       <div className=" create-post bg-white p-4 rounded-lg shadow-md">
       <SearchBar SetSearchInput={SetSearchInput} searchInput={searchInput} />
       </div>
       {/* Post Content */}
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+    <div className="">
       {datas.map((item) => (
         <div className="w-full h-fit relative">
           <div

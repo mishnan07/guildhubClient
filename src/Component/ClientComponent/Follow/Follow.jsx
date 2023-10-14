@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import ProfilePic from '../ProfilePic/ProfilePic';
 import SearchBar from '../MiddleContent/SearchBar';
 import FollowButton from './FollowButton';
+import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner';
 
 const Follow = () => {
   const [userDetail, setUserDetail] = useState([]);
@@ -18,7 +19,7 @@ const Follow = () => {
   const userAxios = CreateUserInstance()
   const proAxios = CreateProInstance()
   const [all,setAll] = useState([])
-
+  const [isLoading, setIsLoading] = useState(false);
 
   const location = useLocation();
   const Type = location.pathname.includes('professional') ? 'professional' : 'users';
@@ -62,12 +63,13 @@ const Follow = () => {
 
   const fetchPosts = async () => {
     try {
+      setIsLoading(true)
       const response = await Axios.get('/usersAndpros');
       setPros(response.data.pros);
       setUsers(response.data.users);
       const combinedArray = [...response.data.pros, ...response.data.users];
       setAll(combinedArray);
-      
+      setIsLoading(false)
     } catch (error) {
       console.log('Error fetching posts:', error);
     }
@@ -116,7 +118,6 @@ const Follow = () => {
   });
 
 
-  console.log(userr, 'uuuuuu');
 
   return (
     <div className="">
@@ -126,10 +127,15 @@ const Follow = () => {
       >
               <SearchBar SetSearchInput={SetSearchInput} searchInput={searchInput} />
 
+              {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+      <>
         <ul
           className="h-full py-2 overflow-y-auto text-black-700 dark:text-black-200 ml-4"
           aria-labelledby="dropdownUsersButton"
         >
+      
           {datas.map((item) => (
             <li
               className="hover:bg-gray-100 border-b border-gray-300 py-4 transition duration-300 ease-in-out transform hover:scale-105"
@@ -146,7 +152,6 @@ const Follow = () => {
                   <p href="#" className="text-yellow-400 text-xs">
                     {item.category?item.category:'Home Owners'}
                   </p>
-                 {console.log(userDetail,'userDetailuserDetailuserDetail')}
                  <div   className="bg-white border border-gray-500 px-10 py-2 rounded-full shadow-lg max-w-sm">
 
                  <FollowButton item={item} userId={userId} userType={userType} userDetail={userDetail} token={token} setSuc={setSuc} suce={suce}/>
@@ -155,8 +160,10 @@ const Follow = () => {
               </div>
             </li>
           ))}
+         
         </ul>
-
+        </>
+          )}
       </div>
     </div>
   );

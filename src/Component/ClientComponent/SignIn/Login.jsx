@@ -110,8 +110,8 @@ const Login = () => {
 <Nav setShow={setShow}/>
 
         <div
-          className="bg-cover bg-center bg-fixed flex justify-evenly  h-full backdrop-blur-3xl bg-opacity-50 overflow-hidden"
-          style={{ backgroundImage: `url('${backgroundImageUrl}')` }}
+          className="bg-cover bg-center bg-fixed flex justify-evenly bg-[url('/images/model-house-project-blueprints.jpg')] bg-opacity-10  h-full overflow-hidden"
+          // style={{ backgroundImage: `url('${backgroundImageUrl}')` }}
         >
           {show&&
           <div className="w-full flex  h-full flex-col justify-center gap-y-2 items-center">
