@@ -189,9 +189,9 @@ socket.on(id,(msg)=> {
     }
   };
 
-  // useEffect(()=>{
-  //   FetchChats(receverId)
-  // },[receverId])
+  useEffect(()=>{
+    FetchChats(receverId)
+  },[receverId])
 
  
 

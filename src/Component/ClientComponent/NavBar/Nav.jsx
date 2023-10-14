@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import NavButton from './NavButton';
 
 const Nav = ({setShow}) => {
+  const [isMenuOpen, setMenuOpen] = useState(false);
+
   return (
     <>
 
 <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between bg-white shadow-lg py-2 text-gray-800 dark:bg-neutral-600">
       <div className="container mx-auto">
         <div className="flex items-center justify-between px-4">
-          <div>
+          <div className='relative'>
             <a href="/" className="flex items-center text-gray-800 dark:text-neutral-200 hover:text-gray-900">
               <img
                 src="https://tecdn.b-cdn.net/img/logo/te-transparent-noshadows.webp"
@@ -18,8 +20,11 @@ const Nav = ({setShow}) => {
               GuildHub
             </a>
           </div>
+  
+
           <button
-            className="block lg:hidden text-gray-800 dark:text-neutral-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-600"
+           onClick={() => setMenuOpen(!isMenuOpen)}
+            className=" block lg:hidden text-gray-800 dark:text-neutral-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-600"
             type="button"
             data-te-collapse-init
             data-te-target="#navbarSupportedContent4"
@@ -40,7 +45,24 @@ const Nav = ({setShow}) => {
               />
             </svg>
           </button>
-          <div
+          {isMenuOpen && (
+  <ul className="lg:hidden absolute mt-[130px] h-20 w-1/2  ">
+     <div className="flex items-center space-x-4 ml-4">
+              <button onClick={()=>setShow(true)}
+                type="button"
+                className="px-3 py-2 text-xs font-medium bg-slate-500 text-white uppercase bg-primary border rounded hover:bg-primary-600 focus:outline-none focus:ring focus:ring-primary-600 active:bg-primary-700"
+              >
+                Login
+              </button>
+             <div className='bg-slate-500'>
+             <NavButton />
+             </div>
+           
+            </div>
+  </ul>
+)}
+   
+       <div
             className="hidden lg:flex lg:items-center"
             id="navbarSupportedContent4"
             data-te-collapse-item
