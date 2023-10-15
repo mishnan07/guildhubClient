@@ -23,7 +23,7 @@ const ProCards = ({ interstPro, setShow, requirementId, no }) => {
 
   const Axios = Type==='users'?userInstance:proInstance
 
-  const socket = io.connect('http://localhost:3000')
+  const socket = io.connect('https://guildhub.site/')
 
   const aa = pros.filter((pro) => interstPro.includes(pro._id));
   const Hire = async () => {

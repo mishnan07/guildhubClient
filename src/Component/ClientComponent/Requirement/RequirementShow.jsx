@@ -23,7 +23,7 @@ const RequirementShow = ({
   const proInstance = CreateProInstance()
   const Axios = Type==='users'?userInstance:proInstance
 
-  const socket = io.connect('http://localhost:3000')
+  const socket = io.connect('https://guildhub.site/')
 
 
   useEffect(() => {

@@ -7,7 +7,7 @@ import { ClientLogin, ClientId } from "../../../Redux/ClientAuth.js";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Google from "../Google/Google.jsx";
-import { FaStar } from "react-icons/fa";
+import { FaPaintBrush, FaQuestion, FaStar, FaUsers } from "react-icons/fa";
 import Nav from "../NavBar/Nav.jsx";
 import CreateProInstance from "../../../Axios/proAxios.js";
 import { ProId, proLogin } from "../../../Redux/proAuth.js";
@@ -72,6 +72,9 @@ const Login = () => {
       dispatch(proLogin({ token: token }));
       dispatch(ProId({ id: id }));
       navigate("/professional/home");
+    }else{
+      showErrorMessage(result.message);
+
     }
   }
        
@@ -83,13 +86,21 @@ const Login = () => {
 
    
   };
-
-  const showToastMessage = () => {
-    toast.success("Success!", {
-      position: toast.POSITION.TOP_RIGHT,
-      autoClose: 3000,
-    });
+  const gradientTextStyles = {
+    backgroundImage: "linear-gradient(45deg, #ffff, #ffff)",
+    WebkitBackgroundClip: "text",
+    WebkitTextFillColor: "transparent",
+    fontWeight: "bold",
+    textShadow: "2px 2px black", // Adding text shadow
+    letterSpacing: "2px", // Adjusting letter spacing
+    fontStyle: "italic", // Adding italic style
+    fontSize: "100px", // Changing font size
+    fontFamily: "Arial, sans-serif", // Specifying font family
   };
+  
+  
+
+
 
   const showErrorMessage = (message) => {
     toast.error(message, {
@@ -108,137 +119,122 @@ const Login = () => {
 <Nav setShow={setShow}/>
 
         <div
-          className="bg-cover bg-center bg-fixed flex justify-evenly bg-[url('/images/model-house-project-blueprints.jpg')] bg-opacity-10  h-full overflow-hidden"
+          className="bg-cover bg-center bg-fixed flex justify-evenly bg-[url('/images/plans-house.jpg')] bg-opacity-10  h-full overflow-hidden"
           // style={{ backgroundImage: `url('${backgroundImageUrl}')` }}
         >
           {show&&
-          <div className="w-full flex  h-full flex-col justify-center gap-y-2 items-center">
-            <div className="p-3 rounded-lg border justify-between bg-opacity-0 w-3/5 flex md:w-2/5 lg:w-[40%] bg-white">
-            <div
-  onClick={() => setUserType('users')} // When clicked, setUserType is called to set the user type to 'users'
-  className={`"p-3 rounded-lg flex font-semibold cursor-pointer justify-center items-center shadow-lg backdrop-blur-2xl  w-3/5 md:w-2/5 lg:w-[48%]"${userType === 'professional' && 'bg-orange-500'}`}
->
-                <a  >Home Owner</a>
-              </div>
-              <div onClick={()=>setUserType('professional')} className="p-3 rounded-lg flex justify-center cursor-pointer items-center font-semibold shadow-lg backdrop-blur-2xl bg-opacity-30 bg-white w-3/5 md:w-2/5 lg:w-[48%]">
-                <a >Professional</a>
-              </div>
+          <div className="flex flex-col h-screen w-full items-center justify-center bg-cover bg-no-repeat" >
+          <ToastContainer />{" "}
+          <div className="rounded-xl bg-gray-800 bg-opacity-50 px-16 py-2 mb-2 shadow-lg backdrop-blur-md max-sm:px-8 space-x-3 text-white">
+            
+          <input onClick={() => setUserType('users')} type="radio" id="radio1" name="radioGroup" value="option1"/>
+          <label for="radio1">Home Owner</label>
+          
+          <input onClick={() => setUserType('professional')} type="radio" id="radio2" name="radioGroup" value="option2"/>
+          <label for="radio2">Professional</label>
+          
+          
+          
+          
+            
             </div>
-
-            <div className="p-8 rounded-lg shadow-lg backdrop-blur-2xl bg-opacity-30 bg-white w-3/5 md:w-2/5 lg:w-[40%]">
-              <h1 className="text-3xl font-bold mb-8 text-center text-gray-800" >
-                Login to GuildHub
-              </h1>
-              <form method="POST" onSubmit={handleSubmit}>
-                <div className="mb-4">
-                  <label
-                    className="block font-semibold text-gray-700 mb-2"
-                    htmlFor="email"
-                  >
-                    Email Address
-                  </label>
-                  <input
-                    className="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    type="text"
-                    id="email"
-                    name="email"
-                    onChange={(e) => {
-                      setEmail(e.target.value);
-                    }}
-                    placeholder="Enter your email address"
-                  />
+            <div className="rounded-xl bg-gray-800 bg-opacity-50 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8">
+              <div className="text-white">
+                <div className="mb-8 flex flex-col items-center">
+          
+                  <h1 className="mb-2 text-2xl">GuildHub</h1>
+                  <span className="text-gray-300">Enter Login Details</span>
                 </div>
-                <div className="mb-4">
-                  <label
-                    className="block font-semibold text-gray-700 mb-2"
-                    htmlFor="password"
-                  >
-                    Password
-                  </label>
-                  <input
-                    className="border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-                    type="password"
-                    id="password"
-                    name="password"
-                    onChange={(e) => {
-                      setPassword(e.target.value);
-                    }}
-                    placeholder="Enter your password"
-                  />
-                  <Link to="/forgetPass">
-                    <div className="text-xs text-end">
-                      <p className="text-red-700">forget password</p>
-                    </div>
-                  </Link>
-                </div>
-
-                <div>
-                  <ToastContainer />{" "}
-                </div>
-
-                <div className="mb-6">
-                  <button
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
-                    type="submit"
-                  >
-                    Login
-                  </button>
-                </div>
-              </form>
-
-              <div className="flex justify-between">
-               
-                <Link to="/otpLogin">
-                  <div className="text-xs ">
-                    <p>sign in with phone</p>
+                <form method="POST" onSubmit={handleSubmit}>
+                  <div className="mb-4 text-lg">
+                    <input  type="text"
+                              id="email"
+                              name="email"
+                              onChange={(e) => {
+                                setEmail(e.target.value);
+                              }} className="rounded-3xl border-none bg-yellow-400 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md" placeholder="id@email.com" />
                   </div>
-                </Link>
-              </div>
-              <div className="flex justify-center mt-4">
-                <Google />
+          
+                  <div className="mb-4 text-lg">
+                    <input    type="password"
+                              id="password"
+                              name="password"
+                              onChange={(e) => {
+                                setPassword(e.target.value);
+                              }} className="rounded-3xl border-none bg-yellow-400 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md" placeholder="*********" />
+                  </div>
+          
+                         
+                  
+                  <div className="mt-8 flex justify-center text-lg text-black">
+                    <button type="submit" className="rounded-3xl bg-yellow-400 bg-opacity-50 px-10 py-2 text-white shadow-xl backdrop-blur-md transition-colors duration-300 hover:bg-yellow-600">Login</button>
+                   
+          
+                  </div>
+                  <div className="rounded-3xl border-none px-6 py-2 text-center text-inherit outline-none ">
+                  <Google />
+          
+                  </div>
+                  <div className="flex justify-evenly">
+                          <Link to="/forgetPass">
+                              <div className="text-xs text-end">
+                                <p className="text-white">forget password</p>
+                              </div>
+                            </Link>
+          
+                            <Link to="/otpLogin">
+                            <div className="text-xs ">
+                              <p>sign in with phone</p>
+                            </div>
+                          </Link>
+                    </div>
+          
+                </form>
               </div>
             </div>
           </div>}
+
           {/* <div className=" "> */}
          {!show&&
-          <div className="flex flex-col items-center mb-64 mr-56 justify-center h-screen relative  ">
-            <div
-             className="py-20"
-            >            </div>
-
-              <h1  style={{ textShadow: "2px 2px black" }}
-              className="text-center text-white  text-6xl font-semibold  mb-8 text">
-                  India's Largest Home Community</h1>
-            <div 
-              //  style={{ textShadow: "2px 2px white" }}
-
-            className=" text-3xl font-bold md:flex md:justify-center md:space-x-6  ">
-              <div className="mb-2 md:mb-0">
-                <div className="text-black flex items-center">
-                  <FaStar className="mr-2 text-yellow-400" />
-                  Find Design
-                </div>
-                <p className="text-black text-sm">Discover stunning designs</p>
-              </div>
-              <div className="mb-2 md:mb-0">
-                <div className="text-black flex items-center">
-                  <FaStar className="mr-2 text-yellow-400" />
-                  Find Professionals
-                </div>
-                <p className="text-black text-sm">Connect with experts</p>
-              </div>
-              <div className="mb-2 md:mb-0">
-                <div className="text-black flex items-center">
-                  <FaStar className="mr-2 text-yellow-400" />
-                  Ask Queries
-                </div>
-                <p className="text-black text-sm">
-                  Get answers to your questions
-                </p>
-              </div>
-            </div>
-          </div>
+     <div className="bg-cover bg-center bg-fixed flex justify-center items-center bg-[url('your-background-image.jpg')]">
+     <div className="text-black text-center">
+       <h1 style={gradientTextStyles} className="text-6xl  mb-8 text-shadow-md shadow-2xl">
+         India's Largest Home Community
+       </h1>
+       <div className="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-6">
+         <div className="rounded-xl bg-white bg-opacity-50 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8 duration-300 transform hover:scale-105">
+           <div className="flex  justify-center text-green-400 text-5xl mb-2 transform hover:scale-110 transition-transform duration-300">
+             <FaPaintBrush />
+           </div>
+           <h2 className="text-xl font-bold">Find Design</h2>
+           <p className="text-lg">Discover stunning designs</p>
+         </div>
+   
+         <div className="rounded-xl bg-white bg-opacity-50 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8 duration-300 transform hover:scale-105">
+           <div className="flex  justify-center text-yellow-400 text-5xl mb-2 transform hover:scale-110 transition-transform duration-300">
+             <FaUsers />
+           </div>
+           <h2 className="text-xl font-bold">Find Professionals</h2>
+           <p className="text-lg">Connect with experts</p>
+         </div>
+   
+         <div className="rounded-xl bg-white bg-opacity-50 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8 duration-300 transform hover:scale-105">
+           <div className= "flex  justify-center text-orange-400  text-5xl mb-2 transform hover:scale-110 transition-transform duration-300">
+             <FaQuestion />
+           </div>
+           <h2 className="text-xl font-bold">Ask Queries</h2>
+           <p className="text-lg">Get answers to your questions</p>
+         </div>
+       </div>
+     </div>
+   </div>
+    
+      
        }
+
+
+
+       
 
         </div>
       </div>

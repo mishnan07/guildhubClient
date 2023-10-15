@@ -49,7 +49,7 @@ setNotification(newNotifications)
     }
     FetchNotifications()
   },[])
-  const socket = io.connect('http://localhost:3000');
+  const socket = io.connect('https://guildhub.site/');
 
   socket.on(id,(itemId,senderId,senderType,text)=>{
        const newNotifications = {

@@ -16,7 +16,7 @@ const Buttun = ({Type,profile1}) => {
     const navigate = useNavigate()
 
     const id = useSelector((state) => (Type === 'users' ? state.ClientAuth.Id : state.proAuth.Id));
-    const socket = io.connect('http://localhost:3000')
+    const socket = io.connect('https://guildhub.site/')
 
         const hadleLogout = () => {
           socket.emit('online',id,false)
