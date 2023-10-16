@@ -88,7 +88,7 @@ const MiddleContent = ({ Type, user, token, userID, saveduserID, saveds,specific
     fetchPosts();
   }, [state, userID, user]);
 
-  const socket = io.connect("http://localhost:3000");
+  const socket = io.connect("https://guildhub.site/");
 
   const handleLike = async (postId, userId = userId) => {
     if (state) {
