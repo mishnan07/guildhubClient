@@ -48,7 +48,7 @@ const Buttun = ({Type,profile1}) => {
         )}
         {/* Dropdown content */}
         {isOpen && (
-          <div className="absolute w-32 bg-white rounded-lg shadow-lg py-2 mt-10 mr-4">
+          <div className="absolute w-32 bg-white rounded-lg shadow-lg py-2 mt-10 right-10">
             {/* <a href="#" className="block px-4 py-2 account-link hover:text-white">
               Account
             </a> */}

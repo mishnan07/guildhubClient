@@ -60,10 +60,8 @@ setNotification(newNotifications)
             timestamp:Date.now()
        }
        setNotification([...notification,newNotifications])
-       console.log(newNotifications,'ppppppppppp00===');
 
   })
-console.log(notification,'=============////');
 const formatTimestamp = (timestamp) => {
     const currentTime = new Date();
     const itemTime = new Date(timestamp);
@@ -94,7 +92,6 @@ const react =(text)=>{
     return ''
 } 
 
-console.log(notification,'notiiiiiiiiii');
 
 
   return (
