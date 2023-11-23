@@ -92,10 +92,10 @@ const Login = () => {
     WebkitTextFillColor: "transparent",
     fontWeight: "bold",
     textShadow: "2px 2px black", // Adding text shadow
-    letterSpacing: "2px", // Adjusting letter spacing
-    fontStyle: "italic", // Adding italic style
-    fontSize: "100px", // Changing font size
-    fontFamily: "Arial, sans-serif", // Specifying font family
+    // letterSpacing: "2px", // Adjusting letter spacing
+    // fontStyle: "italic", // Adding italic style
+    // fontSize: "100px", // Changing font size
+    // fontFamily: "Arial, sans-serif", // Specifying font family
   };
   
   
@@ -198,9 +198,12 @@ const Login = () => {
          {!show&&
      <div className="bg-cover bg-center bg-fixed flex justify-center items-center bg-[url('your-background-image.jpg')]">
      <div className="text-black text-center">
-       <h1 style={gradientTextStyles} className="text-6xl  mb-8 text-shadow-md shadow-2xl">
+      <div className="flex justify-end">
+      <h1 style={gradientTextStyles}  className="  mb-8 text-shadow-md text-6xl shadow-2xl ">
          India's Largest Home Community
        </h1>
+      </div>
+       
        <div className="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-6">
          <div className="rounded-xl bg-white bg-opacity-50 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8 duration-300 transform hover:scale-105">
            <div className="flex  justify-center text-green-400 text-5xl mb-2 transform hover:scale-110 transition-transform duration-300">

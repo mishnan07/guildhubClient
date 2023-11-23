@@ -63,7 +63,7 @@ const LeftSidebar = ({ Type, user }) => {
     <div className="md:w-1/5">
       {user&&
       <div
-       className="profile-card  bg-gradient-to-r from-blue-500 to-purple-500 text-white p-4 rounded-lg shadow-lg">
+       className="profile-card  bg-white text-purple-800 p-4 rounded-lg shadow-lg">
        <div className="flex justify-center items-center">
         {user?.profilePic?(
        <img
@@ -86,7 +86,7 @@ const LeftSidebar = ({ Type, user }) => {
           </a>
         </h5>
         <p className="text-center text-sm">
-          <a href="#" className="text-white hover:underline">
+          <a href="#" className="text-blue-500 hover:underline">
             <i className="ion ion-android-person-add"></i>
             {user ? user.following.length : ""} followeres
           </a>

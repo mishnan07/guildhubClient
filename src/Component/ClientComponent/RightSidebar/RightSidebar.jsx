@@ -67,7 +67,7 @@ const RightSidebar = ({ user }) => {
       
 
           <div id="chat-block" className="mt-6">
-            <div className="title text-blue-500 font-semibold mb-2">
+            <div className="title text-blue-500 font-semibold mb-2 ml-2">
               Chat online
             </div>
             <ul className="online-users w-full flex  list-inline ">
@@ -76,7 +76,7 @@ const RightSidebar = ({ user }) => {
     return (
       
       <>
-      <div className="relative  "   onClick={() => goMessage(item.followersId)}>
+      <div className="relative pb-4  "   onClick={() => goMessage(item.followersId)}>
       <li   
        className="ml-3" key={item._id}>
         <ProfilePic UserId={item.followersId} value="pic" chat='chat'/>

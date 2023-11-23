@@ -83,6 +83,7 @@ const Question = ({value,id,questions}) => {
       showToastMessage(response.data.message)
       setCategory('')
       setMessage('')
+      
       setFiles([])
       setFiles([]);
     } catch (error) {
