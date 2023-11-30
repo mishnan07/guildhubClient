@@ -79,7 +79,7 @@ const MainPages = () => {
 
     <div className=" mt-20 ">
 
-      <div className="flex flex-col md:flex-row justify-around px-6">
+      <div className="flex flex-col md:flex-row justify-around">
       <div></div> 
         <LeftSidebar Type={Type} user={user}/>
         <div className="md:w-1/3 overflow-scroll h-screen">

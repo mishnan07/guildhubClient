@@ -121,6 +121,7 @@ const Login = () => {
         <div
           className="bg-cover bg-center bg-fixed flex justify-evenly bg-[url('/images/plans-house.jpg')] bg-opacity-10  h-full overflow-hidden"
           // style={{ backgroundImage: `url('${backgroundImageUrl}')` }}
+          
         >
           {show&&
           <div className="flex flex-col h-screen w-full items-center justify-center bg-cover bg-no-repeat" >
@@ -196,7 +197,10 @@ const Login = () => {
 
           {/* <div className=" "> */}
          {!show&&
-     <div className="bg-cover bg-center bg-fixed flex justify-center items-center bg-[url('your-background-image.jpg')]">
+    <div
+    className="bg-cover bg-center bg-fixed flex justify-center items-center "
+ 
+  >
      <div className="text-black text-center">
       <div className="flex justify-end">
       <h1 style={gradientTextStyles}  className="  mb-8 text-shadow-md text-6xl shadow-2xl ">
@@ -204,7 +208,7 @@ const Login = () => {
        </h1>
       </div>
        
-       <div className="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-6">
+       <div className="md:flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-6 overflow-hidden hidden ">
          <div className="rounded-xl bg-white bg-opacity-50 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8 duration-300 transform hover:scale-105">
            <div className="flex  justify-center text-green-400 text-5xl mb-2 transform hover:scale-110 transition-transform duration-300">
              <FaPaintBrush />
