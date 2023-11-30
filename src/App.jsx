@@ -17,8 +17,8 @@ function App() {
        
       <Routes>
            <Route path='/*' element={<ClientRoute />} />
-           <Route path='/admin*' element={<AdminRoute />} />
-           <Route path='/professional*' element={<ProfessionalRoute />} />
+           <Route path='/admin/*' element={<AdminRoute />} />
+           <Route path='/professional/*' element={<ProfessionalRoute />} />
 
       </Routes>
      
