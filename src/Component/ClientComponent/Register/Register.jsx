@@ -23,7 +23,7 @@ const Register = () => {
   useEffect(() => {
     console.log('kkkkkkkkkkkkkkkkkk');
     proAxios.get("/getCategory").then((res) => {
-      const getCategory = res.data.category;
+      const getCategory = res?.data?.category;
       console.log(getCategory,'jjjjjjjjjjjjjjjj');
       setAllCAtegory(getCategory);
     });
@@ -69,8 +69,8 @@ const Register = () => {
           experience,
         })
         .then((res) => {
-          if (res.data.status) {
-            console.log(res.data);
+          if (res?.data?.status) {
+            console.log(res?.data);
             console.log("registered sucesssssss");
             navigate("/login");
           } else {
@@ -364,8 +364,8 @@ const Register = () => {
                 value={category}
               >
                 <option value="">Select a category</option>
-                {allCategory.map((item) => (
-                  <option value={item.categoryName}>{item.categoryName}</option>
+                {allCategory?.map((item) => (
+                  <option value={item?.categoryName}>{item?.categoryName}</option>
                 ))}
 
                 {/* Add more options as needed */}
