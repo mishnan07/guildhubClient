@@ -21,8 +21,9 @@ const Register = () => {
 
 
   useEffect(() => {
+    
     console.log('kkkkkkkkkkkkkkkkkk');
-    proAxios.get("/getCategory").then((res) => {
+    proAxios.get('/getCategory').then((res) => {
       const getCategory = res?.data?.category;
       console.log(getCategory,'jjjjjjjjjjjjjjjj');
       setAllCAtegory(getCategory);

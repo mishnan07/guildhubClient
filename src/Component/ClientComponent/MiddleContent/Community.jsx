@@ -66,14 +66,18 @@ const Community = ({ Type, user }) => {
 
  
   const userId = user ? user._id : "";
+  const id = useSelector((state) => (Type === 'users' ? state.ClientAuth.Id : state.proAuth.Id));
+
   const userType = Type ? Type : "";
 
-  const handleLike = async (postId, userId = userId) => {
+  const handleLike = async (postId, userId = id) => {
     if (state) {
       setState(false);
     } else {
       setState(true);
     }
+
+    
     try {
       const updatedPosts = post.map((item) =>
         item._id === postId ? { ...item, liked: !item.liked } : item
@@ -85,7 +89,7 @@ const Community = ({ Type, user }) => {
           "/likeQuestion",
           { postId, userId },
         );
-        // response();
+        response();
       } else {
         console.log("unlike");
         // Handle unliking if needed
