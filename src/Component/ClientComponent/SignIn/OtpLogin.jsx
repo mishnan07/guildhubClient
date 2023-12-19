@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import Otp from '../Otps/Otp'
-import userAxios from '../../../Axios/userAxios'
+// import userAxios from '../../../Axios/userAxios'
+import CreateUserInstance from '../../../Axios/userAxios.js';
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { ClientLogin, ClientId } from "../../../Redux/ClientAuth.js";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 
 
 const OtpLogin = () => {
@@ -14,10 +16,11 @@ const OtpLogin = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const userInstance = CreateUserInstance()
 
     useEffect(()=>{
         if(success){
-            userAxios
+            userInstance
             .post("/login", { phone,success })
             .then((res) => {
               const result = res.data.userResponse;

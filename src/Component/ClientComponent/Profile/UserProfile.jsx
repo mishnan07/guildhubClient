@@ -114,7 +114,6 @@ const UserProfile = () => {
             ...post,
             liked: false,
           }));
-          console.log(updatedPosts,'pppppp');
         setPost(updatedPosts)
         setPostedLength(updatedPosts.length)
       } catch (error) {

@@ -240,7 +240,7 @@ const Community = ({ Type, user }) => {
                   src={`${userAPI}/images/` + item.image[0]}
                   alt="post-image"
                   className="img-responsive post-image w-full h-[350px] object-cover "
-                />
+                />  
               ) : (
                 ""
               )}
