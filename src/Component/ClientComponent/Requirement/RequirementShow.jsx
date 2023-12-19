@@ -4,6 +4,7 @@ import CreateProInstance from "../../../Axios/proAxios";
 import { userAPI } from "../../../Constants/Api";
 import { FaDollarSign, FaMapMarkerAlt, FaThumbsUp, FaUser } from "react-icons/fa"; // Import icons
 import {io} from 'socket.io-client'
+import { userAPI } from "../../../Constants/Api";
 
 
 const RequirementShow = ({
@@ -23,7 +24,7 @@ const RequirementShow = ({
   const proInstance = CreateProInstance()
   const Axios = Type==='users'?userInstance:proInstance
 
-  const socket = io.connect('https://guildhub.site/')
+  const socket = io.connect(userAPI)
 
 
   useEffect(() => {

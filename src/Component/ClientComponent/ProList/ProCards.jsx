@@ -5,6 +5,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import {io} from 'socket.io-client'
 import ProfilePic from "../Profile/ProfilePics";
 import { useLocation, useNavigate } from "react-router-dom";
+import { userAPI } from "../../../Constants/Api";
 
 const ProCards = ({ interstPro, setShow, requirementId, no }) => {
   const [requirement, setRequirement] = useState([]);
@@ -14,16 +15,16 @@ const ProCards = ({ interstPro, setShow, requirementId, no }) => {
   const [resId, setResId] = useState("");
   const [hiredPros, setHiredPros] = useState([]);
   const [change,setChange] = useState(false)
-
   const userInstance = CreateUserInstance()
   const proInstance = CreateProInstance()
   const navigate = useNavigate()
   const location = useLocation();
   const Type = location.pathname.includes('professional') ? 'professional' : 'users';
 
+
   const Axios = Type==='users'?userInstance:proInstance
 
-  const socket = io.connect('https://guildhub.site/')
+  const socket = io.connect(userAPI)
 
   const aa = pros.filter((pro) => interstPro.includes(pro._id));
   const Hire = async () => {

@@ -10,6 +10,7 @@ import { userAPI } from '../../../Constants/Api';
 import EmojiInput from '../InputEmoji/EmojiInput';
 import SearchBar from '../MiddleContent/SearchBar';
 import LoadingSpinner from '../../LoadingSpinner/LoadingSpinner';
+import { userAPI } from '../../../Constants/Api';
 
 const ContactList = ({ setReceiver, users, pros, seReciverId, userId, FetchChats,isLoading }) => {
   const [all, setAll] = useState([]);
@@ -165,7 +166,7 @@ const ChatMessages = () => {
 
 
     
-const socket = io.connect('https://guildhub.site/');
+const socket = io.connect(userAPI);
 // socket.emit('connected',"connectedsss")
 
 

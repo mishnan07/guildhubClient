@@ -6,6 +6,7 @@ import { proLogOut } from '../../../Redux/proAuth';
 import ProfilePic from '../ProfilePic/ProfilePic';
 import { FaCog } from 'react-icons/fa';
 import { io } from 'socket.io-client';
+import { userAPI } from '../../../Constants/Api';
 
 
 
@@ -16,7 +17,7 @@ const Buttun = ({Type,profile1}) => {
     const navigate = useNavigate()
 
     const id = useSelector((state) => (Type === 'users' ? state.ClientAuth.Id : state.proAuth.Id));
-    const socket = io.connect('https://guildhub.site/')
+    const socket = io.connect(userAPI)
 
         const hadleLogout = () => {
           socket.emit('online',id,false)

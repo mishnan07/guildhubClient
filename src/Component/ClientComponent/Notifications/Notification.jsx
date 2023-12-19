@@ -9,6 +9,7 @@ import NoDataFound from '../../NoDataFound/NoDataFound';
 import Modal from '../Modal/Modal';
 import { FaTimes } from 'react-icons/fa';
 import ProCards from '../ProList/ProCards';
+import { userAPI } from '../../../Constants/Api';
 
 
 const Notification = () => {
@@ -49,7 +50,7 @@ setNotification(newNotifications)
     }
     FetchNotifications()
   },[])
-  const socket = io.connect('https://guildhub.site/');
+  const socket = io.connect(userAPI);
 
   socket.on(id,(itemId,senderId,senderType,text)=>{
        const newNotifications = {
